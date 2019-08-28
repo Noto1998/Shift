@@ -12,7 +12,7 @@ local keys = require "lib.keys"
 -- baseData
 local base = require "lib.base"
 -- screenManager
-local ScreenManager = require('lib.ScreenManager')
+local ScreenManager = require('lib.screenManager')
 --
 
 -- LOAD SCREENS
