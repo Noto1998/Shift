@@ -13,6 +13,12 @@ local keys = require "lib.keys"
 local base = require "lib.base"
 -- screenManager
 local ScreenManager = require('lib.screenManager')
+-- 
+require "lib.shape.rectangle"
+require "lib.shape.circle"
+require "lib.shape.cylinder"
+require "lib.shape.cuboid"
+require "lib.player"
 --
 
 -- LOAD SCREENS

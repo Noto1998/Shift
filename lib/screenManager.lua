@@ -55,15 +55,15 @@ function ScreenManager:registerEvents()
 	
 	--function love.directorydropped(...) _self:event('directorydropped', ...) end
 	function love.draw(...)
+		_self:event('draw', ...)
 		-- [DEBUG] draw screen name
 		local _path = self.currentPath
 		if _path == "/" then
 			_path = "Main Menu"
 		end
+		love.graphics.setColor(1,1,1,1)
 		lovePrint("debug: ".._path)
 		--
-		
-		_self:event('draw', ...)
 	end
 	----function love.errhand(...) _self:event('errhand', ...) end
 	----function love.errorhandler(...) _self:event('errorhandler', ...) end

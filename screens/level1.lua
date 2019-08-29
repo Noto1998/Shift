@@ -5,49 +5,65 @@ function Screen:new(ScreenManager)
 end
 
 function Screen:activate()
-	--test
-	_x = base.guiWidth/2
-	_y = base.guiHeight/2
-	_y2 = _y
-	_r = 50
-	_rX = _r
-	_rY = _r
-	_sideH = 10
-	_timer = 0
-	_timerMax = 2--sed
+	shiftMode = "xy" -- switch shiftMode
+	shiftNum = 0
+	shifting = false
+	
+	re1 = Cuboid(1,1,130, 100,base.guiHeight-2,50)
+	re2 = Cuboid(10,10,130-50, 50,70,50)
+	cy1 = Cylinder(100, 50, 50, 50, 50)
+	player = Player(100, 150, 50)
 
-	_lineY = 0
+	_timerMax = 2
+	_timer = 0
+	
 end
 
 --test
 function Screen:update(dt)
+	-- update shiftNum
 	local _dt = 1 / _timerMax * dt
-	_timer = _timer + dt
-	if _timer < _timerMax then
-		_rY = _rY - _r *_dt
-		_y2 = _y2 + _sideH * _dt
-		_lineY = _lineY + (_y+_sideH) * _dt
-	end	
+	if shiftNum < 1 and shiftMode == "xz" then
+		local _border =  1 - shiftNum
+		if _border < _dt then
+			shiftNum = shiftNum + _border
+		else
+			shiftNum = shiftNum + _dt
+		end
+	end
+	if shiftNum > 0 and shiftMode == "xy" then
+		if shiftNum < _dt then
+			shiftNum = 0
+		else
+			shiftNum = shiftNum - _dt
+		end
+	end
+	-- update shifting
+	shifting = shiftNum ~= 0 and shiftNum ~= 1
+
+	
+	--
+	if not shifting then
+		player:update(dt)
+	end
 end
 
 function Screen:draw()
-	--test
-	love.graphics.setColor(1,1,1,1)
-	love.graphics.line(0, _lineY, base.guiWidth, _lineY)--wall
-
-	love.graphics.ellipse("line", _x, _y2, _rX, _rY)
-	love.graphics.setColor(0,0,0,1)
-	love.graphics.rectangle("fill", _x - _r, _y, _r*2, _y2 - _y)
-	love.graphics.ellipse("fill", _x, _y, _rX, _rY)
-	love.graphics.setColor(1,1,1,1)
-	love.graphics.ellipse("line", _x, _y, _rX, _rY)
-	love.graphics.line(_x - _r, _y, _x - _r, _y2)
-	love.graphics.line(_x + _r, _y, _x + _r, _y2)
+	re1:draw(shiftNum)
+	re2:draw(shiftNum)
+	cy1:draw(shiftNum)
+	player:draw(shiftNum)
+	
 end
 
 function Screen:keypressed(key)
-	if key == keys.A then
-		self.screen:view('/')
+	-- switch shiftMode
+	if key == keys.A and not shifting then
+		if shiftMode == "xy" then
+			shiftMode = "xz"
+		elseif shiftMode == "xz" then
+			shiftMode = "xy"
+		end
 	end
 end
 
