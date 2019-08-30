@@ -1,7 +1,7 @@
 Cuboid = Rectangle:extend()
 
-function Cuboid:new(x, y, z, lenX, lenY, lenZ)
-    Cuboid.super.new(self, x, y, z, lenX, lenY)
+function Cuboid:new(x, y, z, lenX, lenY, lenZ, cFill, cLine)
+    Cuboid.super.new(self, x, y, z, lenX, lenY, cFill, cLine)
     self.lenZ = lenZ
 end
 
@@ -10,12 +10,12 @@ function Cuboid:draw(mode)
     if mode == 0 then
         Cuboid.super.draw(self, mode)
     elseif mode == 1 then
-        love.graphics.setColor(0,0,0,1)
+        love.graphics.setColor(self.cFill)
         love.graphics.rectangle("fill", self.x, self.z, self.lenX, self.lenZ)
-        love.graphics.setColor(1,1,1,1)
+        love.graphics.setColor(self.cLine)
         love.graphics.rectangle("line", self.x, self.z, self.lenX, self.lenZ)
     else
-        local re1 = Rectangle(self.x, self.y, self.z, self.lenX, self.lenY)
+        local re1 = Rectangle(self.x, self.y, self.z, self.lenX, self.lenY, self.cFill, self.cLine)
         re1.y = self.z
         re1.lenY = self.lenZ
         re1.z = self.y + self.lenY

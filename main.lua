@@ -1,10 +1,10 @@
--- LOADING SCREEN
+--- LOADING SCREEN
 love.graphics.clear(255,255,255)
 love.graphics.print("loading test")
 love.graphics.present()
---
+---
 
--- IMPORT CLASSIC
+--- IMPORT CLASSIC
 -- object-oriented
 Object = require "lib.classic"
 -- input
@@ -13,20 +13,25 @@ local keys = require "lib.keys"
 local base = require "lib.base"
 -- screenManager
 local ScreenManager = require('lib.screenManager')
--- 
+-- shape
 require "lib.shape.rectangle"
 require "lib.shape.circle"
 require "lib.shape.cylinder"
 require "lib.shape.cuboid"
+-- player
 require "lib.player"
---
+-- level
+require "lib.level"
+-- destination
+require "lib.destination"
+---
 
--- LOAD SCREENS
+--- LOAD SCREENS
 local MainScreen = require('screens.mainScreen')
 local Level1 = require('screens.level1')
---
+---
 
--- LOAD GAME
+--- LOAD GAME
 function love.load()
     -- font
     local font = love.graphics.newFont("font/SourceHanSansCN-Normal.otf", 20)
@@ -37,11 +42,11 @@ function love.load()
 	screenManager:register('/', MainScreen)
     screenManager:register('level1', Level1)
 end
---
+---
 
--- HELPER FUNCTION
+--- HELPER FUNCTION
 function lovePrint(string, x, y, xMode, yMode)
-    -- easy text print, xMode using love.graphics.printf(), yMode get font's pixels height and move
+    -- easy text print, xMode using love.graphics.printf(), yMode get font's pixels height and move x/y
     -- xMode
     if xMode == nil and yMode == nil then
         love.graphics.print(string, x, y)
@@ -64,4 +69,4 @@ function lovePrint(string, x, y, xMode, yMode)
     end
 end
 
---
+---
