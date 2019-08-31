@@ -58,8 +58,6 @@ end
 local function limit(self, dt, x, y, lenX, lenY)
 	local tableX = {x, x+lenX}
 	local tableY = {y, y+lenY}
-
-	
 	-- x -- check self.y is between y and x+lenY
 	if ((self.y+self.radius > y) and (self.y-self.radius < y+lenY)) then
 		for key, xValue in pairs(tableX) do
@@ -119,6 +117,10 @@ function Player:update(dt, mode, list)
 		else
 			spdY = 0
 		end
+		if math.abs(spdX) > 0 and math.abs(spdY) > 0 then	-- 45
+			spdX = spd / math.sqrt(2) * base.sign(spdX)
+			spdY = spd / math.sqrt(2) * base.sign(spdY)
+		end
 		-- limit in rectangle
 		self.stuck = false
 		limit(self, dt, 0, 0, base.guiWidth, base.guiHeight)
@@ -130,7 +132,6 @@ function Player:update(dt, mode, list)
 				end
 			end
 		end
-		
 	elseif mode == 1 then	-- xz
 		-- test
 		if love.keyboard.isDown(keys.DPad_left) then
@@ -153,7 +154,6 @@ function Player:update(dt, mode, list)
 		spdY = 0
 		spdZ = 0
 	end
-
 	-- update spd
 	self.x = self.x + spdX * dt
 	self.y = self.y + spdY * dt
