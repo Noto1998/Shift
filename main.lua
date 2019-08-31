@@ -59,7 +59,7 @@ function lovePrint(string, x, y, xMode, yMode)
             --default
         elseif yMode == "center" then
             y2 = math.floor(y-h/2)
-        elseif yMode == "botton" then
+        elseif yMode == "bottom" then
             y2 = y-h
         else
             error("Invalid alignment " .. yMode .. ", expected one of: 'top','center','bottom'");

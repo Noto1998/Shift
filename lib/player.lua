@@ -4,6 +4,8 @@ local spd = 100
 local r = 30
 local spdX
 local spdY
+local spdZ
+local cFill = {base.cFill[1], base.cFill[2], base.cFill[3], 0.5}--alpha
 
 local function isColisionXY(self, obj)
 	local flag = false
@@ -40,8 +42,6 @@ local function isColisionXY(self, obj)
 							end
 						end
 					end
-
-					
 				end
 			end
 		elseif obj:is(Circle) then
@@ -56,35 +56,51 @@ local function isColisionXY(self, obj)
 end
 
 local function limit(self, dt, x, y, lenX, lenY)
-	local xMin = x + self.radius
-	local yMin = y + self.radius
+	local tableX = {x, x+lenX}
+	local tableY = {y, y+lenY}
 
-	local xMax = x+lenX - self.radius
-	local yMax = y+lenY - self.radius
-
-
-	if self.x+spdX*dt < xMin then
-		self.x = xMin
-		spdX = 0
-	elseif self.x+spdX*dt > xMax then
-		self.x = xMax
-		spdX = 0
+	
+	-- x -- check self.y is between y and x+lenY
+	if ((self.y+self.radius > y) and (self.y-self.radius < y+lenY)) then
+		for key, xValue in pairs(tableX) do
+			local signX = base.sign(self.x - xValue)-- left or right
+			-- stuck
+			if math.abs(self.x-xValue)+1 < self.radius then
+				self.stuck = true
+				spdY = 0
+				spdX = 0
+			-- psuh
+			elseif math.abs(self.x-xValue + spdX*dt) < self.radius then
+				self.x = xValue + self.radius*signX
+				spdX = 0
+			end
+		end
 	end
-	if self.y+spdY*dt < yMin then
-		self.y = yMin
-		spdY = 0
-	elseif self.y+spdY*dt > yMax then
-		self.y = yMax
-		spdY = 0
+	-- y -- check self.x is between x and x+lenX
+	if ((self.x+self.radius > x) and (self.x-self.radius-1 < x+lenX)) then
+		for key, yValue in pairs(tableY) do
+			local signY = base.sign(self.y - yValue)-- up or down
+			-- stuck
+			if math.abs(self.y-yValue)+1 < self.radius then
+				self.stuck = true
+				spdY = 0
+				spdX = 0
+			-- psuh
+			elseif math.abs(self.y-yValue + spdY*dt) < self.radius then
+				self.y = yValue + self.radius*signY
+				spdY = 0
+			end
+		end
 	end
 end
 
 function Player:new(x, y, z)
-    Player.super.new(self, x, y, z, r)
+    Player.super.new(self, x, y, z, r, cFill)
 	spdX = 0
 	spdY = 0
+	spdZ = 0
+	self.stuck = false
 end
-
 
 function Player:update(dt, mode, list)
 	if mode == 0 then	-- xy
@@ -103,35 +119,52 @@ function Player:update(dt, mode, list)
 		else
 			spdY = 0
 		end
-		--[[ collision
+		-- limit in rectangle
+		self.stuck = false
+		limit(self, dt, 0, 0, base.guiWidth, base.guiHeight)
+		
 		if list ~= nil then
 			for key, obj in pairs(list) do
-				if isColisionXY(self, obj) then
-					if spdX ~= 0 then
-						self.x = self.x + (spdX / math.abs(spdX)) *dt
-						spdX = 0
-					end
-					if spdY ~= 0 then
-						self.y = self.y + (spdY / math.abs(spdY)) *dt
-						spdY = 0
-					end
+				if obj:is(Rectangle) then
+					limit(self, dt, obj.x, obj.y, obj.lenX, obj.lenY)
 				end
 			end
 		end
-		]]
-		-- limit in screen
-		limit(self, dt, 0, 0, base.guiWidth, base.guiHeight)
+		
 	elseif mode == 1 then	-- xz
-
+		-- test
+		if love.keyboard.isDown(keys.DPad_left) then
+			spdX = -spd
+		elseif love.keyboard.isDown(keys.DPad_right) then
+			spdX = spd
+		else
+			spdX = 0
+		end
+		if love.keyboard.isDown(keys.DPad_up) then
+			spdZ = -spd
+		elseif love.keyboard.isDown(keys.DPad_down) then
+			spdZ = spd
+		else
+			spdZ = 0
+		end
 	else
+		-- shifting
 		spdX = 0
 		spdY = 0
+		spdZ = 0
 	end
 
 	-- update spd
 	self.x = self.x + spdX * dt
 	self.y = self.y + spdY * dt
-
-	
+	self.z = self.z + spdZ * dt
 end
 
+function Player:draw(mode)
+	Player.super.draw(self, mode)
+	-- draw stuck warning
+	if self.stuck then
+		love.graphics.setColor(1,1,1)
+		lovePrint("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
+	end
+end

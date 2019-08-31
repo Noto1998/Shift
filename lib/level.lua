@@ -4,15 +4,17 @@ function Level:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
-function Level:activate()
+function Level:activate(playerX, playerY, playerZ, DestinationX, DestinationY, DestinationZ, DestinationString)
     -- shift
 	shiftMode = 0-- 0=xy, 1=xz
 	shiftFlag = false
 	shifting = false
 	_timerMax = 2
     _timer = 0
-	-- draw
-	drawList = {}
+	-- drawList
+	player = Player(playerX, playerY, playerZ)
+	destination = Destination(DestinationX, DestinationY, DestinationZ, DestinationString)
+	drawList = {player, destination}
 end
 
 function Level:update(dt)
@@ -37,6 +39,8 @@ function Level:update(dt)
 			end
 		end
 	end
+	-- update player
+	player:update(dt, shiftMode, drawList)
 end
 
 function Level:draw()
@@ -60,6 +64,10 @@ end
 -- add obj to drawList
 function Level:addDrawList(...)
 	local arg={...}
+	-- add player and destination
+	for key, value in pairs(drawList) do
+		table.insert(arg, value)
+	end
 	-- sort by z
 	for i=1, #arg do
 		local j = i
