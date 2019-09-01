@@ -8,6 +8,7 @@ local spdZ
 local cFill = {base.cFill[1], base.cFill[2], base.cFill[3], 0.5}--alpha
 
 local function collisionXY(self, dt, obj)
+	-- Rectangle
 	if obj:is(Rectangle) then
 		local tableX = {obj.x, obj.x+obj.lenX}
 		local tableY = {obj.y, obj.y+obj.lenY}
@@ -22,15 +23,16 @@ local function collisionXY(self, dt, obj)
 			end
 			-- check how far between x and the line
 			for key, xValue in pairs(tableX) do
-				local signX = base.sign(self.x - xValue)-- left or right
+				local disX = math.abs(self.x - xValue)
+				local signX = base.sign(self.x - xValue)
 				-- stuck
-				if math.abs(self.x-xValue)+1 < longLineX then
+				if disX + 1 < longLineX then
 					self.stuck = true
 					spdY = 0
 					spdX = 0
 				-- psuh
-				elseif math.abs(self.x-xValue + spdX*dt) < longLineX then
-					self.x = xValue + longLineX*signX
+				elseif math.abs(disX*signX + spdX * dt) < longLineX then
+					self.x = xValue + math.ceil(longLineX) * signX-- left or right
 					spdX = 0
 				end
 			end
@@ -46,17 +48,63 @@ local function collisionXY(self, dt, obj)
 			end
 			--
 			for key, yValue in pairs(tableY) do
+				local disY = math.abs(self.y - yValue)
 				local signY = base.sign(self.y - yValue)-- up or down
 				-- stuck
-				if math.abs(self.y-yValue)+1 < longLineY then
+				if disY + 1 < longLineY then
 					self.stuck = true
 					spdY = 0
 					spdX = 0
 				-- psuh
-				elseif math.abs(self.y-yValue + spdY*dt) < longLineY then
-					self.y = yValue + longLineY*signY
+				elseif math.abs(disY * signY + spdY * dt) < longLineY then
+					self.y = yValue + math.ceil(longLineY) * signY
 					spdY = 0
 				end
+			end
+		end
+	-- Circle
+	elseif obj:is(Circle) then
+		local disMin = self.radius + obj.radius
+
+		local disX = math.abs(self.x - obj.x)
+		local disY = math.abs(self.y - obj.y)
+		local signX = base.sign(self.x - obj.x)
+		local signY = base.sign(self.y - obj.y)
+		--local dis = math.sqrt( math.pow(disX, 2) + math.pow(disY, 2) )
+		-- same as Rectangle
+		if disY < disMin then
+			local shortLineY = disY
+			local longLineX = disMin
+			if shortLineY > 0 then
+				longLineX = math.sqrt( math.pow(disMin, 2) - math.pow(shortLineY, 2) )
+			end
+			-- stuck
+			if disX + 1 < longLineX then
+				self.stuck = true
+				spdY = 0
+				spdX = 0
+			-- psuh
+			elseif math.abs(disX*signX + spdX*dt) < longLineX then
+					self.x = obj.x + math.ceil(longLineX) * signX
+					spdX = 0		
+			end
+		end
+		if disX < disMin then
+			local shortLineX = disX
+			local longLineY = disMin
+			--
+			if shortLineX > 0 then
+				longLineY = math.sqrt( math.pow(disMin, 2) - math.pow(shortLineX, 2) )
+			end
+			-- stuck
+			if disY + 1 < longLineY then
+				self.stuck = true
+				spdY = 0
+				spdX = 0
+			-- psuh
+			elseif math.abs(disY*signY + spdY*dt) < longLineY then
+				self.y = obj.y + math.ceil(longLineY) * signY
+				spdY = 0		
 			end
 		end
 	else
@@ -95,8 +143,8 @@ function Player:update(dt, mode, list)
 		end
 		-- collision
 		self.stuck = false
-		if list ~= nil then
-			for key, obj in pairs(list) do
+		for key, obj in pairs(list) do
+			if obj ~= nil and not obj:is(Player) then
 				collisionXY(self, dt, obj)
 			end
 		end
@@ -124,10 +172,10 @@ function Player:update(dt, mode, list)
 		spdY = 0
 		spdZ = 0
 	end
-	-- update spd
-	self.x = self.x + spdX * dt
-	self.y = self.y + spdY * dt
-	self.z = self.z + spdZ * dt
+	-- update spd and fix pixel
+	self.x = self.x + math.floor(math.abs(spdX * dt)) * base.sign(spdX)
+	self.y = self.y + math.floor(math.abs(spdY * dt)) * base.sign(spdY)
+	self.z = self.z + math.floor(math.abs(spdZ * dt)) * base.sign(spdZ)
 end
 
 function Player:draw(mode)
@@ -137,4 +185,6 @@ function Player:draw(mode)
 		love.graphics.setColor(1,1,1)
 		lovePrint("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
 	end
+	--[DEBUG] draw location
+	lovePrint(player.x..","..player.y..","..player.z, base.guiWidth/2)
 end

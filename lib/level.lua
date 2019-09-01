@@ -45,6 +45,28 @@ function Level:update(dt)
 	if destination:touch(player) then
 		
 	end
+	-- update drawList in realtime
+	-- sort by z
+	for i=1, #drawList do
+		local j = i
+		for k=i+1, #drawList do
+			if drawList[k].z > drawList[j].z then
+				j, k = k, j
+			end
+		end
+		drawList[i], drawList[j] = drawList[j], drawList[i]
+	end
+	-- then sort by y
+	for i=1, #drawList do
+		local j = i
+		for k=i+1, #drawList do
+			if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
+				j, k = k, j
+			end
+		end
+		drawList[i], drawList[j] = drawList[j], drawList[i]
+	end
+	
 end
 
 function Level:draw()
@@ -76,26 +98,6 @@ function Level:addDrawList(...)
 	-- add player and destination
 	for key, value in pairs(drawList) do
 		table.insert(arg, value)
-	end
-	-- sort by z
-	for i=1, #arg do
-		local j = i
-		for k=i+1, #arg do
-			if arg[k].z > arg[j].z then
-				j, k = k, j
-			end
-		end
-		arg[i], arg[j] = arg[j], arg[i]
-	end
-	-- then sort by y
-	for i=1, #arg do
-		local j = i
-		for k=i+1, #arg do
-			if arg[k].z == arg[j].z and arg[k].y < arg[j].y then
-				j, k = k, j
-			end
-		end
-		arg[i], arg[j] = arg[j], arg[i]
 	end
 	drawList = arg
 end

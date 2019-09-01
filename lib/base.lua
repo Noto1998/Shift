@@ -17,12 +17,12 @@ base.cFill = cGray
 base.cLine = cWhite
 
 function base.sign(number)
-    if number == 0 then
-        return 0
-    elseif number > 0 then
+    if number > 0 then
         return 1
     elseif number < 0 then
         return -1
+    else
+        return 0
     end
 end
 
