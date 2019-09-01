@@ -2,9 +2,9 @@ Destination = Cuboid:extend()
 
 local len = 50
 
-function Destination:new(x, y, z, nextScreen) 
+function Destination:new(x, y, z) 
     Destination.super.new(self, x, y, z, len, len, len, {0.5, 1, 0.5})
-    self.nextScreen = nextScreen
+    --self.nextScreen = nextScreen
 end
 
 -- player touch

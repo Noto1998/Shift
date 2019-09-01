@@ -1,10 +1,12 @@
 Level = Object:extend()
 
+local levelNameToDraw
+
 function Level:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
-function Level:activate(playerX, playerY, playerZ, DestinationX, DestinationY, DestinationZ, DestinationString)
+function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
     -- shift
 	shiftMode = 0-- 0=xy, 1=xz
 	shiftFlag = false
@@ -13,8 +15,12 @@ function Level:activate(playerX, playerY, playerZ, DestinationX, DestinationY, D
     _timer = 0
 	-- drawList
 	player = Player(playerX, playerY, playerZ)
-	destination = Destination(DestinationX, DestinationY, DestinationZ, DestinationString)
+	destination = Destination(destinationX, destinationY, destinationZ)
 	drawList = {player, destination}
+	levelNameToDraw = "levelName missing!"
+	if levelName ~= nil then
+		levelNameToDraw = levelName
+	end
 end
 
 function Level:update(dt)
@@ -43,7 +49,7 @@ function Level:update(dt)
 	player:update(dt, shiftMode, drawList)
 	-- finish level
 	if destination:touch(player) then
-		
+		--
 	end
 	-- update drawList in realtime
 	-- sort by z
@@ -71,7 +77,6 @@ end
 
 function Level:draw()
 	-- draw all obj in drawList
-	-- [BUG] miss using xyz sort to draw
 	if drawList ~= nil then
 		for key, value in pairs(drawList) do
 			value:draw(shiftMode)
@@ -82,6 +87,9 @@ function Level:draw()
 		love.graphics.setColor(1,1,1)
 		lovePrint("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
+	-- draw levelName
+	love.graphics.setColor(1,1,1)
+	lovePrint(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
 end
 
 function Level:keypressed(key)
