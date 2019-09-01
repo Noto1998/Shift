@@ -12,7 +12,7 @@ local keys = require "lib.keys"
 -- baseData
 local base = require "lib.base"
 -- screenManager
-local ScreenManager = require('lib.screenManager')
+local ScreenManager = require "lib.screenManager"
 -- shape
 require "lib.shape.rectangle"
 require "lib.shape.circle"
@@ -27,8 +27,21 @@ require "lib.destination"
 ---
 
 --- LOAD SCREENS
-local MainScreen = require('screens.mainScreen')
-local Level1 = require('screens.level1')
+local MainScreen = require "screens.mainScreen"
+-- put all level in a table
+local LevelScreen = {}
+local i = 1
+while io.open("./screens/level"..i..".lua") ~= nil do
+    local levelName = "screens.level" .. i
+    LevelScreen[i] = require(levelName)
+    i = i + 1
+    io.close()
+end
+---
+
+--- DEBUG
+debugMode = true
+debugI = 0-- for choose level
 ---
 
 --- LOAD GAME
@@ -39,8 +52,11 @@ function love.load()
 
     -- register screens
     local screenManager = ScreenManager()
-	screenManager:register('/', MainScreen)
-    screenManager:register('level1', Level1)
+    screenManager:register('/', MainScreen)
+    for i, level in ipairs(LevelScreen) do
+        local levelName = "level" .. i
+        screenManager:register(levelName, level)
+    end
 end
 ---
 
@@ -60,7 +76,7 @@ function lovePrint(string, x, y, xMode, yMode)
         elseif yMode == "center" then
             y2 = math.floor(y-h/2)
         elseif yMode == "bottom" then
-            y2 = y-h
+            y2 = y - h
         else
             error("Invalid alignment " .. yMode .. ", expected one of: 'top','center','bottom'");
         end
