@@ -67,14 +67,14 @@ function lovePrint(string, x, y, xMode, yMode)
     if xMode == nil and yMode == nil then
         love.graphics.print(string, x, y)
     else
-        local w = base.guiWidth
+        local w = love.graphics.getFont():getWidth(string) * 2
         local h = love.graphics.getFont():getHeight()
         local y2 = y
         -- yMode
         if yMode == "top" or yMode == nil then
             --default
         elseif yMode == "center" then
-            y2 = math.floor(y-h/2)
+            y2 = math.floor(y - h/2)
         elseif yMode == "bottom" then
             y2 = y - h
         else
