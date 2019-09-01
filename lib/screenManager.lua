@@ -56,14 +56,18 @@ function ScreenManager:registerEvents()
 	--function love.directorydropped(...) _self:event('directorydropped', ...) end
 	function love.draw(...)
 		_self:event('draw', ...)
-		-- [DEBUG] draw screen name
-		local _path = self.currentPath
-		if _path == "/" then
-			_path = "Main Menu"
+
+		-- [debug] draw screen name
+		if debugMode then
+			local _path = self.currentPath
+			if _path == "/" then
+				_path = "Main Menu"
+			end
+			love.graphics.setColor(1,1,1,1)
+			lovePrint("debug: ".._path)
 		end
-		love.graphics.setColor(1,1,1,1)
-		lovePrint("debug: ".._path)
 		--
+
 	end
 	----function love.errhand(...) _self:event('errhand', ...) end
 	----function love.errorhandler(...) _self:event('errorhandler', ...) end
@@ -73,6 +77,19 @@ function ScreenManager:registerEvents()
 		if select(1, ...) == 'escape' then
 			love.event.quit()
 		end
+		
+		--- [debug] pressed f1 to next level
+		if debugMode and select(1, ...) == 'f1' then
+			debugI = debugI + 1
+			-- reset
+			if io.open("./screens/level"..debugI..".lua") == nil then
+				debugI = 1
+			end
+			local levelName = "level" .. debugI
+			self:view(levelName)
+		end
+		---
+
 		_self:event('keypressed', ...)
 	end
 	function love.keyreleased(...) _self:event('keyreleased', ...) end
