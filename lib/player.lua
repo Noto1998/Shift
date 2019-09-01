@@ -7,90 +7,60 @@ local spdY
 local spdZ
 local cFill = {base.cFill[1], base.cFill[2], base.cFill[3], 0.5}--alpha
 
-local function isColisionXY(self, obj)
-	local flag = false
-	-- ignore player self
-	if obj ~= nil and not obj:is(Player) then
-		if obj:is(Rectangle) then
-			local oLeft = obj.x
-			local oRight = obj.x + obj.lenX
-			local oTop = obj.y
-			local oBottom = obj.y + obj.lenY
-
-			local sLeft = self.x - self.radius
-			local sRight = self.x + self.radius
-			local sTop = self.y - self.radius
-			local sBottom = self.y + self.radius
-			
-			-- using Rectangle collision
-			if sRight > oLeft and sLeft < oRight and sTop < oBottom and sBottom > oTop then
-				if (self.x > oLeft and self.x < oRight) or (self.y < oBottom and self.y > oTop) then
-					flag = true
-				else
-					--from player's center shot a line to four corners
-					local oTableX = {oLeft, oRight}
-					local oTableY = {oBottom, oTop}
-					for key, corX in pairs(oTableX) do
-						for key, corY in pairs(oTableY) do
-							local disX = math.abs(self.x - corX)
-							local disY = math.abs(self.y - corY)
-							local dis = math.floor( math.sqrt(math.pow(disX, 2) + math.pow(disY, 2)) )
-
-							flag = dis < self.radius
-							if flag then
-								break -- jump
-							end
-						end
-					end
+local function collisionXY(self, dt, obj)
+	if obj:is(Rectangle) then
+		local tableX = {obj.x, obj.x+obj.lenX}
+		local tableY = {obj.y, obj.y+obj.lenY}
+		-- x
+		if ((self.y+self.radius > obj.y) and (self.y-self.radius < obj.y+obj.lenY)) then
+			-- dis from y to rectangle's center y
+			local centerY = obj.y+obj.lenY/2
+			local shortLineY = math.abs(self.y - centerY) - obj.lenY/2
+			local longLineX = self.radius
+			if shortLineY > 0 then
+				longLineX = math.sqrt( math.pow(self.radius, 2) - math.pow(shortLineY,2) )
+			end
+			-- check how far between x and the line
+			for key, xValue in pairs(tableX) do
+				local signX = base.sign(self.x - xValue)-- left or right
+				-- stuck
+				if math.abs(self.x-xValue)+1 < longLineX then
+					self.stuck = true
+					spdY = 0
+					spdX = 0
+				-- psuh
+				elseif math.abs(self.x-xValue + spdX*dt) < longLineX then
+					self.x = xValue + longLineX*signX
+					spdX = 0
 				end
 			end
-		elseif obj:is(Circle) then
-			local disX = math.abs(obj.x - self.x)
-			local disY = math.abs(obj.y - self.y)
-			local dis = math.floor( math.sqrt(math.pow(disX, 2) + math.pow(disY, 2)) )
-			
-			flag = self.radius + obj.radius >= dis
 		end
-	end
-	return flag
-end
-
-local function limit(self, dt, x, y, lenX, lenY)
-	local tableX = {x, x+lenX}
-	local tableY = {y, y+lenY}
-
-	
-	-- x -- check self.y is between y and x+lenY
-	if ((self.y+self.radius > y) and (self.y-self.radius < y+lenY)) then
-		for key, xValue in pairs(tableX) do
-			local signX = base.sign(self.x - xValue)-- left or right
-			-- stuck
-			if math.abs(self.x-xValue)+1 < self.radius then
-				self.stuck = true
-				spdY = 0
-				spdX = 0
-			-- psuh
-			elseif math.abs(self.x-xValue + spdX*dt) < self.radius then
-				self.x = xValue + self.radius*signX
-				spdX = 0
+		-- y -- some as x
+		if ((self.x+self.radius > obj.x) and (self.x-self.radius-1 < obj.x+obj.lenX)) then
+			--
+			local centerX = obj.x+obj.lenX/2
+			local shortLineX = math.abs(self.x - centerX) - obj.lenX/2
+			local longLineY = self.radius
+			if shortLineX > 0 then
+				longLineY = math.sqrt( math.pow(self.radius, 2) - math.pow(shortLineX,2) )
+			end
+			--
+			for key, yValue in pairs(tableY) do
+				local signY = base.sign(self.y - yValue)-- up or down
+				-- stuck
+				if math.abs(self.y-yValue)+1 < longLineY then
+					self.stuck = true
+					spdY = 0
+					spdX = 0
+				-- psuh
+				elseif math.abs(self.y-yValue + spdY*dt) < longLineY then
+					self.y = yValue + longLineY*signY
+					spdY = 0
+				end
 			end
 		end
-	end
-	-- y -- check self.x is between x and x+lenX
-	if ((self.x+self.radius > x) and (self.x-self.radius-1 < x+lenX)) then
-		for key, yValue in pairs(tableY) do
-			local signY = base.sign(self.y - yValue)-- up or down
-			-- stuck
-			if math.abs(self.y-yValue)+1 < self.radius then
-				self.stuck = true
-				spdY = 0
-				spdX = 0
-			-- psuh
-			elseif math.abs(self.y-yValue + spdY*dt) < self.radius then
-				self.y = yValue + self.radius*signY
-				spdY = 0
-			end
-		end
+	else
+		-- other
 	end
 end
 
@@ -119,18 +89,17 @@ function Player:update(dt, mode, list)
 		else
 			spdY = 0
 		end
-		-- limit in rectangle
+		if math.abs(spdX) > 0 and math.abs(spdY) > 0 then	-- 45
+			spdX = spd / math.sqrt(2) * base.sign(spdX)
+			spdY = spd / math.sqrt(2) * base.sign(spdY)
+		end
+		-- collision
 		self.stuck = false
-		limit(self, dt, 0, 0, base.guiWidth, base.guiHeight)
-		
 		if list ~= nil then
 			for key, obj in pairs(list) do
-				if obj:is(Rectangle) then
-					limit(self, dt, obj.x, obj.y, obj.lenX, obj.lenY)
-				end
+				collisionXY(self, dt, obj)
 			end
 		end
-		
 	elseif mode == 1 then	-- xz
 		-- test
 		if love.keyboard.isDown(keys.DPad_left) then
@@ -147,13 +116,14 @@ function Player:update(dt, mode, list)
 		else
 			spdZ = 0
 		end
+
+		-- 
 	else
 		-- shifting
 		spdX = 0
 		spdY = 0
 		spdZ = 0
 	end
-
 	-- update spd
 	self.x = self.x + spdX * dt
 	self.y = self.y + spdY * dt
@@ -163,7 +133,7 @@ end
 function Player:draw(mode)
 	Player.super.draw(self, mode)
 	-- draw stuck warning
-	if self.stuck then
+	if mode == 0 and self.stuck then
 		love.graphics.setColor(1,1,1)
 		lovePrint("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
 	end

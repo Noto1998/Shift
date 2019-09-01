@@ -41,6 +41,10 @@ function Level:update(dt)
 	end
 	-- update player
 	player:update(dt, shiftMode, drawList)
+	-- finish level
+	if destination:touch(player) then
+		
+	end
 end
 
 function Level:draw()
@@ -50,6 +54,11 @@ function Level:draw()
 		for key, value in pairs(drawList) do
 			value:draw(shiftMode)
 		end
+	end
+	-- finish level
+	if destination:touch(player) then
+		love.graphics.setColor(1,1,1)
+		lovePrint("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 end
 
@@ -63,7 +72,7 @@ end
 
 -- add obj to drawList
 function Level:addDrawList(...)
-	local arg={...}
+	local arg = {...}
 	-- add player and destination
 	for key, value in pairs(drawList) do
 		table.insert(arg, value)
