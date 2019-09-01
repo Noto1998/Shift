@@ -72,7 +72,7 @@ end
 
 -- add obj to drawList
 function Level:addDrawList(...)
-	local arg={...}
+	local arg = {...}
 	-- add player and destination
 	for key, value in pairs(drawList) do
 		table.insert(arg, value)
