@@ -105,11 +105,11 @@ function Level:draw()
 	-- finish level
 	if destination:touch(player) then
 		love.graphics.setColor(1,1,1)
-		lovePrint("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
+		base.print("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 	-- draw levelName
 	love.graphics.setColor(1,1,1)
-	lovePrint(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
+	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
 end
 
 function Level:keypressed(key)

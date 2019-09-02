@@ -64,7 +64,7 @@ function ScreenManager:registerEvents()
 				_path = "Main Menu"
 			end
 			love.graphics.setColor(1,1,1,1)
-			lovePrint("debug: ".._path)
+			base.print("debug: ".._path)
 		end
 		--
 

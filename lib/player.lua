@@ -183,8 +183,10 @@ function Player:draw(mode)
 	-- draw stuck warning
 	if mode == 0 and self.stuck then
 		love.graphics.setColor(1,1,1)
-		lovePrint("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
+		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
 	end
 	--[DEBUG] draw location
-	lovePrint(player.x..","..player.y..","..player.z, base.guiWidth/2)
+	if debugMode then
+		base.print(player.x..","..player.y..","..player.z, base.guiWidth/2)
+	end
 end

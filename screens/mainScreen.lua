@@ -9,10 +9,10 @@ end
 
 function Screen:draw()
 	-- credits
-	lovePrint("mofish", base.guiWidth/2, base.guiHeight/3, "center", "center")
+	base.print("mofish", base.guiWidth/2, base.guiHeight/3, "center", "center")
 
 	--pressed start
-	lovePrint("按 A 开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+	base.print("按 A 开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
 end
 
 function Screen:keypressed(key)
