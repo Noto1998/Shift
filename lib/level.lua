@@ -55,7 +55,7 @@ function Level:update(dt)
 	if destination:touch(player) then
 		-- goto next level
 		levelChoice = levelChoice + 1
-		local levelName = "level" .. levelChoice
+		local levelName = "levelScreen" .. levelChoice
 		self.screen:view(levelName)
 	end
 

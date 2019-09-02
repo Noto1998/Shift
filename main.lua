@@ -27,9 +27,9 @@ require "lib.destination"
 ---
 
 --- LOAD SCREENS
-levelChoice = 1--- for goto next level
 local MainScreen = require "screens.mainScreen"
--- put all level's screenClass in a table
+local FinishScreen = require "screens.finishScreen"
+-- level
 local LevelScreen = {}
 for i, value in ipairs(require "screens.level.levelConf") do
     local file = io.open("./screens/level/" .. value .. ".lua")
@@ -40,13 +40,14 @@ for i, value in ipairs(require "screens.level.levelConf") do
 end
 ---
 
---- DEBUG
-debugMode = true
-debugLevel = nil-- pressed f2 to type, pressed f1 to run level
----
-
 --- LOAD GAME
 function love.load()
+    --- DEBUG
+    debugMode = true
+    debugLevel = nil-- pressed f2 to type, pressed f1 to run level
+    ---
+    -- for goto next level
+    levelChoice = 1
     -- font
     local font = love.graphics.newFont("font/SourceHanSansCN-Normal.otf", 20)
     love.graphics.setFont(font)
@@ -58,5 +59,6 @@ function love.load()
         local levelName = "levelScreen" .. i
         screenManager:register(levelName, level)
     end
+    screenManager:register("levelScreen" .. (#LevelScreen+1), FinishScreen)
 end
 ---
