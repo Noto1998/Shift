@@ -27,21 +27,22 @@ require "lib.destination"
 ---
 
 --- LOAD SCREENS
+levelChoice = 1--- for goto next level
 local MainScreen = require "screens.mainScreen"
--- put all level in a table
+-- put all level's screenClass in a table
 local LevelScreen = {}
-local i = 1
-while io.open("./screens/level"..i..".lua") ~= nil do
-    local levelName = "screens.level" .. i
-    LevelScreen[i] = require(levelName)
-    i = i + 1
-    io.close()
+for i, value in ipairs(require "screens.level.levelConf") do
+    local file = io.open("./screens/level/" .. value .. ".lua")
+    if file ~= nil then
+        table.insert(LevelScreen, require("screens.level." .. value))
+        file:close()
+    end
 end
-levelChoice = 1--- for choose level
 ---
 
 --- DEBUG
 debugMode = true
+debugLevel = nil-- pressed f2 to type, pressed f1 to run level
 ---
 
 --- LOAD GAME
@@ -54,7 +55,7 @@ function love.load()
     local screenManager = ScreenManager()
     screenManager:register('/', MainScreen)
     for i, level in ipairs(LevelScreen) do
-        local levelName = "level" .. i
+        local levelName = "levelScreen" .. i
         screenManager:register(levelName, level)
     end
 end

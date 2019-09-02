@@ -187,6 +187,6 @@ function Player:draw(mode)
 	end
 	--[DEBUG] draw location
 	if debugMode then
-		base.print(player.x..","..player.y..","..player.z, base.guiWidth/2)
+		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
 	end
 end

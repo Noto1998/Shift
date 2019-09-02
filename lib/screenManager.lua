@@ -59,15 +59,12 @@ function ScreenManager:registerEvents()
 
 		-- [debug] draw screen name
 		if debugMode then
-			local _path = self.currentPath
-			if _path == "/" then
-				_path = "Main Menu"
-			end
+			local path = self.currentPath
 			love.graphics.setColor(1,1,1,1)
-			base.print("debug: ".._path)
+			base.print("debug:".. path)
 		end
 		--
-
+		
 	end
 	----function love.errhand(...) _self:event('errhand', ...) end
 	----function love.errorhandler(...) _self:event('errorhandler', ...) end
@@ -78,16 +75,28 @@ function ScreenManager:registerEvents()
 			love.event.quit()
 		end
 		
-		--- [debug] pressed f1 to next level
+		--- [debug]
+		-- f1, goto debugLevel
 		if debugMode and select(1, ...) == 'f1' then
-			levelChoice = levelChoice + 1
-			-- reset
-			if io.open("./screens/level"..levelChoice..".lua") == nil then
-				levelChoice = 1
+			if debugLevel ~= nil then
+				local file = io.open("./screens/level/"..debugLevel..".lua")
+				if file ~= nil then
+					ScreenManager:register(debugLevel, require "screens.level." .. debugLevel)
+					self:view(debugLevel)
+					print("goto " .. debugLevel)
+					--reset
+					debugLevel = nil
+					file:close()
+				else
+					print("debugLevel " .. debugLevel .. " file dont exist.")
+				end
+			else
+				print("debugLevel == nil.")
 			end
-			local levelName = "level" .. levelChoice
-			print("debug:goto level" .. levelChoice)
-			self:view(levelName)
+		end
+		-- f2, goto lua debug, type debugLevel
+		if debugMode and select(1, ...) == 'f2' then
+			debug.debug()
 		end
 		---
 

@@ -13,7 +13,7 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shifting = false
 	_timerMax = 2
     _timer = 0
-	-- shapeList
+	-- shapeList, when start a new level, release shape
 	shapeList = {}
 	--- drawList
 	player = Player(playerX, playerY, playerZ)
