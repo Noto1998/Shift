@@ -81,7 +81,7 @@ function ScreenManager:registerEvents()
 			if debugLevel ~= nil then
 				local file = io.open("./screens/level/"..debugLevel..".lua")
 				if file ~= nil then
-					ScreenManager:register(debugLevel, require "screens.level." .. debugLevel)
+					self:register(debugLevel, require("screens.level." .. debugLevel))
 					self:view(debugLevel)
 					print("goto " .. debugLevel)
 					--reset
@@ -94,7 +94,7 @@ function ScreenManager:registerEvents()
 				print("debugLevel == nil.")
 			end
 		end
-		-- f2, goto lua debug, type debugLevel
+		-- f2, goto lua debug, type debugLevel(string)
 		if debugMode and select(1, ...) == 'f2' then
 			debug.debug()
 		end

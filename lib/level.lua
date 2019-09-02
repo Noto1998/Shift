@@ -16,14 +16,17 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shiftFlag = false
 	shifting = false
 	shiftTimerMax = 1.25
-    shiftTimer = 0
+	shiftTimer = 0
+	
 	-- shapeList, when start a new level, release shape
 	shapeList = {}
+
 	--- drawList
 	player = Player(playerX, playerY, playerZ)
 	destination = Destination(destinationX, destinationY, destinationZ)
 	drawList = {player, destination}
 	---
+	
 	-- levelName
 	levelNameToDraw = "levelName missing!"
 	if levelName ~= nil then
