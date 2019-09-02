@@ -80,12 +80,13 @@ function ScreenManager:registerEvents()
 		
 		--- [debug] pressed f1 to next level
 		if debugMode and select(1, ...) == 'f1' then
-			debugI = debugI + 1
+			levelChoice = levelChoice + 1
 			-- reset
-			if io.open("./screens/level"..debugI..".lua") == nil then
-				debugI = 1
+			if io.open("./screens/level"..levelChoice..".lua") == nil then
+				levelChoice = 1
 			end
-			local levelName = "level" .. debugI
+			local levelName = "level" .. levelChoice
+			print("debug:goto level" .. levelChoice)
 			self:view(levelName)
 		end
 		---

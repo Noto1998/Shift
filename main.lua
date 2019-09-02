@@ -37,11 +37,11 @@ while io.open("./screens/level"..i..".lua") ~= nil do
     i = i + 1
     io.close()
 end
+levelChoice = 1--- for choose level
 ---
 
 --- DEBUG
 debugMode = true
-debugI = 0-- for choose level
 ---
 
 --- LOAD GAME

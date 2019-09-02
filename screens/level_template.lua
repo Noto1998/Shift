@@ -1,6 +1,8 @@
 local Screen = Level:extend()
 
 function Screen:activate()
+	-- levelName
+	local levelName = ""
 	-- player location
 	local playerX = 0
 	local playerY = 0
@@ -9,10 +11,8 @@ function Screen:activate()
 	local destinationX = 0
 	local destinationY = 0
 	local destinationZ = 0
-	local destinationString = ""-- not work now
-	
 	-- create player and destination
-	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, destinationString)
+	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	-- here to create shape
 	-- c = Circle(x, y, z, radius)

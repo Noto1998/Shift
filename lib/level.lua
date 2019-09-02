@@ -13,10 +13,19 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shifting = false
 	_timerMax = 2
     _timer = 0
-	-- drawList
+	--- drawList
 	player = Player(playerX, playerY, playerZ)
 	destination = Destination(destinationX, destinationY, destinationZ)
+	--clear
+	if drawList ~= nil then
+		for key, value in pairs(drawList) do
+			value = nil
+		end
+		drawList = nil
+	end
 	drawList = {player, destination}
+	---
+	-- levelName
 	levelNameToDraw = "levelName missing!"
 	if levelName ~= nil then
 		levelNameToDraw = levelName
@@ -49,7 +58,18 @@ function Level:update(dt)
 	player:update(dt, shiftMode, drawList)
 	-- finish level
 	if destination:touch(player) then
-		--
+		--clear
+		--[[
+		for key, value in pairs(drawList) do
+			value = nil
+		end
+		drawList = nil
+		]]
+		-- goto next level
+		levelChoice = levelChoice + 1
+		local levelName = "level" .. levelChoice
+		self.screen:view(levelName)
+		
 	end
 	-- update drawList in realtime
 	-- sort by z
