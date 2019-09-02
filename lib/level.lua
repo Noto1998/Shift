@@ -1,6 +1,10 @@
 Level = Object:extend()
 
 local levelNameToDraw
+local shiftTimerMax
+local shiftTimer
+local shifting
+local shiftFlag
 
 function Level:new(ScreenManager)
 	self.screen = ScreenManager
@@ -11,8 +15,8 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shiftMode = 0-- 0=xy, 1=xz
 	shiftFlag = false
 	shifting = false
-	_timerMax = 2
-    _timer = 0
+	shiftTimerMax = 1.25
+    shiftTimer = 0
 	-- shapeList, when start a new level, release shape
 	shapeList = {}
 	--- drawList
@@ -30,7 +34,7 @@ end
 function Level:update(dt)
 	-- update shiftMode
 	if shifting then
-		local _dt = 1 / _timerMax * dt
+		local _dt = 1 / shiftTimerMax * dt
 		if shiftMode < 1 and shiftFlag then
 			local _border =  1 - shiftMode
 			if _border < _dt then
@@ -49,8 +53,10 @@ function Level:update(dt)
 			end
 		end
 	end
+
 	-- update player
 	player:update(dt, shiftMode, drawList)
+	
 	-- finish level
 	if destination:touch(player) then
 		-- goto next level
@@ -130,4 +136,5 @@ end
 -- add obj to shapeList
 function Level:addShapeList(obj, ...)
 	table.insert(shapeList, obj(...))
+	return obj(...)--test
 end
