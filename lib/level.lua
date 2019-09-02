@@ -13,16 +13,11 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shifting = false
 	_timerMax = 2
     _timer = 0
+	-- shapeList
+	shapeList = {}
 	--- drawList
 	player = Player(playerX, playerY, playerZ)
 	destination = Destination(destinationX, destinationY, destinationZ)
-	--clear
-	if drawList ~= nil then
-		for key, value in pairs(drawList) do
-			value = nil
-		end
-		drawList = nil
-	end
 	drawList = {player, destination}
 	---
 	-- levelName
@@ -58,20 +53,13 @@ function Level:update(dt)
 	player:update(dt, shiftMode, drawList)
 	-- finish level
 	if destination:touch(player) then
-		--clear
-		--[[
-		for key, value in pairs(drawList) do
-			value = nil
-		end
-		drawList = nil
-		]]
 		-- goto next level
 		levelChoice = levelChoice + 1
 		local levelName = "level" .. levelChoice
 		self.screen:view(levelName)
-		
 	end
-	-- update drawList in realtime
+
+	--- update drawList in realtime
 	-- sort by z
 	for i=1, #drawList do
 		local j = i
@@ -92,7 +80,7 @@ function Level:update(dt)
 		end
 		drawList[i], drawList[j] = drawList[j], drawList[i]
 	end
-	
+	---
 end
 
 function Level:draw()
@@ -121,11 +109,25 @@ function Level:keypressed(key)
 end
 
 -- add obj to drawList
-function Level:addDrawList(...)
-	local arg = {...}
+function Level:addDrawList()
+	local arg = {}
 	-- add player and destination
 	for key, value in pairs(drawList) do
-		table.insert(arg, value)
+		if value ~= nil then
+			table.insert(arg, value)
+		end
 	end
+	-- put all shape in
+	for key, value in pairs(shapeList) do
+		if value ~= nil then
+			table.insert(arg, value)
+		end
+	end
+	--
 	drawList = arg
+end
+
+-- add obj to shapeList
+function Level:addShapeList(obj, ...)
+	table.insert(shapeList, obj(...))
 end

@@ -14,14 +14,17 @@ function Screen:activate()
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
-	-- here to create shape
-	-- c = Circle(x, y, z, radius)
-	-- c = Cuboid(x, y, z, lenX, lenY, lenZ)
-	-- c = Cylinderx, y, z, radius, height, cFill, cLine)
-	-- r = Rectangle(x, y, z, lenX, lenY, cFill, cLine)
+	--- here to create shape
+	-- use [ Screen:addShapeList(shape,...) ] to create shape:
+	-- Rectangle,	x, y, z, lenX, lenY
+	-- Circle,		x, y, z, radius
+	-- Cuboid,		x, y, z, lenX, lenY, lenZ
+	-- Cylinder,	x, y, z, radius, height
 
-	--remember to put obj's name in here
-	Screen:addDrawList(--[[pull in here]])
+	-- e.g. Screen:addShapeList(Circle, 0, 0, 0, 50)
+	
+	-- add drawList
+	Screen:addDrawList()
 end
 
 return Screen
