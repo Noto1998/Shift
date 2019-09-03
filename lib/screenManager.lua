@@ -76,27 +76,21 @@ function ScreenManager:registerEvents()
 		end
 		
 		--- [debug]
-		-- f1, goto debugLevel
+		-- f1, run the file in screens/debug
 		if debugMode and select(1, ...) == 'f1' then
-			if debugLevel ~= nil then
-				local file = io.open("./screens/level/"..debugLevel..".lua")
-				if file ~= nil then
-					self:register(debugLevel, require("screens.level." .. debugLevel))
-					self:view(debugLevel)
-					print("goto " .. debugLevel)
-					--reset
-					debugLevel = nil
-					file:close()
-				else
-					print("debugLevel " .. debugLevel .. " file dont exist.")
-				end
-			else
-				print("debugLevel == nil.")
+			local fileTable = love.filesystem.getDirectoryItems("screens/debug")
+			local fileName
+			for key, value in pairs(fileTable) do
+				fileName = value
 			end
-		end
-		-- f2, goto lua debug, type debugLevel(string)
-		if debugMode and select(1, ...) == 'f2' then
-			debug.debug()
+			if fileName ~= nil then
+				local levelName = string.sub(fileName, 1, string.len(fileName)-string.len(".lua"))
+				self:register(levelName, require("screens.debug." .. levelName))
+				self:view(levelName)
+				print("debug: goto " .. levelName)
+			else
+				print("debug: file don't exist.")
+			end
 		end
 		---
 
