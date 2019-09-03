@@ -5,6 +5,7 @@ local shiftTimerMax
 local shiftTimer
 local shifting
 local shiftFlag
+local shiftSpd
 
 function Level:new(ScreenManager)
 	self.screen = ScreenManager
@@ -17,7 +18,8 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shifting = false
 	shiftTimerMax = 1.25
 	shiftTimer = 0
-	
+	shiftSpd = 0
+
 	-- shapeList, when start a new level, release shape
 	shapeList = {}
 
@@ -37,7 +39,28 @@ end
 function Level:update(dt)
 	-- update shiftMode
 	if shifting then
-		local _dt = 1 / shiftTimerMax * dt
+		local shiftAddSpd = 2*dt
+		local shiftAddTime = 0.3
+		-- start spd
+		if shiftMode == 0 or shiftMode == 1 then
+			shiftSpd = 0
+		end
+		-- add spd
+		if shiftFlag then
+			if shiftMode < shiftAddTime then
+					shiftSpd = shiftSpd + shiftAddSpd
+			elseif shiftMode > 1-shiftAddTime then
+				shiftSpd = shiftSpd - shiftAddSpd
+			end
+		else
+			if shiftMode < shiftAddTime then
+				shiftSpd = shiftSpd - shiftAddSpd
+			elseif shiftMode > 1-shiftAddTime then
+				shiftSpd = shiftSpd + shiftAddSpd
+			end
+		end
+		local _dt = shiftSpd / shiftTimerMax * dt
+		-- change shiftMode
 		if shiftMode < 1 and shiftFlag then
 			local _border =  1 - shiftMode
 			if _border < _dt then
@@ -99,11 +122,13 @@ function Level:draw()
 			value:draw(shiftMode)
 		end
 	end
+	
 	-- finish level
 	if destination:touch(player) then
 		love.graphics.setColor(1,1,1)
 		base.print("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
+	
 	-- draw levelName
 	love.graphics.setColor(1,1,1)
 	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
