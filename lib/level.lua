@@ -21,6 +21,11 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shiftSpd = 0
 
 	-- shapeList, when start a new level, release shape
+	if shapeList ~= nil then
+		for key, value in pairs(shapeList) do
+			value.mesh:release()
+		end
+	end
 	shapeList = {}
 
 	--- drawList
@@ -91,26 +96,28 @@ function Level:update(dt)
 		self.screen:view(levelName)
 	end
 
-	--- update drawList in realtime
-	-- sort by z
-	for i=1, #drawList do
-		local j = i
-		for k=i+1, #drawList do
-			if drawList[k].z > drawList[j].z then
-				j, k = k, j
+	--- sort drawList
+	if shiftMode ~= 1 then
+		-- sort by z
+		for i=1, #drawList do
+			local j = i
+			for k=i+1, #drawList do
+				if drawList[k].z > drawList[j].z then
+					j, k = k, j
+				end
 			end
+			drawList[i], drawList[j] = drawList[j], drawList[i]
 		end
-		drawList[i], drawList[j] = drawList[j], drawList[i]
-	end
-	-- then sort by y
-	for i=1, #drawList do
-		local j = i
-		for k=i+1, #drawList do
-			if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
-				j, k = k, j
+		-- then sort by y
+		for i=1, #drawList do
+			local j = i
+			for k=i+1, #drawList do
+				if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
+					j, k = k, j
+				end
 			end
+			drawList[i], drawList[j] = drawList[j], drawList[i]
 		end
-		drawList[i], drawList[j] = drawList[j], drawList[i]
 	end
 	---
 end

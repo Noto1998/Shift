@@ -18,6 +18,7 @@ require "lib.shape.rectangle"
 require "lib.shape.circle"
 require "lib.shape.cylinder"
 require "lib.shape.cuboid"
+--require "lib.shape.trigger"
 -- player
 require "lib.player"
 -- level
@@ -48,9 +49,26 @@ function love.load()
     ---
     -- for goto next level
     levelChoice = 1
+    
     -- font
     local font = love.graphics.newFont("font/SourceHanSansCN-Normal.otf", 20)
     love.graphics.setFont(font)
+
+    --test
+    canvasBG = love.graphics.newCanvas()
+    love.graphics.setCanvas(canvasBG)
+        love.graphics.clear()
+        local lineBorder = 40
+        love.graphics.setColor(0.25, 0.25, 0.25)
+        for i = 1, base.guiHeight/lineBorder-1 do
+            local y = i * lineBorder
+            love.graphics.line(0, y, base.guiWidth, y)
+        end
+        for i = 1, base.guiWidth/lineBorder-1 do
+            local x = i * lineBorder
+            love.graphics.line(x, 0, x, base.guiHeight)
+        end
+    love.graphics.setCanvas()
 
     -- register screens
     local screenManager = ScreenManager()

@@ -5,13 +5,13 @@ local radius = 30
 local spdX
 local spdY
 local spdZ
-local cFill = {base.cFill[1], base.cFill[2], base.cFill[3], 0.5}--alpha
----test
-local dir = math.pi/2
-local lockPoint = 0
-local lockPointX = 0
-local lockPointZ = 0
-local lock = false
+local cFill = {0.5, 0.5, 0.5, 0.5}--test
+---point
+local dir
+local lockPoint
+local lockPointX
+local lockPointZ
+local lock
 local spdGarvity = 100
 local point = {}
 for i = 1, 2 do
@@ -287,8 +287,15 @@ function Player:new(x, y, z)
 	spdZ = 0
 	self.stuck = false
 	for i = 1, 2 do
+		point[i].x = 0
+		point[i].y = 0
 		point[i].onGround = false
 	end
+	dir = math.pi/2
+	lockPoint = 0
+	lockPointX = 0
+	lockPointZ = 0
+	lock = false
 	updatePoint(self)
 end
 
@@ -390,10 +397,6 @@ function Player:draw(mode)
 		love.graphics.setColor(self.cLine)
 		love.graphics.ellipse("line", _x, _y, _rX, _rY)
 	end
-	
-	
-	
-	
 end
 
 -- if one point not onGround, can't shift

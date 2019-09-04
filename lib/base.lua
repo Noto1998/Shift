@@ -13,7 +13,7 @@ local cBlack = {0, 0, 0}
 local cWhite = {1, 1, 1}
 local cGray = {0.5, 0.5, 0.5}
 
-base.cFill = cGray
+base.cFill = cBlack
 base.cLine = cWhite
 
 function base.sign(number)
