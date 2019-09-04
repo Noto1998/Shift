@@ -81,7 +81,7 @@ function Level:update(dt)
 	end
 
 	-- update player
-	player:update(dt, shiftMode, drawList)
+	player:update(dt, shiftMode, shapeList)
 	
 	-- finish level
 	if destination:touch(player) then
@@ -136,7 +136,7 @@ end
 
 function Level:keypressed(key)
 	-- switch shiftMode
-	if key == keys.A and not shifting then
+	if key == keys.A and not shifting and Player:onGround(shiftMode) then
 		shiftFlag = not shiftFlag
 		shifting = true
     end
