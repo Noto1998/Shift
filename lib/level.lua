@@ -89,7 +89,7 @@ function Level:update(dt)
 	player:update(dt, shiftMode, shapeList)
 	
 	-- finish level
-	if destination:touch(player) then
+	if player:touch(destination, shiftMode) then
 		-- goto next level
 		levelChoice = levelChoice + 1
 		local levelName = "levelScreen" .. levelChoice
@@ -123,6 +123,10 @@ function Level:update(dt)
 end
 
 function Level:draw()
+	-- draw BG
+	love.graphics.setColor(base.cFill)
+	love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+
 	-- draw all obj in drawList
 	if drawList ~= nil then
 		for key, value in pairs(drawList) do
@@ -131,7 +135,7 @@ function Level:draw()
 	end
 	
 	-- finish level
-	if destination:touch(player) then
+	if player:touch(destination, shiftMode) then
 		love.graphics.setColor(1,1,1)
 		base.print("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
@@ -146,6 +150,10 @@ function Level:draw()
 		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
 	end
 
+	-- draw bottom
+	love.graphics.setColor(1,1,1)
+	base.print("A=shift Select=reset", base.guiWidth, base.guiHeight, "left", "bottom")
+
 	--[DEBUG] draw location
 	if debugMode then
 		love.graphics.setColor(1,1,1)
@@ -158,7 +166,12 @@ function Level:keypressed(key)
 	if key == keys.A and not shifting and Player:onGround(shiftMode) then
 		shiftFlag = not shiftFlag
 		shifting = true
-    end
+	end
+	-- reset
+	if key == keys.Select then
+		local levelName = "levelScreen" .. levelChoice
+		self.screen:view(levelName)
+	end
 end
 
 -- add obj to drawList

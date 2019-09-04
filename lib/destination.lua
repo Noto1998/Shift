@@ -8,18 +8,3 @@ function Destination:new(x, y, z)
     local cBG = {0,0,0,0}
     Destination.super.new(self, x, y, z, len, len, len, cFill, cLine, cBG)
 end
-
--- player touch
-function Destination:touch(player)
-    local flag = false
-    local centerX = self.x + len/2
-    local centerY = self.y + len/2
-    local disMin = len/2 + player.radius + 1
-    local disX = math.abs(player.x - centerX)
-    local disY = math.abs(player.y - centerY)
-    local dis = math.sqrt(math.pow(disX, 2)+math.pow(disY, 2))
-    if dis < disMin then
-        flag = true
-    end
-    return flag
-end

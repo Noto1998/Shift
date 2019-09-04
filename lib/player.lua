@@ -379,12 +379,12 @@ function Player:draw(mode)
 		love.graphics.line(point[1].x, point[1].z, point[2].x, point[2].z)
 		local rPoint = 3
 		for i = 1, 2 do
-			local cPoint = {1, 0.1, 0.1}
+			local cPoint = {0.25, 0.25, 0.25}
 			if point[i].onGround then
-				cPoint = {0.1, 1, 0.1}
+				cPoint = {1, 1, 1}
 			end
 			love.graphics.setColor(cPoint)
-			love.graphics.circle("fill", point[i].x, point[i].z, rPoint)	
+			love.graphics.circle("fill", point[i].x, point[i].z, rPoint)
 		end
 	else
 		local _x = self.x
@@ -412,4 +412,21 @@ function Player:onGround(mode)
 		end
 	end
 	return flag
+end
+
+-- player touch
+function Player:touch(destination, mode)
+    local flag = false
+	if mode == 0 then
+		local centerX = destination.x + destination.lenX/2
+		local centerY = destination.y + destination.lenY/2
+		local disMin = destination.lenX/2 + self.radius + 1
+		local disX = math.abs(self.x - centerX)
+		local disY = math.abs(self.y - centerY)
+		local dis = math.sqrt(math.pow(disX, 2)+math.pow(disY, 2))
+		if dis < disMin then
+			flag = true
+		end
+	end
+    return flag
 end
