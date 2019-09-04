@@ -132,6 +132,18 @@ function Level:draw()
 	-- draw levelName
 	love.graphics.setColor(1,1,1)
 	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
+
+	-- draw stuck warning
+	if shiftMode == 0 and player.stuck then
+		love.graphics.setColor(1,1,1)
+		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
+	end
+
+	--[DEBUG] draw location
+	if debugMode then
+		love.graphics.setColor(1,1,1)
+		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
+	end
 end
 
 function Level:keypressed(key)

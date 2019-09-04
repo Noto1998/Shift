@@ -361,12 +361,14 @@ function Player:update(dt, mode, shapelist)
 end
 
 function Player:draw(mode)
-	
-	if mode ~= 1 then
-		Player.super.draw(self, mode)
-	-- draw Point
-	else
-		love.graphics.setColor(1, 1, 1)
+	if mode == 0 then
+		love.graphics.setColor(self.cFill)
+		love.graphics.circle("fill" , self.x, self.y, self.radius)
+		love.graphics.setColor(self.cLine)
+		love.graphics.circle("line" , self.x, self.y, self.radius)
+	elseif mode == 1 then
+		-- draw line
+		love.graphics.setColor(self.cLine)
 		love.graphics.line(point[1].x, point[1].z, point[2].x, point[2].z)
 		local rPoint = 3
 		for i = 1, 2 do
@@ -377,19 +379,21 @@ function Player:draw(mode)
 			love.graphics.setColor(cPoint)
 			love.graphics.circle("fill", point[i].x, point[i].z, rPoint)	
 		end
-	end
-
-	-- draw stuck warning
-	if mode == 0 and self.stuck then
-		love.graphics.setColor(1,1,1)
-		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
+	else
+		local _x = self.x
+		local _rX = self.radius
+		local _rY = self.radius * (1 - mode)
+		local _y = self.y + (-self.y+self.z) * mode
+		
+		love.graphics.setColor(self.cFill)
+		love.graphics.ellipse("fill", _x, _y, _rX, _rY)
+		love.graphics.setColor(self.cLine)
+		love.graphics.ellipse("line", _x, _y, _rX, _rY)
 	end
 	
-	--[DEBUG] draw location
-	if debugMode then
-		love.graphics.setColor(1,1,1)
-		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
-	end
+	
+	
+	
 end
 
 -- if one point not onGround, can't shift
