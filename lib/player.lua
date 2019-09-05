@@ -511,9 +511,13 @@ function Player:touch(destination, mode)
 		-- any endPoint 
 		for i = 1, 2 do
 			local p = endPoint[i]
-			if	p.x > destination.x and p.x < destination.x + destination.lenX
-				and
-				p.z > destination.z and p.z < destination.z + destination.lenZ then
+			if p.x >= destination.x
+			and
+			p.x <= destination.x + destination.lenX
+			and
+			p.z >= destination.z
+			and
+			p.z <= destination.z + destination.lenZ then
 				flag = true
 				break
 			end
