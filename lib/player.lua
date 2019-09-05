@@ -44,8 +44,8 @@ local function isCollisionXY(self, obj)
 	local flag = false
 	-- Rectangle
 	if obj:is(Rectangle) then
-		if self.y < obj.y + obj.lenY and self.y + self.lenY > obj.y
-		and self.x-self.lenX < obj.x + obj.lenX and self.x + self.lenX > obj.x then
+		if self.y <= obj.y + obj.lenY and self.y + self.lenY >= obj.y
+		and self.x-self.lenX <= obj.x + obj.lenX and self.x + self.lenX >= obj.x then
 			flag = true
 		end
 	-- Circle
@@ -55,7 +55,7 @@ local function isCollisionXY(self, obj)
 	end
 	return flag
 end
-local function collisionXY(self, dt, obj) -- old, when player is Circle
+local function collisionXY(self, dt, obj)
 	-- Rectangle
 	if obj:is(Rectangle) then
 		local tableX = {obj.x, obj.x+obj.lenX}

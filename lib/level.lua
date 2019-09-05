@@ -38,10 +38,11 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shapeList = {}
 
 	--- drawList
+	drawList = {}
+
+	-- player and destination
 	player = Player(playerX, playerY, playerZ)
 	destination = Destination(destinationX, destinationY, destinationZ)
-	drawList = {player, destination}
-	---
 	
 	-- levelName
 	levelNameToDraw = "levelName missing!"
@@ -215,12 +216,9 @@ end
 function Level:addDrawList()
 	local arg = {}
 	-- add player and destination
-	for key, value in pairs(drawList) do
-		if value ~= nil then
-			table.insert(arg, value)
-		end
-	end
-	-- put all shape in
+	table.insert(arg, player)
+	table.insert(arg, destination)
+	-- put all shape in drawList
 	for key, value in pairs(shapeList) do
 		if value ~= nil then
 			table.insert(arg, value)
@@ -228,6 +226,8 @@ function Level:addDrawList()
 	end
 	--
 	drawList = arg
+	-- test add destination to shapeList
+	table.insert(shapeList, destination)
 end
 
 -- add obj to shapeList
