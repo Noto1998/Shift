@@ -6,16 +6,16 @@ local spdX
 local spdY
 local spdZ
 local cFill = {0.5, 0.5, 0.5, 0.5}--test
----point
+---endPoint
 local dir
 local lockPoint
 local lockPointX
 local lockPointZ
 local lock
 local spdGarvity = 100
-local point = {}
+local endPoint = {}
 for i = 1, 2 do
-	point[i] = {}
+	endPoint[i] = {}
 end
 
 local function moveXY()
@@ -147,8 +147,8 @@ end
 
 local function isCollisionXZ(self, i, table)
 	local flag = false
-	local x = point[i].x
-	local z = point[i].z
+	local x = endPoint[i].x
+	local z = endPoint[i].z
 	local signX = base.sign(x - self.x)
 	local checkNum = 1-- not work well
 	local lenX = math.abs(x - self.x) / checkNum
@@ -156,8 +156,8 @@ local function isCollisionXZ(self, i, table)
 	local lenZ = math.abs(z - self.z) / checkNum
 	for key, obj in pairs(table) do
 		if obj:is(Cuboid) then
-			x = point[i].x
-			z = point[i].z
+			x = endPoint[i].x
+			z = endPoint[i].z
 			for i = 1, checkNum do
 				if x >= obj.x and x <= obj.x + obj.lenX then
 					if z >= obj.z and z <= obj.z + obj.lenZ then
@@ -215,31 +215,27 @@ local function updateXZ(self, lockPoint)
 	self.z = lockPointZ + sign * lenZ
 end
 
-local function updatePoint(self)
+local function updateEndPoint(self)
 	local lenX = getLenXZ(self, "x")
 	local lenZ = getLenXZ(self, "z")
-	-- update point
-	point[1].x = self.x - lenX
-	point[1].z = self.z - lenZ
-	point[2].x = self.x + lenX
-	point[2].z = self.z + lenZ
+	-- update endPoint
+	endPoint[1].x = self.x - lenX
+	endPoint[1].z = self.z - lenZ
+	endPoint[2].x = self.x + lenX
+	endPoint[2].z = self.z + lenZ
 end
 
 local function setLockPointXZ(lockPoint)
-	lockPointX = point[lockPoint].x
-	lockPointZ = point[lockPoint].z
+	lockPointX = endPoint[lockPoint].x
+	lockPointZ = endPoint[lockPoint].z
 end
 
-local function getOtherPointNum(num)
+local function getOtherEndPointNum(num)
 	if num == 2 then
 		return 1
 	elseif num == 1 then
 		return 2
 	end
-end
-local function otherPoint(num)-- not using --
-	local _num = getOtherPointNum(num)
-	return point[_num]
 end
 
 local function keyPressedLock(self, dt)
@@ -254,7 +250,7 @@ local function keyPressedLock(self, dt)
 	end
 end
 
-local function onePointSetting(self, dt, num)
+local function oneEndPointSetting(self, dt, num)
 	-- setLockPointXZ
 	if not lock then
 		lockPoint = num
@@ -267,7 +263,7 @@ local function onePointSetting(self, dt, num)
 	-- garvity
 	else
 		local sign
-		if point[num].x > point[getOtherPointNum(num)].x then
+		if endPoint[num].x > endPoint[getOtherEndPointNum(num)].x then
 			sign = 1
 		else
 			sign = -1
@@ -287,16 +283,16 @@ function Player:new(x, y, z)
 	spdZ = 0
 	self.stuck = false
 	for i = 1, 2 do
-		point[i].x = 0
-		point[i].y = 0
-		point[i].onGround = false
+		endPoint[i].x = 0
+		endPoint[i].y = 0
+		endPoint[i].onGround = false
 	end
 	dir = math.pi/2
 	lockPoint = 0
 	lockPointX = 0
 	lockPointZ = 0
 	lock = false
-	updatePoint(self)
+	updateEndPoint(self)
 end
 
 function Player:update(dt, mode, shapelist)
@@ -312,23 +308,23 @@ function Player:update(dt, mode, shapelist)
 		spdZ = 0
 		-- onGround
 		for i = 1, 2 do
-			point[i].onGround = isCollisionXZ(self, i, shapelist)
+			endPoint[i].onGround = isCollisionXZ(self, i, shapelist)
 		end
 		-- both onGround
-		if point[1].onGround and point[2].onGround then
+		if endPoint[1].onGround and endPoint[2].onGround then
 			lock = false
 			-- setLockPointXZ
 			if not lock then
-				-- get the most right point
+				-- get the most right endPoint
 				local rightPoint = 1
-				for i, value in ipairs(point) do
-					if value.x > point[rightPoint].x then
+				for i, value in ipairs(endPoint) do
+					if value.x > endPoint[rightPoint].x then
 						rightPoint = i
 					end
 				end
 				if love.keyboard.isDown(keys.DPad_left) then
 					-- take the left
-					lockPoint = getOtherPointNum(rightPoint)
+					lockPoint = getOtherEndPointNum(rightPoint)
 					setLockPointXZ(lockPoint)
 					lock = true
 				elseif love.keyboard.isDown(keys.DPad_right) then
@@ -340,12 +336,12 @@ function Player:update(dt, mode, shapelist)
 			end
 			-- Player control
 			keyPressedLock(self, dt)
-		-- point 1 onGround
-		elseif point[1].onGround then
-			onePointSetting(self, dt, 1)
-		-- point 2 onGround
-		elseif point[2].onGround then
-			onePointSetting(self, dt, 2)
+		-- endPoint 1 onGround
+		elseif endPoint[1].onGround then
+			oneEndPointSetting(self, dt, 1)
+		-- endPoint 2 onGround
+		elseif endPoint[2].onGround then
+			oneEndPointSetting(self, dt, 2)
 		-- both not onGround
 		else
 			lock = false
@@ -363,8 +359,8 @@ function Player:update(dt, mode, shapelist)
 	self.x = self.x + math.floor(math.abs(spdX * dt)) * base.sign(spdX)
 	self.y = self.y + math.floor(math.abs(spdY * dt)) * base.sign(spdY)
 	self.z = self.z + math.floor(math.abs(spdZ * dt)) * base.sign(spdZ)
-	-- update Point
-	updatePoint(self)
+	-- update endPoint
+	updateEndPoint(self)
 end
 
 function Player:draw(mode)
@@ -376,15 +372,15 @@ function Player:draw(mode)
 	elseif mode == 1 then
 		-- draw line
 		love.graphics.setColor(self.cLine)
-		love.graphics.line(point[1].x, point[1].z, point[2].x, point[2].z)
+		love.graphics.line(endPoint[1].x, endPoint[1].z, endPoint[2].x, endPoint[2].z)
 		local rPoint = 3
 		for i = 1, 2 do
 			local cPoint = {0.25, 0.25, 0.25}
-			if point[i].onGround then
+			if endPoint[i].onGround then
 				cPoint = {1, 1, 1}
 			end
 			love.graphics.setColor(cPoint)
-			love.graphics.circle("fill", point[i].x, point[i].z, rPoint)
+			love.graphics.circle("fill", endPoint[i].x, endPoint[i].z, rPoint)
 		end
 	else
 		local _x = self.x
@@ -399,13 +395,13 @@ function Player:draw(mode)
 	end
 end
 
--- if one point not onGround, can't shift
+-- if one endPoint not onGround, can't shift
 function Player:onGround(mode)
 	local flag
 	if mode ~= 1 then
 		flag = true
 	else
-		if point[1].onGround and point[2].onGround then
+		if endPoint[1].onGround and endPoint[2].onGround then
 			flag = true
 		else
 			flag = false
