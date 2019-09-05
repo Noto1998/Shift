@@ -7,11 +7,16 @@ local shifting
 local shiftFlag
 local shiftSpd
 
+local finishFlag
+local finishTimer
+
+local dialogue
+
 function Level:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
-function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
+function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
     -- shift
 	shiftMode = 0-- 0=xy, 1=xz
 	shiftFlag = false
@@ -19,6 +24,10 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	shiftTimerMax = 1.25
 	shiftTimer = 0
 	shiftSpd = 0
+
+	-- finishLevelTimer
+	finishFlag = false
+	finishTimer = 0
 
 	-- shapeList, when start a new level, release shape
 	if shapeList ~= nil then
@@ -38,6 +47,11 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	levelNameToDraw = "levelName missing!"
 	if levelName ~= nil then
 		levelNameToDraw = levelName
+	end
+
+	dialogue = nil
+	if dialogTable ~= nil then
+		dialogue = Dialogue(dialogTable)
 	end
 end
 
@@ -90,10 +104,18 @@ function Level:update(dt)
 	
 	-- finish level
 	if player:touch(destination, shiftMode) then
-		-- goto next level
-		levelChoice = levelChoice + 1
-		local levelName = "levelScreen" .. levelChoice
-		self.screen:view(levelName)
+		if not finishFlag then
+			finishFlag = true
+		end
+	end
+	if finishFlag then
+		finishTimer = finishTimer + dt
+		if finishTimer > 2 then
+			-- goto next level
+			levelChoice = levelChoice + 1
+			local levelName = "levelScreen" .. levelChoice
+			self.screen:view(levelName)
+		end
 	end
 
 	--- sort drawList
@@ -133,13 +155,7 @@ function Level:draw()
 			value:draw(shiftMode)
 		end
 	end
-	
-	-- finish level
-	if player:touch(destination, shiftMode) then
-		love.graphics.setColor(1,1,1)
-		base.print("level finish", base.guiWidth/2, base.guiHeight/2, "center", "center")
-	end
-	
+
 	-- draw levelName
 	love.graphics.setColor(1,1,1)
 	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
@@ -152,7 +168,20 @@ function Level:draw()
 
 	-- draw bottom
 	love.graphics.setColor(1,1,1)
-	base.print("A=shift Select=reset", base.guiWidth, base.guiHeight, "left", "bottom")
+	base.print("A:切换,Select:重置", base.guiWidth, base.guiHeight, "left", "bottom")
+
+	-- dialogue
+	if dialogue ~= nil then
+		dialogue:draw()
+	end
+
+	-- finish level
+	if finishFlag then
+		love.graphics.setColor(1,1,1, 0.5)
+		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+		love.graphics.setColor(0, 0, 0)
+		base.print("level finish!", base.guiWidth/2, base.guiHeight/2, "center", "center")
+	end
 
 	--[DEBUG]
 	if debugMode then
@@ -160,13 +189,13 @@ function Level:draw()
 		-- player location
 		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
 		-- shift
-		base.print("shifting:" .. tostring(shifting) .."\nshiftMode:".. shiftMode .."\nshiftSpd:"..shiftSpd, 0, love.graphics.getFont():getHeight()*2)
+		--base.print("shifting:" .. tostring(shifting) .."\nshiftMode:".. shiftMode .."\nshiftSpd:"..shiftSpd, 0, love.graphics.getFont():getHeight()*2)
 	end
 end
 
 function Level:keypressed(key)
 	-- switch shiftMode
-	if key == keys.A and not shifting and Player:onGround(shiftMode) then
+	if key == keys.A and not shifting and Player:onGround(shiftMode) and (dialogue==nil or not dialogue:isDraw() ) then
 		shiftFlag = not shiftFlag
 		shifting = true
 	end
@@ -174,6 +203,11 @@ function Level:keypressed(key)
 	if key == keys.Select then
 		local levelName = "levelScreen" .. levelChoice
 		self.screen:view(levelName)
+	end
+
+	-- dialogueTable
+	if key == keys.Y and dialogue ~= nil and not shifting then
+		dialogue:nextPage()
 	end
 end
 
