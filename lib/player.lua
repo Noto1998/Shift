@@ -416,12 +416,43 @@ function Player:touch(destination, mode)
 	if mode == 0 then
 		local centerX = destination.x + destination.lenX/2
 		local centerY = destination.y + destination.lenY/2
-		local disMin = destination.lenX/2 + self.radius + 1
 		local disX = math.abs(self.x - centerX)
 		local disY = math.abs(self.y - centerY)
-		local dis = math.sqrt(math.pow(disX, 2)+math.pow(disY, 2))
-		if dis < disMin then
-			flag = true
+		if	self.y > destination.y and self.y < destination.y + destination.lenY
+			and
+			disX <= self.radius + destination.lenX/2 then
+			return true
+		elseif self.x > destination.x and self.x < destination.x + destination.lenX
+			and
+			disY <= self.radius + destination.lenY/2 then
+
+		-- four points
+		else
+			local point = {
+				{destination.x, destination.y},
+				{destination.x + destination.lenX, destination.y},
+				{destination.x + destination.lenX, destination.y + destination.lenY},
+				{destination.x, destination.y + destination.lenY}
+			}
+			for key, value in pairs(point) do
+				local _disX = math.abs(self.x - value[1])
+				local _disY = math.abs(self.y - value[2])
+				local _dis = math.sqrt(math.pow(_disX, 2)+math.pow(_disY, 2))
+				if _dis < self.radius then
+					flag =true
+					break
+				end
+			end
+		end
+	elseif mode == 1 then
+		for i = 1, 2 do
+			local p = endPoint[i]
+			if	p.x > destination.x and p.x < destination.x + destination.lenX
+				and
+				p.z > destination.z and p.z < destination.z + destination.lenZ then
+				flag = true
+				break
+			end
 		end
 	end
     return flag
