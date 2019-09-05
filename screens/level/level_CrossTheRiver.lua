@@ -6,7 +6,7 @@ function Screen:activate()
 	local cubeLenX = 150
 	local cubeLenY = base.guiHeight-1-1
 	local cubeLenZ = 50
-	local cubeLenZ3 = 100
+	local cubeLenZ3 = 50+2
 
 	-- levelName
 	local levelName = "过河"
@@ -26,7 +26,7 @@ function Screen:activate()
 	
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
-	Screen:addShapeList(Cuboid,		250, 150, cubeZ-cubeLenZ3,		50, 50, cubeLenZ3)
+	Screen:addShapeList(Cuboid,		250-1, 150, cubeZ-cubeLenZ3,		cubeLenZ3, cubeLenZ3, cubeLenZ3)
 
 	-- add drawList
 	Screen:addDrawList()
