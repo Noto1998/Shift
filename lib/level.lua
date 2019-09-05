@@ -64,7 +64,7 @@ function Level:update(dt)
 				shiftSpd = shiftSpd + shiftAddSpd
 			end
 		end
-		local _dt = shiftSpd / shiftTimerMax * dt
+		local _dt = math.abs(shiftSpd) / shiftTimerMax * dt
 		-- change shiftMode
 		if shiftMode < 1 and shiftFlag then
 			local _border =  1 - shiftMode
@@ -154,10 +154,13 @@ function Level:draw()
 	love.graphics.setColor(1,1,1)
 	base.print("A=shift Select=reset", base.guiWidth, base.guiHeight, "left", "bottom")
 
-	--[DEBUG] draw location
+	--[DEBUG]
 	if debugMode then
 		love.graphics.setColor(1,1,1)
+		-- player location
 		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
+		-- shift
+		base.print("shifting:" .. tostring(shifting) .."\nshiftMode:".. shiftMode .."\nshiftSpd:"..shiftSpd, 0, love.graphics.getFont():getHeight()*2)
 	end
 end
 
