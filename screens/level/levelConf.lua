@@ -4,7 +4,11 @@ local level = {
     "level_HideAndSeek",
     "level_RockClimbing",
     "level_Tunnel",
-    "level_Ccontour"
+    "level_Ccontour",
+
+
+    -- FinishScreen
+    "finishScreen"
 }
 
 return level

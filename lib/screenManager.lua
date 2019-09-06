@@ -44,6 +44,9 @@ function ScreenManager:view(path, ...)
 			self.currentPath = path
 		end
 	end
+
+	-- test for reset level
+	resetLevelString = path
 end
 
 -- Register Löve2D events

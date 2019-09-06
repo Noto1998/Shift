@@ -196,8 +196,7 @@ function Level:keypressed(key)
 	
 	-- reset
 	if key == keys.Select then
-		local levelName = "levelScreen" .. levelChoice
-		self.screen:view(levelName)
+		self.screen:view(resetLevelString)
 	end
 
 	-- dialogueTable
@@ -209,7 +208,7 @@ function Level:keypressed(key)
 	if finishFlag and key == keys.A then
 		-- goto next level
 		levelChoice = levelChoice + 1
-		local levelName = "levelScreen" .. levelChoice
+		local levelName = levelString[levelChoice]
 		self.screen:view(levelName)
 	end
 end

@@ -17,7 +17,7 @@ end
 
 function Screen:keypressed(key)
 	if key == keys.A then
-		self.screen:view("levelScreen1")
+		self.screen:view(levelString[1])
 	end
 end
 
