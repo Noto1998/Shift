@@ -100,22 +100,15 @@ function Level:update(dt)
 		end
 	end
 
-	-- update player
-	player:update(dt, shiftMode, shapeList)
+	-- player's move and update location
+	if not finishFlag then
+		player:update(dt, shiftMode, shapeList)
+	end
 	
 	-- finish level
 	if player:touch(destination, shiftMode) then
 		if not finishFlag then
 			finishFlag = true
-		end
-	end
-	if finishFlag then
-		finishTimer = finishTimer + dt
-		if finishTimer > 2 then
-			-- goto next level
-			levelChoice = levelChoice + 1
-			local levelName = "levelScreen" .. levelChoice
-			self.screen:view(levelName)
 		end
 	end
 
@@ -167,7 +160,7 @@ function Level:draw()
 		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
 	end
 
-	-- draw bottom
+	-- draw bottom tips
 	love.graphics.setColor(1,1,1)
 	base.print("A:切换,Select:重置", base.guiWidth, base.guiHeight, "left", "bottom")
 
@@ -178,10 +171,11 @@ function Level:draw()
 
 	-- finish level
 	if finishFlag then
-		love.graphics.setColor(1,1,1, 0.5)
+		love.graphics.setColor(0,0,0, 0.75)
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
-		love.graphics.setColor(0, 0, 0)
-		base.print("level finish!", base.guiWidth/2, base.guiHeight/2, "center", "center")
+		love.graphics.setColor(1, 1, 1)
+		base.print("关卡完成", base.guiWidth/2, base.guiHeight/3, "center", "center")
+		base.print("按A继续", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 	end
 
 	--[DEBUG]
@@ -189,17 +183,17 @@ function Level:draw()
 		love.graphics.setColor(1,1,1)
 		-- player location
 		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
-		-- shift
-		--base.print("shifting:" .. tostring(shifting) .."\nshiftMode:".. shiftMode .."\nshiftSpd:"..shiftSpd, 0, love.graphics.getFont():getHeight()*2)
 	end
 end
 
 function Level:keypressed(key)
 	-- switch shiftMode
-	if key == keys.A and not shifting and Player:onGround(shiftMode) and (dialogue==nil or not dialogue:isDraw() ) then
+	if key == keys.A and not shifting and Player:onGround(shiftMode)
+	and (dialogue==nil or not dialogue:isDraw()) and not finishFlag then
 		shiftFlag = not shiftFlag
 		shifting = true
 	end
+	
 	-- reset
 	if key == keys.Select then
 		local levelName = "levelScreen" .. levelChoice
@@ -209,6 +203,14 @@ function Level:keypressed(key)
 	-- dialogueTable
 	if key == keys.Y and dialogue ~= nil and not shifting then
 		dialogue:nextPage()
+	end
+
+	-- goto next level
+	if finishFlag and key == keys.A then
+		-- goto next level
+		levelChoice = levelChoice + 1
+		local levelName = "levelScreen" .. levelChoice
+		self.screen:view(levelName)
 	end
 end
 
