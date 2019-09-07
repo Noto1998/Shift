@@ -27,9 +27,9 @@ function Circle:draw(mode)
 		love.graphics.line(self.x - self.radius, self.z, self.x + self.radius, self.z)
 	else
 		local _x = self.x
+		local _y = self.y + (-self.y+self.z) * mode
 		local _rX = self.radius
 		local _rY = self.radius * (1 - mode)
-		local _y = self.y + (-self.y+self.z) * mode
 		
 		love.graphics.setColor(self.cFill)
 		love.graphics.ellipse("fill", _x, _y, _rX, _rY)

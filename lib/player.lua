@@ -216,29 +216,39 @@ end
 -- xz
 local function isCollisionXZ(self, i, table)
 	local flag = false
-	local x = endPoint[i].x
-	local z = endPoint[i].z
-	local signX = base.sign(x - self.x)
 	local checkNum = 1-- not work now
-	local lenX = math.abs(x - self.x) / checkNum
-	local signZ = base.sign(z - self.z)
-	local lenZ = math.abs(z - self.z) / checkNum
+	local _x = endPoint[i].x
+	local _z = endPoint[i].z
+	local signX = base.sign(_x - self.x)
+	local lenX = math.abs(_x - self.x) / checkNum
+	local signZ = base.sign(_z - self.z)
+	local lenZ = math.abs(_z - self.z) / checkNum
 	for key, obj in pairs(table) do
 		if obj:is(Cuboid) then
-			x = endPoint[i].x
-			z = endPoint[i].z
+			_x = endPoint[i].x
+			_z = endPoint[i].z
 			for i = 1, checkNum do
-				if x >= obj.x and x <= obj.x + obj.lenX then
-					if z >= obj.z and z <= obj.z + obj.lenZ then
-						flag = true
-						break;
-					end
+				if _x >= obj.x and _x <= obj.x + obj.lenX
+				and _z >= obj.z and _z <= obj.z + obj.lenZ then
+					flag = true
+					break
 				end
-				x = x - signX * lenX
-				z = z - signZ * lenZ
+				_x = _x - signX * lenX
+				_z = _z - signZ * lenZ
 			end
 			if flag then
 				break;
+			end
+		elseif obj:is(Rectangle) then
+			local dx = endPoint[i].x - obj.x
+			local dz = math.tan(math.pi/2-obj.dir) * dx
+			local _lenZ = math.abs(math.tan(math.pi/2-obj.dir) * obj.lenX)
+			
+			if endPoint[i].x > obj.x and endPoint[i].x < obj.x+obj.lenX
+			and endPoint[i].z > obj.z and endPoint[i].z <obj.z+_lenZ then
+				if math.abs(obj.z+dz - endPoint[i].z) < 2 then
+					flag = true
+				end
 			end
 		elseif obj:is(Circle) then
 			---
@@ -437,15 +447,7 @@ function Player:update(dt, mode, shapelist)
 end
 
 function Player:draw(mode)
-	if mode == 0 then
-		--player == circle
-		--[[
-		love.graphics.setColor(self.cFill)
-		love.graphics.circle("fill" , self.x, self.y, self.radius)
-		love.graphics.setColor(self.cLine)
-		love.graphics.circle("line" , self.x, self.y, self.radius)
-		]]
-	elseif mode == 1 then
+	if mode == 1 then
 		-- draw endPoint
 		love.graphics.setColor(self.cLine)
 		love.graphics.line(endPoint[1].x, endPoint[1].z, endPoint[2].x, endPoint[2].z)
@@ -459,34 +461,18 @@ function Player:draw(mode)
 			love.graphics.circle("fill", endPoint[i].x, endPoint[i].z, rPoint)
 		end
 	else
-		--player == circle
-		--[[
-		local _x = self.x
-		local _rX = self.radius
-		local _rY = self.radius * (1 - mode)
-		local _y = self.y + (-self.y+self.z) * mode
-		
+		-- polygon
+		local table = {
+				endPoint[1].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[1].z) * mode,--
+				endPoint[2].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[2].z) * mode,
+				endPoint[2].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[2].z) * mode,--
+				endPoint[1].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[1].z) * mode,
+			}
 		love.graphics.setColor(self.cFill)
-		love.graphics.ellipse("fill", _x, _y, _rX, _rY)
+		love.graphics.polygon("fill", table)
 		love.graphics.setColor(self.cLine)
-		love.graphics.ellipse("line", _x, _y, _rX, _rY)
-		]]
+		love.graphics.polygon("line", table)
 	end
-
-	-- test
-	local table
-	for i = 1, 4 do
-		table = {
-			endPoint[1].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[1].z) * mode,--
-			endPoint[2].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[2].z) * mode,
-			endPoint[2].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[2].z) * mode,--
-			endPoint[1].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[1].z) * mode,
-		}
-	end
-	love.graphics.setColor(self.cFill)
-	love.graphics.polygon("fill", table)
-	love.graphics.setColor(self.cLine)
-	love.graphics.polygon("line", table)
 end
 
 -- if one endPoint not onGround, can't shift

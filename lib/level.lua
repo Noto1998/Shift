@@ -100,8 +100,9 @@ function Level:update(dt)
 		end
 	end
 
-	-- turret
+	-- shape update
 	for i = 1, #shapeList do
+		-- turret
 		if shapeList[i]:is(Turret) then
 			-- hit player
 			if shapeList[i]:hit(shiftMode, player) then
@@ -113,6 +114,9 @@ function Level:update(dt)
 			if not shifting then
 				shapeList[i]:update(dt)
 			end
+		-- Ball
+		elseif shapeList[i]:is(Ball) then
+			shapeList[i]:update(dt, shiftMode, shapeList)
 		end
 	end
 
