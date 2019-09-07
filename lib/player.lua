@@ -1,7 +1,8 @@
 Player = Object:extend()
 
 local len = 25
-local spdMove = 100
+local spdMoveXY = 100
+local spdMoveXZ = math.pi/2.5
 local spdX
 local spdY
 local spdZ
@@ -22,22 +23,22 @@ end
 local function moveXY()
 	-- move
 	if love.keyboard.isDown(keys.DPad_left) then
-		spdX = -spdMove
+		spdX = -spdMoveXY
 	elseif love.keyboard.isDown(keys.DPad_right) then
-		spdX = spdMove
+		spdX = spdMoveXY
 	else
 		spdX = 0
 	end
 	if love.keyboard.isDown(keys.DPad_up) then
-		spdY = -spdMove
+		spdY = -spdMoveXY
 	elseif love.keyboard.isDown(keys.DPad_down) then
-		spdY = spdMove
+		spdY = spdMoveXY
 	else
 		spdY = 0
 	end
 	if math.abs(spdX) > 0 and math.abs(spdY) > 0 then	-- 45
-		spdX = spdMove / math.sqrt(2) * base.sign(spdX)
-		spdY = spdMove / math.sqrt(2) * base.sign(spdY)
+		spdX = spdMoveXY / math.sqrt(2) * base.sign(spdX)
+		spdY = spdMoveXY / math.sqrt(2) * base.sign(spdY)
 	end
 end
 local function isCollisionXY(self, obj)
@@ -247,7 +248,7 @@ local function isCollisionXZ(self, i, table)
 	return flag
 end
 local function setDir(dir, dt, sign)
-	local spdDir = (math.pi/3)
+	local spdDir = spdMoveXZ
 	dir = dir + sign * spdDir * dt
 	-- allways positive
 	if dir >= math.pi*2 then
@@ -337,6 +338,7 @@ local function endPointSetting(self, dt, num)
 	end
 end
 
+
 function Player:new(x, y, z)
 	self.x = x -- center
 	self.y = y -- center
@@ -424,7 +426,7 @@ function Player:update(dt, mode, shapelist)
 		spdY = 0
 		spdZ = 0
 	end
-	-- update spdMove and fix pixel
+	-- update spdMoveXY and fix pixel
 	self.x = self.x + math.floor(math.abs(spdX * dt)) * base.sign(spdX)
 	self.y = self.y + math.floor(math.abs(spdY * dt)) * base.sign(spdY)
 	self.z = self.z + math.floor(math.abs(spdZ * dt)) * base.sign(spdZ)
