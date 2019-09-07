@@ -5,7 +5,7 @@ local level = {
     "level_RockClimbing",
     "level_Tunnel",
     "level_Ccontour",
-
+    "level_Skull",
 
     -- FinishScreen
     "finishScreen"
