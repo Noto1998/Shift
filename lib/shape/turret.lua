@@ -5,17 +5,22 @@ local sx
 local sy
 local sz
 local lenShoot = base.guiHeight+base.guiWidth
+local timer
+local timeMax = 2-- second
+local turnOn
 
 
 function Turret:new(x, y, z, shootX, shootY, shootZ)
     self.x = x
     self.y = y
     self.z = z
-
     -- 0~1
     sx = shootX
     sy = shootY
     sz = shootZ
+    -- turn on/off
+    timer = 0
+    turnOn = false
 end
 
 
@@ -26,18 +31,24 @@ function Turret:draw(mode)
     love.graphics.setColor(1,1,1)
     love.graphics.circle("line", self.x, _y, radius)
     love.graphics.circle("line", self.x, _y, radius*2)
-
-    -- test draw line
-    love.graphics.setColor(1, 1, 0)
-    love.graphics.line(self.x, _y,
-    self.x + sx*lenShoot, _y + (sy+(-sy+sz)*mode)*lenShoot )
+    if turnOn then
+        -- draw shoot line
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.line(self.x, _y,
+        self.x + sx*lenShoot, _y + (sy+(-sy+sz)*mode)*lenShoot )
+    else
+        -- draw warning/dir
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.line(self.x, _y,
+        self.x + sx*radius*3, _y + (sy+(-sy+sz)*mode)*radius*3 )
+    end
 end
 
 
 function Turret:hit(mode, player)
     local flag = false
     -- xy
-    if mode == 0 then
+    if mode == 0 and turnOn then
         local a = sx/sy
         local dy = a * (player.x - self.x)
         
@@ -47,4 +58,13 @@ function Turret:hit(mode, player)
         end
     end
     return flag
+end
+
+
+function Turret:update(dt)
+    timer = timer + dt
+    if timer > timeMax then
+        timer = 0
+        turnOn = not turnOn
+    end
 end

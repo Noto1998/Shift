@@ -100,13 +100,18 @@ function Level:update(dt)
 		end
 	end
 
-	-- turret hit player
+	-- turret
 	for i = 1, #shapeList do
 		if shapeList[i]:is(Turret) then
+			-- hit player
 			if shapeList[i]:hit(shiftMode, player) then
 				-- reset
 				self.screen:view(resetLevelString)
 				break
+			end
+			-- turn on/off
+			if not shifting then
+				shapeList[i]:update(dt)
 			end
 		end
 	end
