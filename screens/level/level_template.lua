@@ -20,7 +20,6 @@ function Screen:activate()
 	-- Circle,		x, y, z, radius
 	-- Cuboid,		x, y, z, lenX, lenY, lenZ
 	-- Cylinder,	x, y, z, radius, height
-	-- Turret,		x, y, z, shootX(0~1), shootY(0~1), shootZ(0~1)
 
 	-- e.g. Screen:addShapeList(Circle, 0, 0, 0, 50)
 	
