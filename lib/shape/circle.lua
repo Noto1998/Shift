@@ -7,7 +7,7 @@ function Circle:new(x, y, z, radius, cFill, cLine)
 	self.radius = radius
 	self.cFill = base.cFill
 	if cFill ~= nil then
-		self.cFill =  cFill
+		self.cFill = cFill
 	end
 	self.cLine = base.cLine
 	if cLine ~= nil then

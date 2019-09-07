@@ -10,7 +10,7 @@ local timeMax = 2-- second
 local turnOn
 
 
-function Turret:new(x, y, z, shootX, shootY, shootZ)
+function Turret:new(x, y, z, shootX, shootY, shootZ, cFill, cLine)
     self.x = x
     self.y = y
     self.z = z
@@ -21,6 +21,15 @@ function Turret:new(x, y, z, shootX, shootY, shootZ)
     -- turn on/off
     timer = 0
     turnOn = false
+    --
+    self.cFill = base.cFill
+	if cFill ~= nil then
+		self.cFill = cFill
+	end
+	self.cLine = base.cLine
+	if cLine ~= nil then
+		self.cLine = cLine
+	end
 end
 
 
@@ -28,7 +37,9 @@ function Turret:draw(mode)
     local _y = self.y+(-self.y+self.z)*mode
     
     -- draw self
-    love.graphics.setColor(1,1,1)
+    love.graphics.setColor(self.cFill)
+    love.graphics.circle("fill", self.x, _y, radius*2)
+    love.graphics.setColor(self.cLine)
     love.graphics.circle("line", self.x, _y, radius)
     love.graphics.circle("line", self.x, _y, radius*2)
     if turnOn then
