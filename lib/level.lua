@@ -6,10 +6,8 @@ local shiftTimer
 local shifting
 local shiftFlag
 local shiftSpd
-
 local finishFlag
 local finishTimer
-
 local dialogue
 
 function Level:new(ScreenManager)
@@ -32,7 +30,9 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	-- shapeList, when start a new level, release shape
 	if shapeList ~= nil then
 		for key, value in pairs(shapeList) do
-			value.mesh:release()
+			if value.mesh ~= nil then
+				value.mesh:release()
+			end
 		end
 	end
 	shapeList = {}
@@ -96,6 +96,17 @@ function Level:update(dt)
 				shifting = false -- close
 			else
 				shiftMode = shiftMode - _dt
+			end
+		end
+	end
+
+	-- turret hit player
+	for i = 1, #shapeList do
+		if shapeList[i]:is(Turret) then
+			if shapeList[i]:hit(shiftMode, player) then
+				-- reset
+				self.screen:view(resetLevelString)
+				break
 			end
 		end
 	end
@@ -212,6 +223,7 @@ function Level:keypressed(key)
 		self.screen:view(levelName)
 	end
 end
+
 
 -- add obj to drawList
 function Level:addDrawList()

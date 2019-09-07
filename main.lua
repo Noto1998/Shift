@@ -18,6 +18,7 @@ require "lib.shape.rectangle"
 require "lib.shape.circle"
 require "lib.shape.cylinder"
 require "lib.shape.cuboid"
+require("lib.shape.turret")
 -- player
 require "lib.player"
 -- level
