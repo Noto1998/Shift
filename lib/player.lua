@@ -215,43 +215,34 @@ end
 -- xz
 local function isCollisionXZ(self, i, table)
 	local flag = false
-	local checkNum = 1-- not work now
-	local _x = endPoint[i].x
-	local _z = endPoint[i].z
-	local signX = base.sign(_x - self.x)
-	local lenX = math.abs(_x - self.x) / checkNum
-	local signZ = base.sign(_z - self.z)
-	local lenZ = math.abs(_z - self.z) / checkNum
+	--
 	for key, obj in pairs(table) do
 		if obj:is(Cuboid) then
-			_x = endPoint[i].x
-			_z = endPoint[i].z
-			for i = 1, checkNum do
-				if _x >= obj.x and _x <= obj.x + obj.lenX
-				and _z >= obj.z and _z <= obj.z + obj.lenZ then
-					flag = true
-					break
-				end
-				_x = _x - signX * lenX
-				_z = _z - signZ * lenZ
-			end
-			if flag then
-				break;
+			if	endPoint[i].x >= obj.x
+			and endPoint[i].x <= obj.x + obj.lenX
+			and endPoint[i].z >= obj.z
+			and endPoint[i].z <= obj.z + obj.lenZ then
+				flag = true
 			end
 		elseif obj:is(Rectangle) then
 			local dx = endPoint[i].x - obj.x
 			local dz = math.tan(math.pi/2-obj.dir) * dx
-			local _lenZ = math.abs(math.tan(math.pi/2-obj.dir) * obj.lenX)
-			
-			if endPoint[i].x > obj.x and endPoint[i].x < obj.x+obj.lenX
-			and endPoint[i].z > obj.z and endPoint[i].z <obj.z+_lenZ then
-				if math.abs(obj.z+dz - endPoint[i].z) < 2 then
-					flag = true
-				end
+			--
+			if 	endPoint[i].x > obj.x
+			and endPoint[i].x < obj.x + obj.lenX
+			and endPoint[i].z > obj.z
+			and endPoint[i].z < obj.z + obj.lenZ
+			and
+			math.abs((obj.z + dz) - endPoint[i].z) < 1 then
+				flag = true
 			end
 		elseif obj:is(Circle) then
-			---
+			--
 		end	
+		-- jump
+		if flag then
+			break
+		end
 	end
 
 	return flag
