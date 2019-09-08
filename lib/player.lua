@@ -218,10 +218,10 @@ local function isCollisionXZ(self, i, table)
 	--
 	for key, obj in pairs(table) do
 		if obj:is(Cuboid) then
-			if	endPoint[i].x >= obj.x
-			and endPoint[i].x <= obj.x + obj.lenX
-			and endPoint[i].z >= obj.z
-			and endPoint[i].z <= obj.z + obj.lenZ then
+			if	endPoint[i].x >= obj.x -1
+			and endPoint[i].x <= obj.x + obj.lenX +1
+			and endPoint[i].z >= obj.z -1
+			and endPoint[i].z <= obj.z + obj.lenZ +1 then
 				flag = true
 			end
 		elseif obj:is(Rectangle) then
