@@ -26,18 +26,20 @@ function Screen:activate()
 	local destinationZ = cubeZ2
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
-	--Dialoguetest
 	
 	--- here to create shape
 	Screen:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
-	
+	-- gate
 	Screen:addShapeList(Cuboid,		1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX2-1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
-	
+	-- wall
 	Screen:addShapeList(Cuboid,		250-1, cubeY2, cubeZ-cubeLenZ3,		50, 50, cubeLenZ3)
 
 	-- add drawList
 	Screen:addDrawList()
+
+	-- tips
+	Screen:addTipsList(10, -200, 20, "/这有点难/")
 end
 
 return Screen

@@ -8,7 +8,7 @@ function Screen:activate()
 	local cubeLenZ = 50
 
 	-- levelName
-	local levelName = "捉迷藏"
+	local levelName = "隐形"
 	-- player location
 	local playerX = 100
 	local playerY = 180
@@ -16,7 +16,7 @@ function Screen:activate()
 	-- destination location
 	local destinationX = 250
 	local destinationY = 50
-	local destinationZ = 130-50
+	local destinationZ = cubeZ-50
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
@@ -25,8 +25,9 @@ function Screen:activate()
 	
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
-	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,		cubeLenX, cubeLenY, cubeLenZ)
+	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,		cubeLenX, cubeLenY, cubeLenZ-40)
 
+	Screen:addShapeList(Cuboid,		250, 50+100, cubeZ-50,		50, 50, 50)
 	-- add drawList
 	Screen:addDrawList()
 end

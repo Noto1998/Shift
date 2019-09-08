@@ -16,7 +16,7 @@ function Screen:activate()
 	local playerZ = cubeZ - 1
 	-- destination location
 	local destinationX = base.guiWidth/2 - 50/2
-	local destinationY = 20+50*2+2
+	local destinationY = 20+50*2
 	local destinationZ = cubeZ-150-50 -100
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
@@ -32,7 +32,6 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		base.guiWidth-50-(playerX-50/2), playerY-50/2, cubeZ-cubeLenZ3,		50, 50, cubeLenZ3)
 
 	--tooth
-	--Screen:addShapeList(Cuboid,		base.guiWidth/2-100/2, cubeLenY-50+10, cubeZ-cubeLenZ3,		100, 40, 50)
 	Screen:addShapeList(Cuboid,		base.guiWidth/2-40/2-40-10, cubeLenY-50+10, -100,		40, 40, 50)
 	Screen:addShapeList(Cuboid,		base.guiWidth/2-40/2,		cubeLenY-50+10, -200,		40, 40, 50)
 	Screen:addShapeList(Cuboid,		base.guiWidth/2-40/2+40+10, cubeLenY-50+10, -300,		40, 40, 50)

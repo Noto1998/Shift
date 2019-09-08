@@ -198,12 +198,13 @@ function Level:draw()
 		base.print("按A继续", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 	end
 
-	--[DEBUG]
+	--[[ [DEBUG]
 	if debugMode then
 		love.graphics.setColor(base.cWhite)
 		-- player location
 		base.print(player.x .. "," .. player.y .. "," .. player.z)
 	end
+	]]
 end
 
 

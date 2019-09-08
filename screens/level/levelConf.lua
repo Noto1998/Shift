@@ -3,7 +3,7 @@ local level = {
     "level_Tutorial_Move",
     "level_Tutorial_Shift",
     "level_CrossTheRiver",
-    "level_HideAndSeek",
+    "level_Invisible",
     "level_RockClimbing",
     "level_Tunnel",
     "level_Ccontour",
