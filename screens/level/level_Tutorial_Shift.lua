@@ -28,17 +28,9 @@ function Screen:activate()
 	-- add drawList
 	Screen:addDrawList()
 
-
 	-- tips
-	t1 = Tips(180, 50, -50, "按A:切换维度")
-	t2 = Tips(180, 350, 20, "←→移动")
-end
-
-function Screen:draw()
-	Screen.super.draw(self)
-
-	t1:draw(shiftMode)
-	t2:draw(shiftMode)
+	Screen:addTipsList(180, 50, -50, "按A切换维度。")
+	Screen:addTipsList(180, 350, 20, "←→移动。")
 end
 
 return Screen

@@ -37,8 +37,11 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	end
 	shapeList = {}
 
-	--- drawList
+	-- drawList
 	drawList = {}
+
+	-- tipsList
+	tipsList = {}
 
 	-- player and destination
 	player = Player(playerX, playerY, playerZ)
@@ -167,16 +170,23 @@ function Level:draw()
 		end
 	end
 
+	-- tips
+	if tipsList ~= nil then
+		for i = 1, #tipsList do
+			tipsList[i]:draw(shiftMode)
+		end
+	end
+
 	love.graphics.setColor(base.cWhite)
 	-- draw levelName
 	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
 	-- draw bottom tips
-	base.print("select:重置关卡", base.guiWidth, base.guiHeight, "left", "bottom")
+	base.print("select 重置关卡", base.guiWidth, base.guiHeight, "left", "bottom")
 
 	-- draw stuck warning
 	if shiftMode == 0 and player.stuck then
 		love.graphics.setColor(base.cWhite)
-		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
+		base.print("player stuck", base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 
 	-- finish level
@@ -237,8 +247,12 @@ function Level:addDrawList()
 	table.insert(shapeList, destination)
 end
 
--- add obj to shapeList
+-- shapeList
 function Level:addShapeList(obj, ...)
 	table.insert(shapeList, obj(...))
-	return obj(...)--test
+end
+
+-- tipsList
+function Level:addTipsList(...)
+	table.insert(tipsList, Tips(...))
 end

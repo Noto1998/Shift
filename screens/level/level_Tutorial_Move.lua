@@ -28,17 +28,11 @@ function Screen:activate()
 	-- add drawList
 	Screen:addDrawList()
 
-
 	-- tips
-	t1 = Tips(10, 5, 80, "方向键:移动")
-	t2 = Tips(destination.x-50, destination.y-50, destination.z-50, "到达绿色终点")
+	Screen:addTipsList(10, 5, 80, "用方向键移动。")
+	Screen:addTipsList(destination.x-50, destination.y-50, destination.z-50, "到达绿色终点。")
+	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ, "来找我们。")
 end
 
-function Screen:draw()
-	Screen.super.draw(self)
-
-	t1:draw(shiftMode)
-	t2:draw(shiftMode)
-end
 
 return Screen
