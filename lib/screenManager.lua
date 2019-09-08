@@ -60,14 +60,13 @@ function ScreenManager:registerEvents()
 	function love.draw(...)
 		_self:event('draw', ...)
 
-		-- [debug] draw screen name
+		--- [debug] draw screen name
 		if debugMode then
 			local path = self.currentPath
 			love.graphics.setColor(1,1,1,1)
 			base.print("debug:".. path)
 		end
-		--
-		
+		---
 	end
 	----function love.errhand(...) _self:event('errhand', ...) end
 	----function love.errorhandler(...) _self:event('errorhandler', ...) end
@@ -78,8 +77,7 @@ function ScreenManager:registerEvents()
 			love.event.quit()
 		end
 		
-		--- [debug]
-		-- f1, run the file in screens/debug
+		--- [debug] f1, run the file in screens/debug
 		if debugMode and select(1, ...) == 'f1' then
 			local fileTable = love.filesystem.getDirectoryItems("screens/debug")
 			local fileName

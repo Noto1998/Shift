@@ -18,8 +18,8 @@ function Dialogue:draw()
         love.graphics.setColor(0,0,0, 0.75)
         love.graphics.rectangle("fill", bgX, bgY, bgWidth, bgHeight)
         -- head
-        local headX = bgX+40
-        local headY = bgY+20
+        local headX = bgX + 40
+        local headY = bgY + 20
         local headWidth = 80
         local headHeight = 100
         love.graphics.setColor(1,1,1)

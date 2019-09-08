@@ -31,13 +31,15 @@ function Turret:draw(mode)
     love.graphics.setColor(self.cLine)
     love.graphics.circle("line", self.x, _y, radius)
     love.graphics.circle("line", self.x, _y, radius*2)
+    
+    -- draw line
     if turnOn then
-        -- draw shoot line
+        -- shoot line
         love.graphics.setColor(1, 1, 0)
         love.graphics.line(self.x, _y,
         self.x + sx*lenShoot, _y + (sy+(-sy+sz)*mode)*lenShoot )
     else
-        -- draw warning/dir
+        -- warning
         love.graphics.setColor(1, 0, 0)
         love.graphics.line(self.x, _y,
         self.x + sx*radius*3, _y + (sy+(-sy+sz)*mode)*radius*3 )

@@ -21,6 +21,6 @@ function Cuboid:draw(mode)
     _z = self.y + self.lenY
     re1 = Rectangle(self.x, _y, _z, self.lenX, _lenY, _dir, self.cFill, self.cLine, self.cMesh)
     re1:draw(1 - mode)
-
-    re1 = nil--release
+    -- release
+    re1 = nil
 end
