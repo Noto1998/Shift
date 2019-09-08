@@ -30,8 +30,8 @@ function Screen:activate()
 
 
 	-- tips
-	t1 = Tips(180, 80, -50, "按A:切换维度")
-	t2 = Tips(180, 500, 20, "←→移动")
+	t1 = Tips(180, 50, -50, "按A:切换维度")
+	t2 = Tips(180, 350, 20, "←→移动")
 end
 
 function Screen:draw()
