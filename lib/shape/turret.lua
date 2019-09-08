@@ -2,28 +2,22 @@ Turret = Shape:extend()
 
 local radius = 10
 local lenShoot = base.guiHeight+base.guiWidth
-local sx
-local sy
-local sz
-local timer
 local timeMax = 2-- second
-local turnOn
 
-
-function Turret:new(x, y, z, shootX, shootY, shootZ, cFill, cLine, cMesh)
+function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
     Turret.super.new(self, x, y, z, cFill, cLine, cMesh)
     -- 0~1
-    sx = shootX
-    sy = shootY
-    sz = shootZ
+    self.sx = sx
+    self.sy = sy
+    self.sz = sz
     -- turn on/off
-    timer = 0
-    turnOn = false
+    self.timer = 0
+    self.turnOn = false
 end
 
 
 function Turret:draw(mode)
-    local _y = self.y+(-self.y+self.z)*mode
+    local _y = self.y + (-self.y+self.z)*mode
     
     -- draw self
     love.graphics.setColor(self.cFill)
@@ -33,16 +27,16 @@ function Turret:draw(mode)
     love.graphics.circle("line", self.x, _y, radius*2)
     
     -- draw line
-    if turnOn then
+    if self.turnOn then
         -- shoot line
         love.graphics.setColor(1, 1, 0)
         love.graphics.line(self.x, _y,
-        self.x + sx*lenShoot, _y + (sy+(-sy+sz)*mode)*lenShoot )
+        self.x + self.sx*lenShoot, _y + (self.sy + (-self.sy+self.sz)*mode) * lenShoot )
     else
         -- warning
         love.graphics.setColor(1, 0, 0)
         love.graphics.line(self.x, _y,
-        self.x + sx*radius*3, _y + (sy+(-sy+sz)*mode)*radius*3 )
+        self.x + self.sx*radius*3, _y + (self.sy + (-self.sy+self.sz)*mode) * radius*3 )
     end
 end
 
@@ -50,8 +44,8 @@ end
 function Turret:hit(mode, player)
     local flag = false
     -- xy
-    if mode == 0 and turnOn then
-        local a = sx/sy
+    if mode == 0 and self.turnOn then
+        local a = self.sx/self.sy
         local dy = a * (player.x - self.x)
         
         -- hit
@@ -64,9 +58,9 @@ end
 
 
 function Turret:update(dt)
-    timer = timer + dt
-    if timer > timeMax then
-        timer = 0
-        turnOn = not turnOn
+    self.timer = self.timer + dt
+    if self.timer > timeMax then
+        self.timer = 0
+        self.turnOn = not self.turnOn
     end
 end
