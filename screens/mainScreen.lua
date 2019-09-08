@@ -11,13 +11,17 @@ function Screen:activate()
 end
 
 function Screen:draw()
-	love.graphics.setColor(base.cWhite)
 	-- credits
+	love.graphics.setColor(base.cWhite)
 	base.print("mofish", base.guiWidth/2, base.guiHeight/3, "center", "center")
-	--pressed start
-	base.print("左右选关 A开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+
 	-- level choice
-	base.print("\n关卡选择  <   " .. page .. "   >", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+	love.graphics.setColor(base.cWhite)
+	base.print("<		关卡" .. page .. "		>", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+	-- tips
+	love.graphics.setColor(0.25, 0.25, 0.25)
+	base.print("\n←→选择  A开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+	
 end
 
 function Screen:keypressed(key)
