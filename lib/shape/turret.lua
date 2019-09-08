@@ -1,19 +1,17 @@
-Turret = Object:extend()
+Turret = Shape:extend()
 
 local radius = 10
+local lenShoot = base.guiHeight+base.guiWidth
 local sx
 local sy
 local sz
-local lenShoot = base.guiHeight+base.guiWidth
 local timer
 local timeMax = 2-- second
 local turnOn
 
 
-function Turret:new(x, y, z, shootX, shootY, shootZ, cFill, cLine)
-    self.x = x
-    self.y = y
-    self.z = z
+function Turret:new(x, y, z, shootX, shootY, shootZ, cFill, cLine, cMesh)
+    Turret.super.new(self, x, y, z, cFill, cLine, cMesh)
     -- 0~1
     sx = shootX
     sy = shootY
@@ -21,15 +19,6 @@ function Turret:new(x, y, z, shootX, shootY, shootZ, cFill, cLine)
     -- turn on/off
     timer = 0
     turnOn = false
-    --
-    self.cFill = base.cFill
-	if cFill ~= nil then
-		self.cFill = cFill
-	end
-	self.cLine = base.cLine
-	if cLine ~= nil then
-		self.cLine = cLine
-	end
 end
 
 

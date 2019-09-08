@@ -44,7 +44,7 @@ end
 local function isCollisionXY(self, obj)
 	local flag = false
 	-- Rectangle
-	if obj:is(Rectangle) then
+	if obj:is(Rectangle) or obj:is(Cuboid) then
 		if self.y <= obj.y + obj.lenY and self.y + self.lenY >= obj.y
 		and self.x-self.lenX <= obj.x + obj.lenX and self.x + self.lenX >= obj.x then
 			flag = true
@@ -58,7 +58,7 @@ local function isCollisionXY(self, obj)
 end
 local function collisionXY(self, dt, obj)
 	-- Rectangle
-	if obj:is(Rectangle) then
+	if obj:is(Rectangle) or obj:is(Cuboid) then
 		local tableX = {obj.x, obj.x+obj.lenX}
 		local tableY = {obj.y, obj.y+obj.lenY}
 		-- x
@@ -212,7 +212,6 @@ local function collisionXY_Circle(self, dt, obj) -- old, when player is Circle
 	end
 	]]
 end
-
 -- xz
 local function isCollisionXZ(self, i, table)
 	local flag = false
@@ -375,6 +374,7 @@ function Player:new(x, y, z)
 	updateEndPoint(self)
 end
 
+
 function Player:update(dt, mode, shapelist)
 	-- xy
 	if mode == 0 then
@@ -446,6 +446,7 @@ function Player:update(dt, mode, shapelist)
 	self.lenX = math.abs(endPoint[1].x - self.x)
 end
 
+
 function Player:draw(mode)
 	if mode == 1 then
 		-- draw endPoint
@@ -474,6 +475,7 @@ function Player:draw(mode)
 		love.graphics.polygon("line", table)
 	end
 end
+
 
 -- if one endPoint not onGround, can't shift
 function Player:onGround(mode)

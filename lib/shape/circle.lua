@@ -1,18 +1,8 @@
-Circle = Object:extend()
+Circle = Shape:extend()
 
-function Circle:new(x, y, z, radius, cFill, cLine)
-    self.x = x--in center
-    self.y = y
-    self.z = z
+function Circle:new(x, y, z, radius, cFill, cLine, cMesh)
+    Circle.super.new(self, x, y, z, cFill, cLine, cMesh)
 	self.radius = radius
-	self.cFill = base.cFill
-	if cFill ~= nil then
-		self.cFill = cFill
-	end
-	self.cLine = base.cLine
-	if cLine ~= nil then
-		self.cLine = cLine
-	end
 end
 
 function Circle:draw(mode)

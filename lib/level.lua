@@ -14,6 +14,7 @@ function Level:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
+
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
     -- shift
 	shiftMode = 0-- 0=xy, 1=xz
@@ -55,6 +56,7 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 		dialogue = Dialogue(dialogTable)
 	end
 end
+
 
 function Level:update(dt)
 	-- update shiftMode
@@ -205,6 +207,7 @@ function Level:draw()
 		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
 	end
 end
+
 
 function Level:keypressed(key)
 	-- switch shiftMode

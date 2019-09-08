@@ -5,17 +5,15 @@ base = require "lib.const"
 base.guiWidth = love.graphics.getWidth()
 base.guiHeight = love.graphics.getHeight()
 
---player
---base.playerSpd = 
-
 -- color
-local cBlack = {0, 0, 0}
-local cWhite = {1, 1, 1}
-local cGray = {0.5, 0.5, 0.5}
+base.cBlack = {0, 0, 0}
+base.cWhite = {1, 1, 1}
+base.cGray = {0.5, 0.5, 0.5}
 
-base.cFill = cBlack
-base.cLine = cWhite
+base.cFill = base.cBlack
+base.cLine = base.cWhite
 
+-- function
 function base.sign(number)
     if number > 0 then
         return 1

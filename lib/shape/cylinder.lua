@@ -1,7 +1,7 @@
 Cylinder = Circle:extend()
 
-function Cylinder:new(x, y, z, radius, height, cFill, cLine)
-    Cylinder.super.new(self, x, y, z, radius, cFill, cLine)
+function Cylinder:new(x, y, z, radius, height, cFill, cLine, cMesh)
+    Cylinder.super.new(self, x, y, z, radius, cFill, cLine, cMesh)
     self.height = height
 end
 

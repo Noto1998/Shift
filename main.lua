@@ -8,17 +8,19 @@ love.graphics.present()
 -- object-oriented
 Object = require "lib.classic"
 -- input
-local keys = require "lib.keys"
--- baseData
-local base = require "lib.base"
+require "lib.keys"
+-- baseClassic
+require "lib.base"
 -- screenManager
-local ScreenManager = require "lib.screenManager"
+require "lib.screenManager"
 -- shape
+require "lib.shape.shape"
 require "lib.shape.rectangle"
 require "lib.shape.circle"
 require "lib.shape.cylinder"
 require "lib.shape.cuboid"
-require("lib.shape.turret")
+require "lib.shape.turret"
+require "lib.shape.ball"
 -- player
 require "lib.player"
 -- level
