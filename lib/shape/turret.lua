@@ -42,14 +42,26 @@ end
 
 
 function Turret:hit(mode, player)
-    local flag = false
     -- xy
-    if mode == 0 and self.turnOn then
-        local a = self.sx/self.sy
-        local dy = a * (player.x - self.x)
-        
+    local flag = false
+    local inReX = false
+    if self.sx > 0 then
+        inReX = player.x+player.lenX >= self.x
+    elseif self.sx < 0 then
+        inReX = player.x-player.lenX <= self.x
+    end
+    local inReY = false
+    if self.sy > 0 then
+        inReY = player.y+player.lenY >= self.y
+    elseif self.sy < 0 then
+        inReY = player.y-player.lenY <= self.y
+    end
+    if mode == 0 and self.turnOn and inReX and inReY then
+        local a = self.sy/self.sx
+        local py = self.y + a * (player.x - self.x)
+        print(math.abs(py - player.y))
         -- hit
-        if math.abs(self.y+dy - player.y) < player.lenY*2 then
+        if math.abs(py - player.y) < player.lenY+math.abs(player.lenX*a) then
             flag = true
         end
     end
