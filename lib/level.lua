@@ -215,7 +215,7 @@ function Level:keypressed(key)
 	end
 
 	-- switch shiftMode
-	if key == keys.A and not shifting and Player:onGround(shiftMode)
+	if key == keys.Y and not shifting and Player:onGround(shiftMode)
 	and (dialogue==nil or not dialogue:isDraw()) and not finishFlag then
 		shiftFlag = not shiftFlag
 		shifting = true

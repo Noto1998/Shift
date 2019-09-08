@@ -11,13 +11,11 @@ function Screen:activate()
 end
 
 function Screen:draw()
-	love.graphics.setColor(1,1,1)
-
+	love.graphics.setColor(base.cWhite)
 	-- credits
 	base.print("mofish", base.guiWidth/2, base.guiHeight/3, "center", "center")
-
 	--pressed start
-	base.print("左右选关，A开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
+	base.print("左右选关 A开始", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
 	-- level choice
 	base.print("\n关卡选择  <   " .. page .. "   >", base.guiWidth/2, base.guiHeight/3 *2, "center", "center")
 end
@@ -32,6 +30,7 @@ function Screen:keypressed(key)
 	-- choice level
 	local levelMax = #levelString-1--the last one is finishScreen
 	if key == keys.DPad_right then
+		
 		if page < levelMax then
 			page = page + 1
 		else

@@ -29,7 +29,7 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(180, 50, -50, "按A切换维度。")
+	Screen:addTipsList(180, 50, -50, "按Y切换维度。")
 	Screen:addTipsList(180, 350, 20, "←→移动。")
 end
 
