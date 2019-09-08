@@ -10,14 +10,14 @@ function Screen:activate()
 	local cubeLenZ3 = 50+2
 	
 	-- levelName
-	local levelName = "教学2"
+	local levelName = "教学"
 	-- player location
 	local playerX = 80
 	local playerY = base.guiHeight/2
 	local playerZ = cubeZ - 1
 	-- destination location
 	local destinationX = base.guiWidth-playerX-50/2
-	local destinationY = base.guiHeight+2
+	local destinationY = playerY-50/2
 	local destinationZ = cubeZ-50
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
@@ -30,8 +30,8 @@ function Screen:activate()
 
 
 	-- tips
-	t1 = Tips(180, 80, -50, "按A:切换维度")
-	t2 = Tips(180, 500, 20, "←→移动")
+	t1 = Tips(10, 5, 80, "方向键:移动")
+	t2 = Tips(destination.x-50, destination.y-50, destination.z-50, "到达绿色终点")
 end
 
 function Screen:draw()

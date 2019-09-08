@@ -1,7 +1,7 @@
 -- put all level in here
 local level = {
-    "level_Tutorial1",
-    "level_Tutorial2",
+    "level_Tutorial_Move",
+    "level_Tutorial_Shift",
     "level_CrossTheRiver",
     "level_HideAndSeek",
     "level_RockClimbing",
