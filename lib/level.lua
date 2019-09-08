@@ -132,7 +132,29 @@ function Level:update(dt)
 	end
 
 	--- sort drawList
-	if shiftMode ~= 1 then
+	if shiftMode == 0 then
+		-- sort by z
+		for i=1, #drawList do
+			local j = i
+			for k=i+1, #drawList do
+				if drawList[k].z > drawList[j].z then
+					j, k = k, j
+				end
+			end
+			drawList[i], drawList[j] = drawList[j], drawList[i]
+		end
+	elseif shiftMode == 1 then
+		-- then sort by y
+		for i=1, #drawList do
+			local j = i
+			for k=i+1, #drawList do
+				if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
+					j, k = k, j
+				end
+			end
+			drawList[i], drawList[j] = drawList[j], drawList[i]
+		end
+	else
 		-- sort by z
 		for i=1, #drawList do
 			local j = i
