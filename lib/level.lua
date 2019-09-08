@@ -8,14 +8,13 @@ local shiftFlag
 local shiftSpd
 local finishFlag
 local finishTimer
-local dialogue
 
 function Level:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
 
-function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
+function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
     -- shift
 	shiftMode = 0-- 0=xy, 1=xz
 	shiftFlag = false
@@ -49,11 +48,6 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	levelNameToDraw = "levelName missing!"
 	if levelName ~= nil then
 		levelNameToDraw = levelName
-	end
-
-	dialogue = nil
-	if dialogTable ~= nil then
-		dialogue = Dialogue(dialogTable)
 	end
 end
 
@@ -173,64 +167,51 @@ function Level:draw()
 		end
 	end
 
+	love.graphics.setColor(base.cWhite)
 	-- draw levelName
-	love.graphics.setColor(1,1,1)
 	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
+	-- draw bottom tips
+	base.print("select:重置关卡", base.guiWidth, base.guiHeight, "left", "bottom")
 
 	-- draw stuck warning
 	if shiftMode == 0 and player.stuck then
-		love.graphics.setColor(1,1,1)
+		love.graphics.setColor(base.cWhite)
 		base.print("player stuck", base.guiWidth/2, base.guiHeight, "center", "bottom")
-	end
-
-	-- draw bottom tips
-	love.graphics.setColor(1,1,1)
-	base.print("A:切换,Select:重置", base.guiWidth, base.guiHeight, "left", "bottom")
-
-	-- dialogue
-	if dialogue ~= nil then
-		dialogue:draw()
 	end
 
 	-- finish level
 	if finishFlag then
 		love.graphics.setColor(0,0,0, 0.75)
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
-		love.graphics.setColor(1, 1, 1)
+		love.graphics.setColor(base.cWhite)
 		base.print("关卡完成", base.guiWidth/2, base.guiHeight/3, "center", "center")
 		base.print("按A继续", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 	end
 
 	--[DEBUG]
 	if debugMode then
-		love.graphics.setColor(1,1,1)
+		love.graphics.setColor(base.cWhite)
 		-- player location
-		base.print("debug:" .. player.x..","..player.y..","..player.z, 0, love.graphics.getFont():getHeight())
+		base.print(player.x .. "," .. player.y .. "," .. player.z)
 	end
 end
 
 
 function Level:keypressed(key)
+	-- reset
+	if key == keys.Select then
+		self.screen:view(resetLevelString)
+	end
+
 	-- switch shiftMode
 	if key == keys.A and not shifting and Player:onGround(shiftMode)
 	and (dialogue==nil or not dialogue:isDraw()) and not finishFlag then
 		shiftFlag = not shiftFlag
 		shifting = true
 	end
-	
-	-- reset
-	if key == keys.Select then
-		self.screen:view(resetLevelString)
-	end
-
-	-- dialogueTable
-	if key == keys.Y and dialogue ~= nil and not shifting then
-		dialogue:nextPage()
-	end
 
 	-- goto next level
 	if finishFlag and key == keys.A then
-		-- goto next level
 		levelChoice = levelChoice + 1
 		local levelName = levelString[levelChoice]
 		self.screen:view(levelName)

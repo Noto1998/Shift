@@ -27,8 +27,8 @@ require "lib.player"
 require "lib.level"
 -- destination
 require "lib.destination"
--- dialogue
-require "lib.dialogue"
+-- tips
+require "lib.tips"
 ---
 
 --- LOAD SCREENS

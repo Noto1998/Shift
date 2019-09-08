@@ -57,17 +57,7 @@ function ScreenManager:registerEvents()
 	-- The events that are commented out with four '-', cause trouble when not being used
 	
 	--function love.directorydropped(...) _self:event('directorydropped', ...) end
-	function love.draw(...)
-		_self:event('draw', ...)
-
-		--- [debug] draw screen name
-		if debugMode then
-			local path = self.currentPath
-			love.graphics.setColor(1,1,1,1)
-			base.print("debug:".. path)
-		end
-		---
-	end
+	function love.draw(...)	_self:event('draw', ...) end
 	----function love.errhand(...) _self:event('errhand', ...) end
 	----function love.errorhandler(...) _self:event('errorhandler', ...) end
 	--function love.filedropped(...) _self:event('filedropped', ...) end
@@ -92,6 +82,11 @@ function ScreenManager:registerEvents()
 			else
 				print("debug: file don't exist.")
 			end
+		end
+		---
+		--- [debug] f2, turn on/off
+		if select(1, ...) == 'f2' then
+			debugMode = not debugMode
 		end
 		---
 
