@@ -17,7 +17,7 @@ function Screen:activate()
 	-- player location
 	local playerX = 80
 	local playerY = 35
-	local playerZ = cubeZ
+	local playerZ = cubeZ-1
 	-- destination location
 	local destinationX = cubeX+(cubeLenX-50)/2
 	local destinationY = 35-50/2
