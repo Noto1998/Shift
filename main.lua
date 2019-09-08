@@ -8,9 +8,9 @@ love.graphics.present()
 -- object-oriented
 Object = require "lib.classic"
 -- input
-require "lib.keys"
+keys = require "lib.keys"
 -- baseClassic
-require "lib.base"
+base = require "lib.base"
 -- screenManager
 require "lib.screenManager"
 -- shape
@@ -37,10 +37,11 @@ local MainScreen = require "screens.mainScreen"
 levelString = require "screens.level.levelConf"
 local LevelScreen = {}
 for i, value in ipairs(levelString) do
-    local file = io.open("./screens/level/" .. value .. ".lua")
+    local file = love.filesystem.getInfo("screens/level/" .. value .. ".lua")
+    --io.open("screens/level/" .. value .. ".lua")
     if file ~= nil then
         table.insert(LevelScreen, require("screens.level." .. value))
-        file:close()
+        --file:close()
     end
 end
 ---
