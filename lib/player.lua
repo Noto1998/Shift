@@ -225,16 +225,26 @@ local function isCollisionXZ(self, i, table)
 				flag = true
 			end
 		elseif obj:is(Rectangle) then
+			local a = obj.lenZ/obj.lenX 
 			local dx = endPoint[i].x - obj.x
-			local dz = math.tan(math.pi/2-obj.dir) * dx
-			--
-			if 	endPoint[i].x > obj.x
-			and endPoint[i].x < obj.x + obj.lenX
-			and endPoint[i].z > obj.z
-			and endPoint[i].z < obj.z + obj.lenZ
-			and
-			math.abs((obj.z + dz) - endPoint[i].z) < 1 then
-				flag = true
+			local dz = a * dx
+			local centerX = obj.x + obj.lenX/2--left
+			local centerZ = obj.z - obj.lenZ/2--bottom
+			
+			local _z
+			-- check in a rectangle
+			if 	math.abs(endPoint[i].x - centerX) < obj.lenX/2
+			and math.abs(endPoint[i].z - centerZ) < obj.lenZ/2 then
+				--
+				if obj.dir < math.pi/2 then
+					_z = obj.z - obj.lenZ
+			    else
+        			_z = obj.z
+				end
+				--
+				if math.abs((_z + dz) - endPoint[i].z) <= 1 then
+					flag = true
+				end
 			end
 		elseif obj:is(Circle) then
 			--

@@ -1,5 +1,8 @@
 Rectangle = Shape:extend()
 
+--x, left
+--z, bottom
+
 function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
     Circle.super.new(self, x, y, z, cFill, cLine, cMesh)
     self.lenX = lenX
@@ -35,38 +38,39 @@ function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
 end
 
 function Rectangle:draw(mode)
-    local _x = self.x + self.lenX
-    local _z = self.z + self.lenZ
-    
+    local _z
+    if self.dir < math.pi/2 then
+        _z = self.z - self.lenZ
+    else
+        _z = self.z
+    end
+
+    local x2 = self.x + self.lenX
+    local z2 = _z + self.lenZ
+
     --line
     if mode == 1 then
         love.graphics.setColor(self.cLine)
-        love.graphics.line(self.x, self.z, _x, _z)
+        love.graphics.line(self.x, _z, x2, z2)
     
     -- polygon
     else
         -- fill
 		local table = {
-            self.x, self.y+ (-self.y + self.z) * mode,--
-            _x,     self.y+ (-self.y + _z)     * mode,
-            _x,     self.y+self.lenY + (-(self.y+self.lenY) + _z)      * mode,--
-            self.x, self.y+self.lenY + (-(self.y+self.lenY) + self.z)  * mode
+            self.x, self.y+ (-self.y + _z) * mode,--
+            x2,     self.y+ (-self.y + z2) * mode,
+            x2,     self.y+self.lenY + (-(self.y+self.lenY) + z2)  * mode,--
+            self.x, self.y+self.lenY + (-(self.y+self.lenY) + _z)  * mode
         }
         
         love.graphics.setColor(self.cFill)
         love.graphics.polygon("fill", table)
         
         -- mesh
-        local table2 = {
-            {self.x, self.y+ (-self.y + self.z) * mode},--
-            {_x,     self.y+ (-self.y + _z)     * mode},
-            {_x,     self.y+self.lenY + (-(self.y+self.lenY) + _z)      * mode},--
-            {self.x, self.y+self.lenY + (-(self.y+self.lenY) + self.z)  * mode}
-        }
         if mode ~= 0 then
             -- update point location
-            for i = 1, 4 do
-                self.mesh:setVertexAttribute(i, 1, table2[i][1], table2[i][2])
+            for i = 2, 4*2, 2 do
+                self.mesh:setVertexAttribute(i/2, 1, table[i-1], table[i])
             end
         end
         love.graphics.setColor(self.cMesh)
