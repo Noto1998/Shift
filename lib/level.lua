@@ -148,7 +148,7 @@ function Level:update(dt)
 		for i=1, #drawList do
 			local j = i
 			for k=i+1, #drawList do
-				if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
+				if drawList[k].y < drawList[j].y then
 					j, k = k, j
 				end
 			end
@@ -219,14 +219,6 @@ function Level:draw()
 		base.print("关卡完成", base.guiWidth/2, base.guiHeight/3, "center", "center")
 		base.print("按A继续", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 	end
-
-	--[[ [DEBUG]
-	if debugMode then
-		love.graphics.setColor(base.cWhite)
-		-- player location
-		base.print(player.x .. "," .. player.y .. "," .. player.z)
-	end
-	]]
 end
 
 
