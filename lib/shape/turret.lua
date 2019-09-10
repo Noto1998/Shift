@@ -1,7 +1,7 @@
 Turret = Shape:extend()
 
 local radius = 10
-local lenShoot = base.guiHeight+base.guiWidth
+local len = math.sqrt(math.pow(base.guiHeight, 2) + math.pow(base.guiWidth, 2)) + 1
 local timeMax = 2-- second
 
 function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
@@ -31,7 +31,7 @@ function Turret:draw(mode)
         -- shoot line
         love.graphics.setColor(1, 1, 0)
         love.graphics.line(self.x, _y,
-        self.x + self.sx*lenShoot, _y + (self.sy + (-self.sy+self.sz)*mode) * lenShoot )
+        self.x + self.sx*len, _y + (self.sy + (-self.sy+self.sz)*mode) * len )
     else
         -- warning
         love.graphics.setColor(1, 0, 0)
@@ -42,29 +42,45 @@ end
 
 
 function Turret:hit(mode, player)
-    -- xy
     local flag = false
-    local inReX = false
-    if self.sx > 0 then
-        inReX = player.x+player.lenX >= self.x
-    elseif self.sx < 0 then
-        inReX = player.x-player.lenX <= self.x
-    end
-    local inReY = false
-    if self.sy > 0 then
-        inReY = player.y+player.lenY >= self.y
-    elseif self.sy < 0 then
-        inReY = player.y-player.lenY <= self.y
-    end
-    if mode == 0 and self.turnOn and inReX and inReY then
-        local a = self.sy/self.sx
-        local py = self.y + a * (player.x - self.x)
-        print(math.abs(py - player.y))
-        -- hit
-        if math.abs(py - player.y) < player.lenY+math.abs(player.lenX*a) then
-            flag = true
+    -- xy
+    if mode == 0 and self.turnOn then
+        -- x
+        local xLeft = self.x
+        local xRight = self.x + self.sx*len
+        if xLeft > xRight then
+            xLeft, xRight = xRight, xLeft
+        end
+        -- y
+        local yTop = self.y
+        local yBottom = self.y + self.sy*len
+        if yTop > yBottom then
+            yTop, yBottom = yBottom, yTop
+        end
+        -- check rectangle
+        if  player.x > xLeft - player.lenX
+        and player.x < xRight + player.lenX
+        and player.y > yTop - player.lenY
+        and player.y < yBottom + player.lenY then
+            if self.sx == 0 and self.sy == 0 then
+                -- point, do nothing
+            elseif self.sx == 0 or self.sy == 0 then
+                -- vertical or horizontal
+                flag = true
+            else
+                -- both ~= 0
+                local dy = math.abs(self.y - player.y)
+                local a = math.abs(self.sy)/math.abs(self.sx)
+                local dx = dy / a
+                local checkX = self.x + dx*base.sign(self.sx)
+                --
+                if math.abs(player.x - checkX) < player.lenX+math.abs(player.lenY*a) then
+                    flag = true
+                end
+            end
         end
     end
+    --
     return flag
 end
 

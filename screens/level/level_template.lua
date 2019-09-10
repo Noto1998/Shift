@@ -16,11 +16,11 @@ function Screen:activate()
 	
 	--- here to create shape
 	-- use [ Screen:addShapeList(shape,...) ] to create shape:
-	-- Rectangle,	x, y, z, lenX, lenY
-	-- Circle,		x, y, z, radius
+	-- Rectangle,	x, y, z, lenX, lenY, dir(math.pi/2)
 	-- Cuboid,		x, y, z, lenX, lenY, lenZ
-	-- Cylinder,	x, y, z, radius, height
-	-- Turret,		x, y, z, shootX(0~1), shootY(0~1), shootZ(0~1)
+	-- Turret,		x, y, z, sx(0~1), sy(0~1), sz(0~1)
+	-- [work bad]	Circle,		x, y, z, radius
+	-- [work bad]	Cylinder,	x, y, z, radius, height
 
 	-- e.g. Screen:addShapeList(Circle, 0, 0, 0, 50)
 	
