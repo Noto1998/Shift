@@ -70,9 +70,11 @@ end
 
 
 function Shift:keypressed(key)
-    -- switch shiftMode
-    if key == keys.Y and not shifting then
-        shiftFlag = not shiftFlag
-        shifting = true
+	-- switch shiftMode
+	if key == keys.Y and not shifting then
+		shiftFlag = not shiftFlag
+		shifting = true
+		--sfx
+		love.audio.play(sfx_shift)
     end
 end

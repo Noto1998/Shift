@@ -61,6 +61,14 @@ function love.load()
     local font = love.graphics.newFont("font/sarasa-mono-sc-medium.ttf", 20)--SourceHanSansCN-Normal.otf
     love.graphics.setFont(font)
 
+    -- sound
+    sfx_menu = love.audio.newSource("sound/bibi.wav", "static")
+    sfx_touchGound = love.audio.newSource("sound/touchGound.wav", "static")
+    sfx_shift = love.audio.newSource("sound/shift.wav", "static")
+    sfx_finish = love.audio.newSource("sound/leida.wav", "static")
+    sfx_restart = love.audio.newSource("sound/switch.wav", "static")
+    sfx_shoot = love.audio.newSource("sound/leida2.wav", "static")
+
     --- canvas
     canvasBG = love.graphics.newCanvas()
     love.graphics.setCanvas(canvasBG)

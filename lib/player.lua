@@ -18,6 +18,7 @@ local endPoint = {}
 for i = 1, 2 do
 	endPoint[i] = {}
 end
+local sfxPoint = {true, true}
 
 -- xy
 local function moveXY()
@@ -121,29 +122,6 @@ local function isCollisionXZ(self, i, table)
 				flag = true
 			end
 		elseif obj:is(Rectangle) then
-			--[[
-			local a = obj.lenZ/obj.lenX 
-			local dx = endPoint[i].x - obj.x
-			local dz = a * dx
-			local centerX = obj.x + obj.lenX/2--left
-			local centerZ = obj.z - obj.lenZ/2--bottom
-			
-			local _z
-			-- check in a rectangle
-			if 	math.abs(endPoint[i].x - centerX) < obj.lenX/2
-			and math.abs(endPoint[i].z - centerZ) < obj.lenZ/2 then
-				--
-				if obj.dir < math.pi/2 then
-					_z = obj.z - obj.lenZ
-			    else
-        			_z = obj.z
-				end
-				--
-				if math.abs((_z + dz) - endPoint[i].z) <= 1 then
-					flag = true
-				end
-			end
-			]]
 			flag = obj:isCollisionXZ(endPoint[i].x, endPoint[i].z)
 		elseif obj:is(Circle) then
 			--
@@ -290,6 +268,16 @@ function Player:update(dt, mode, shapelist)
 		-- onGround
 		for i = 1, 2 do
 			endPoint[i].onGround = isCollisionXZ(self, i, shapelist)
+
+			--
+			if endPoint[i].onGround == false then
+				sfxPoint[i] = false
+			end
+			if endPoint[i].onGround and not sfxPoint[i] then
+				sfxPoint[i] = true
+				--sfx
+				love.audio.play(sfx_touchGound)
+			end
 		end
 		-- both onGround
 		if endPoint[1].onGround and endPoint[2].onGround then

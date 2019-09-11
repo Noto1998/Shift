@@ -66,8 +66,10 @@ function Screen:keypressed(key)
 		end
 
 		-- update string
-		if key ==keys.DPad_right or keys.DPad_left then
+		if key ==keys.DPad_right or key == keys.DPad_left then
 			t1.string = "<\t第" .. page .. "关\t>"
+			--sfx
+			love.audio.play(sfx_menu)
 		end
 	end
 end

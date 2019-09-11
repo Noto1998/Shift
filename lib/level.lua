@@ -52,6 +52,9 @@ function Level:update(dt)
 			if shapeList[i]:hit(shiftMode, player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
+				-- sfx
+				sfx_restart:seek(0.15)
+				love.audio.play(sfx_restart)
 				break
 			end
 			-- turn on/off
@@ -73,6 +76,8 @@ function Level:update(dt)
 	if player:touch(destination, shiftMode) then
 		if not finishFlag then
 			finishFlag = true
+			--sfx
+			love.audio.play(sfx_finish)
 		end
 	end
 

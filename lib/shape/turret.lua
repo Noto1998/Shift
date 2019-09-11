@@ -90,5 +90,9 @@ function Turret:update(dt)
     if self.timer > timeMax then
         self.timer = 0
         self.turnOn = not self.turnOn
+        --sfx
+        if self.turnOn then
+            love.audio.play(sfx_shoot)
+        end
     end
 end
