@@ -58,7 +58,7 @@ function love.load()
     resetLevelString = nil-- for reset level, set in screenManager.lua
     
     -- font
-    local font = love.graphics.newFont("font/SourceHanSansCN-Normal.otf", 20)
+    local font = love.graphics.newFont("font/sarasa-mono-sc-medium.ttf", 20)--SourceHanSansCN-Normal.otf
     love.graphics.setFont(font)
 
     --- canvas
