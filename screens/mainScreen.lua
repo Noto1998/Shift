@@ -13,29 +13,29 @@ function Screen:activate()
 	img = love.graphics.newImage("img/logo.bmp")
 
 	
-	-- level choice
-	t1 = Tips(85,145,-50, "<		第" .. page .. "关		>")
-	
+	-- tips
+	local x = 20
+	t1 = Tips(base.guiWidth/2,145,-50, "<\t第" .. page .. "关\t>", "center")
 	tipsList = {
 		-- key tips
-		Tips(85,185,-50, "←→选择  A开始"),
+		Tips(base.guiWidth/2,185,-50, "←→选择\tA开始", "center"),
 		--credits
-		Tips(30,base.guiHeight+50,120+40*2,	"code/art/level\tNotoj"),
-		Tips(30,base.guiHeight+50,120+40, 	"design/level\tYaolaotou"),
-		Tips(30,base.guiHeight+50,120, "mofish team"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code & art & level\tNotoj", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design & level\tYaolaotou", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"mofish team", "center"),
 	}
 end
 
 function Screen:draw()
+	-- logo
+	love.graphics.setColor(base.cWhite)
+	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
+	
 	-- tips
 	t1:draw(shiftMode)
 	for key, obj in pairs(tipsList) do
 		obj:draw(shiftMode)
 	end
-
-	-- logo
-	love.graphics.setColor(base.cWhite)
-	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
 end
 
 function Screen:keypressed(key)
@@ -67,7 +67,7 @@ function Screen:keypressed(key)
 
 		-- update string
 		if key ==keys.DPad_right or keys.DPad_left then
-			t1.string = "<		第" .. page .. "关		>"
+			t1.string = "<\t第" .. page .. "关\t>"
 		end
 	end
 end
