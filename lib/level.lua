@@ -49,7 +49,7 @@ function Level:update(dt)
 		-- turret
 		if shapeList[i]:is(Turret) then
 			-- hit player
-			if shapeList[i]:hit(shiftMode, player) then
+			if shapeList[i]:hit(shiftMode, player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				break

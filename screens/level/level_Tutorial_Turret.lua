@@ -27,14 +27,14 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
     
     -- wall
-    Screen:addShapeList(Cuboid,		base.guiWidth/2-cubeLenX2/2, base.guiHeight/2-cubeLenY2/2, cubeZ-cubeLenZ,		cubeLenX2, cubeLenY2, cubeLenZ)
+    Screen:addShapeList(Cuboid,		base.guiWidth/2-cubeLenX2/2, base.guiHeight/2-cubeLenY2/2, cubeZ-cubeLenZ*2,		cubeLenX2, cubeLenY2, cubeLenZ*2)
 
 	-- turret
     Screen:addShapeList(Turret,		base.guiWidth/2, 0, cubeZ-cubeLenZ3,		0, 1, 0)
     Screen:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
 	-- tips
-	Screen:addTipsList(5, base.guiHeight/2+50, 20,		"败者，食尘？")
+	Screen:addTipsList(5, base.guiHeight+10, 20,		"败者食尘")
 
 	-- add drawList
 	Screen:addDrawList()
