@@ -1,27 +1,12 @@
-Level = Object:extend()
+Level = Shift:extend()
 
 local levelNameToDraw
-local shiftTimerMax
-local shiftTimer
-local shifting
-local shiftFlag
-local shiftSpd
 local finishFlag
 local finishTimer
 
-function Level:new(ScreenManager)
-	self.screen = ScreenManager
-end
-
-
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
-    -- shift
-	shiftMode = 0-- 0=xy, 1=xz
-	shiftFlag = false
-	shifting = false
-	shiftTimerMax = 1.25
-	shiftTimer = 0
-	shiftSpd = 0
+	-- shift
+	Level.super.activate(self)
 
 	-- finishLevelTimer
 	finishFlag = false
@@ -56,48 +41,8 @@ end
 
 
 function Level:update(dt)
-	-- update shiftMode
-	if shifting then
-		local shiftAddSpd = 2*dt
-		local shiftAddTime = 0.3
-		-- start spd
-		if shiftMode == 0 or shiftMode == 1 then
-			shiftSpd = 0
-		end
-		-- add spd
-		if shiftFlag then
-			if shiftMode < shiftAddTime then
-					shiftSpd = shiftSpd + shiftAddSpd
-			elseif shiftMode > 1-shiftAddTime then
-				shiftSpd = shiftSpd - shiftAddSpd
-			end
-		else
-			if shiftMode < shiftAddTime then
-				shiftSpd = shiftSpd - shiftAddSpd
-			elseif shiftMode > 1-shiftAddTime then
-				shiftSpd = shiftSpd + shiftAddSpd
-			end
-		end
-		local _dt = math.abs(shiftSpd) / shiftTimerMax * dt
-		-- change shiftMode
-		if shiftMode < 1 and shiftFlag then
-			local _border =  1 - shiftMode
-			if _border < _dt then
-				shiftMode = 1
-				shifting = false -- close
-			else
-				shiftMode = shiftMode + _dt
-			end
-		end
-		if shiftMode > 0 and not shiftFlag then
-			if shiftMode < _dt then
-				shiftMode = 0
-				shifting = false -- close
-			else
-				shiftMode = shiftMode - _dt
-			end
-		end
-	end
+	-- shift
+	Level.super.update(self, dt)
 
 	-- shape update
 	for i = 1, #shapeList do
@@ -223,16 +168,14 @@ end
 
 
 function Level:keypressed(key)
+	-- shift
+	if Player:onGround(shiftMode) and not finishFlag then
+		Level.super.keypressed(self, key)
+	end
+
 	-- reset
 	if key == keys.Select then
 		self.screen:view(resetLevelString)
-	end
-
-	-- switch shiftMode
-	if key == keys.Y and not shifting and Player:onGround(shiftMode)
-	and (dialogue==nil or not dialogue:isDraw()) and not finishFlag then
-		shiftFlag = not shiftFlag
-		shifting = true
 	end
 
 	-- goto next level

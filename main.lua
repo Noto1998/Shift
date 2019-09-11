@@ -21,14 +21,15 @@ require "lib.shape.cylinder"
 require "lib.shape.cuboid"
 require "lib.shape.turret"
 --require "lib.shape.ball"
+require "lib.shape.tips"
 -- player
 require "lib.player"
 -- level
+require "lib.shift"-- frist
 require "lib.level"
 -- destination
 require "lib.destination"
--- tips
-require "lib.tips"
+
 ---
 
 --- LOAD SCREENS
@@ -60,7 +61,7 @@ function love.load()
     local font = love.graphics.newFont("font/SourceHanSansCN-Normal.otf", 20)
     love.graphics.setFont(font)
 
-    -- canvas
+    --- canvas
     canvasBG = love.graphics.newCanvas()
     love.graphics.setCanvas(canvasBG)
         love.graphics.clear()
@@ -75,6 +76,7 @@ function love.load()
             love.graphics.line(x, 0, x, base.guiHeight)
         end
     love.graphics.setCanvas()
+    ---
 
     -- register screens
     local screenManager = ScreenManager()
