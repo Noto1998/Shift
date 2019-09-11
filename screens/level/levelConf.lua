@@ -6,6 +6,7 @@ local level = {
     "level_Invisible",
     "level_RockClimbing",
     "level_Tunnel",
+    "level_Tutorial_Turret",
     "level_Ccontour",
     "level_Skull",
 
