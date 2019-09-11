@@ -1,5 +1,5 @@
 function love.conf(t)
-    t.window.title = "test"
+    t.window.title = "Two Dimensions"
     t.window.width = 320
     t.window.height = 240
 

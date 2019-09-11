@@ -121,6 +121,7 @@ local function isCollisionXZ(self, i, table)
 				flag = true
 			end
 		elseif obj:is(Rectangle) then
+			--[[
 			local a = obj.lenZ/obj.lenX 
 			local dx = endPoint[i].x - obj.x
 			local dz = a * dx
@@ -142,6 +143,8 @@ local function isCollisionXZ(self, i, table)
 					flag = true
 				end
 			end
+			]]
+			flag = obj:isCollisionXZ(endPoint[i].x, endPoint[i].z)
 		elseif obj:is(Circle) then
 			--
 		end	

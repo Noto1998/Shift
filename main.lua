@@ -20,7 +20,7 @@ require "lib.shape.circle"
 require "lib.shape.cylinder"
 require "lib.shape.cuboid"
 require "lib.shape.turret"
---require "lib.shape.ball"
+require "lib.shape.ball"
 require "lib.shape.tips"
 -- player
 require "lib.player"

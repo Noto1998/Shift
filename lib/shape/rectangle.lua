@@ -15,8 +15,8 @@ function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
     end
     -- update lenX/Z
     if self.dir ~= math.pi/2 then
-        self.lenX = math.cos(math.pi/2 - dir) * self.lenX
-        self.lenZ = math.tan(math.pi/2 - dir) * self.lenX
+        self.lenX = math.abs(math.cos(math.pi/2 - dir) * self.lenX)
+        self.lenZ = math.abs(math.tan(math.pi/2 - dir) * self.lenX)
     end
     -- mesh
     local vertices ={}
@@ -38,28 +38,26 @@ function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
 end
 
 function Rectangle:draw(mode)
-    local _z
+    local _x2 = self.x + self.lenX
+    --
+    local _z = self.z
+    local _z2 = self.z - self.lenZ
     if self.dir < math.pi/2 then
-        _z = self.z - self.lenZ
-    else
-        _z = self.z
+        _z, _z2 = _z2, _z        
     end
-
-    local x2 = self.x + self.lenX
-    local z2 = _z + self.lenZ
 
     --line
     if mode == 1 then
         love.graphics.setColor(self.cLine)
-        love.graphics.line(self.x, _z, x2, z2)
+        love.graphics.line(self.x, _z, _x2, _z2)
     
     -- polygon
     else
         -- fill
 		local table = {
             self.x, self.y+ (-self.y + _z) * mode,--
-            x2,     self.y+ (-self.y + z2) * mode,
-            x2,     self.y+self.lenY + (-(self.y+self.lenY) + z2)  * mode,--
+            _x2,    self.y+ (-self.y + _z2) * mode,
+            _x2,    self.y+self.lenY + (-(self.y+self.lenY) + _z2)  * mode,--
             self.x, self.y+self.lenY + (-(self.y+self.lenY) + _z)  * mode
         }
         
@@ -80,4 +78,35 @@ function Rectangle:draw(mode)
 		love.graphics.setColor(self.cLine)
 		love.graphics.polygon("line", table)
     end
+end
+
+function  Rectangle:isCollisionXZ(x, z)
+    local flag = false
+    local centerX = self.x + self.lenX/2--left
+    local centerZ = self.z - self.lenZ/2--bottom
+    
+    -- check in a rectangle
+    if 	math.abs(x - centerX) < self.lenX/2
+    and math.abs(z - centerZ) < self.lenZ/2 then
+
+        local _x2 = self.x + self.lenX
+        local _z = self.z
+        local _z2 = self.z - self.lenZ
+        local signX = -1
+        if self.dir < math.pi/2 then
+            _z, _z2 = _z2, _z
+            signX = 1
+        end
+
+        --
+        local a = self.lenZ/self.lenX
+        local dx = math.abs(self.x - x)
+        local dz = dx * a
+        --
+        if math.abs((_z + dz*signX) - z) <= 1.5 then
+            flag = true
+        end
+    end
+    --
+    return flag
 end
