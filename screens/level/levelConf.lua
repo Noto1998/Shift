@@ -9,9 +9,10 @@ local level = {
     "level_Tutorial_Turret",
     "level_Ccontour",
     "level_Skull",
-
     -- FinishScreen
-    "finishScreen"
+    "level_FinishScreen",
+    
+    "laser_unfinished"
 }
 
 return level

@@ -22,7 +22,7 @@ function Screen:activate()
 		--credits
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code & art & level\tNotoj", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design & level\tYaolaotou", "center"),
-		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"mofish team", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
 end
 
@@ -50,7 +50,7 @@ function Screen:keypressed(key)
 		end
 
 		-- choice level
-		local levelMax = #levelString-1--the last one is finishScreen
+		local levelMax = #levelString-2--finishScreen
 		if key == keys.DPad_right then
 			if page < levelMax then
 				page = page + 1
