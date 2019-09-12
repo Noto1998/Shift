@@ -15,6 +15,17 @@ function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
     self.turnOn = false
 end
 
+function Turret:update(dt)
+    self.timer = self.timer + dt
+    if self.timer > timeMax then
+        self.timer = 0
+        self.turnOn = not self.turnOn
+        --sfx
+        if self.turnOn then
+            love.audio.play(sfx_shoot)
+        end
+    end
+end
 
 function Turret:draw(mode)
     local _y = self.y + (-self.y+self.z)*mode
@@ -34,9 +45,11 @@ function Turret:draw(mode)
         self.x + self.sx*len, _y + (self.sy + (-self.sy+self.sz)*mode) * len )
     else
         -- warning
-        love.graphics.setColor(1, 0, 0)
-        love.graphics.line(self.x, _y,
-        self.x + self.sx*radius*3, _y + (self.sy + (-self.sy+self.sz)*mode) * radius*3 )
+        if self.timer > timeMax * (1-0.3) then
+            love.graphics.setColor(1, 0, 0, 0.35)
+            love.graphics.line(self.x, _y,
+            self.x + self.sx*len, _y + (self.sy + (-self.sy+self.sz)*mode) * len )
+        end
     end
 end
 
@@ -82,17 +95,4 @@ function Turret:hit(mode, player)
     end
     --
     return flag
-end
-
-
-function Turret:update(dt)
-    self.timer = self.timer + dt
-    if self.timer > timeMax then
-        self.timer = 0
-        self.turnOn = not self.turnOn
-        --sfx
-        if self.turnOn then
-            love.audio.play(sfx_shoot)
-        end
-    end
 end

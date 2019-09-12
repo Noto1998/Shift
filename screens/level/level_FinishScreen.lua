@@ -25,7 +25,6 @@ function Screen:activate()
 
 	-- add drawList
 	Screen:addDrawList()
-
 	
 	-- tips
 	Screen:addTipsList(base.guiWidth/2, base.guiHeight/3-9, -50*4, "救救我们", "center", "center")
@@ -39,12 +38,11 @@ function Screen:activate()
 	Screen:addTipsList(_x, base.guiHeight+100*2, 50*0, "救救我们", "center")
 	Screen:addTipsList(_x, base.guiHeight+100*3, 50*1, "救救我们", "center")
 	Screen:addTipsList(_x, base.guiHeight+100*4, 50*2, "救救我们", "center")
-	
-	-- random
+	-- random location
 	for i = 0, 10 do
 		local _x = love.math.random(0, base.guiWidth)
-		local _y = love.math.random(0, base.guiWidth)
-		local _z = love.math.random(0, base.guiHeight)
+		local _y = love.math.random(0, base.guiHeight)
+		local _z = love.math.random(0, base.guiHeight-80)
 		Screen:addTipsList(_x, base.guiHeight+_y, 	_z, "救救我们", "center")
 	end
 end
