@@ -6,17 +6,20 @@ local spdX, spdZ
 
 local function  isCollision(self, table)
     local flag = false
+    local _z = self.z+self.radius
 
     for index, obj in ipairs(table) do
-        --
+        -- Cuboid
         if obj:is(Cuboid) then
             if  self.x > obj.x
             and self.x < obj.x+obj.lenX 
-            and self.z+self.radius > obj.z then
+            and _z > obj.z
+            and _z < obj.z+obj.lenZ then
                 flag = true
             end
+        -- Rectangle
         elseif obj:is(Rectangle) then
-            flag = obj:isCollisionXZ(self.x, self.z+self.radius)
+            flag = obj:isCollisionXZ(self.x, _z)
         end
         --
         if flag then
