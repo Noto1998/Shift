@@ -20,9 +20,9 @@ function Screen:activate()
 	-- shift
 	Screen.super.activate(self)
 
+	--
 	page = 1
 	img = love.graphics.newImage("img/logo.bmp")
-
 	
 	-- tips
 	local x = 20
@@ -35,6 +35,10 @@ function Screen:activate()
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design & level\tYaolaotou", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
+
+	-- bgm
+	bgm_mainScreens:setLooping(true)
+	love.audio.play(bgm_mainScreens)
 end
 
 function Screen:draw()

@@ -69,6 +69,8 @@ function love.load()
     sfx_restart = love.audio.newSource("sound/switch.wav", "static")
     sfx_shoot = love.audio.newSource("sound/leida2.wav", "static")
 
+    bgm_mainScreens = love.audio.newSource("sound/test.wav", "stream")
+
     --- canvas
     canvasBG = love.graphics.newCanvas()
     love.graphics.setCanvas(canvasBG)
