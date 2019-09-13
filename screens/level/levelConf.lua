@@ -13,7 +13,7 @@ local level = {
     
     "level_FinishScreen",   -- FinishScreen
     
-    "laser_unfinished"
+    "level_Laser"           -- Final
 }
 
 return level

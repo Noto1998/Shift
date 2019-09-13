@@ -48,13 +48,14 @@ function Screen:activate()
 end
 
 function Screen:keypressed(key)
-	Screen.super.keypressed(self, key)
-
 	-- goto mainScreens
-	if shiftMode ==0 and key == keys.A then
+	if shiftMode == 0 and key == keys.A then
 		love.load()
 		--love.event.quit( "restart" )
 	end
+
+	-- should under [goto mainScreens], or no work
+	Screen.super.keypressed(self, key)
 end
 
 
