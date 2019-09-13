@@ -1,6 +1,5 @@
 Level = Shift:extend()
 
-local levelNameToDraw
 local finishFlag
 local finishTimer
 
@@ -33,9 +32,9 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	destination = Destination(destinationX, destinationY, destinationZ)
 	
 	-- levelName
-	levelNameToDraw = "levelName missing!"
+	self.levelName = "levelName missing!"
 	if levelName ~= nil then
-		levelNameToDraw = levelName
+		self.levelName = levelName
 	end
 end
 
@@ -67,12 +66,6 @@ function Level:update(dt)
 					shapeList[i]:block(shapeList[j])
 				end
 			end
-
-
-			
-
-
-
 
 		-- Ball
 		elseif shapeList[i]:is(Ball) then
@@ -164,7 +157,7 @@ function Level:draw()
 
 	love.graphics.setColor(base.cWhite)
 	-- draw levelName
-	base.print(levelNameToDraw, 0, base.guiHeight, "right", "bottom")
+	base.print(self.levelName, 0, base.guiHeight, "right", "bottom")
 	-- draw bottom tips
 	base.print("select 重置关卡", base.guiWidth, base.guiHeight, "left", "bottom")
 

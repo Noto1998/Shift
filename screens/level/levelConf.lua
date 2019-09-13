@@ -4,13 +4,12 @@ local level = {
     "level_Tutorial_Shift",
     "level_CrossTheRiver",
     "level_Invisible",
-    "level_RockClimbing",
     "level_Tunnel",
+    "level_RockClimbing",
     "level_Tutorial_Turret",
-    "level_Ccontour",
+    "level_Contour",
     "level_Skull",
-    -- FinishScreen
-    "level_FinishScreen",
+    "level_FinishScreen",   -- FinishScreen
     
     "laser_unfinished"
 }

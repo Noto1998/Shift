@@ -5,6 +5,17 @@ local img
 local t1
 local tipsList
 
+local function getLevelName(page)
+	local string = "bug"
+	local test = require ("screens.level." .. levelString[page])
+	
+	test:activate()
+	string = test.levelName
+	test = nil--release
+
+	return string
+end
+
 function Screen:activate()
 	-- shift
 	Screen.super.activate(self)
@@ -15,7 +26,7 @@ function Screen:activate()
 	
 	-- tips
 	local x = 20
-	t1 = Tips(base.guiWidth/2,145,-50, "<\t第" .. page .. "关\t>", "center")
+	t1 = Tips(base.guiWidth/2,145,-50, "<\t第" .. page .. "关 " .. getLevelName(page) .. "\t>", "center")
 	tipsList = {
 		-- key tips
 		Tips(base.guiWidth/2,185,-50, "←→选择\tA开始", "center"),
@@ -67,7 +78,8 @@ function Screen:keypressed(key)
 
 		-- update string
 		if key ==keys.DPad_right or key == keys.DPad_left then
-			t1.string = "<\t第" .. page .. "关\t>"
+			t1.string = "<\t第" .. page .. "关 " .. getLevelName(page) .. "\t>"
+
 			--sfx
 			love.audio.play(sfx_menu)
 		end
