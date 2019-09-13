@@ -48,8 +48,12 @@ function Level:update(dt)
 	for i = 1, #shapeList do
 		-- turret
 		if shapeList[i]:is(Turret) then
+			-- turn on/off
+			if not shifting then
+				shapeList[i]:update(dt)
+			end
 			-- hit player
-			if shapeList[i]:hit(shiftMode, player) and not finishFlag then
+			if shiftMode == 0 and shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				-- sfx
@@ -57,10 +61,19 @@ function Level:update(dt)
 				love.audio.play(sfx_restart)
 				break
 			end
-			-- turn on/off
-			if not shifting then
-				shapeList[i]:update(dt)
+			-- ball can block laser
+			for j = 1, #shapeList do
+				if shapeList[j]:is(Ball) then
+					shapeList[i]:block(shapeList[j])
+				end
 			end
+
+
+			
+
+
+
+
 		-- Ball
 		elseif shapeList[i]:is(Ball) then
 			shapeList[i]:update(dt, shiftMode, shapeList)

@@ -13,7 +13,10 @@ function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
     -- turn on/off
     self.timer = 0
     self.turnOn = false
+
+    self.len = len
 end
+
 
 function Turret:update(dt)
     self.timer = self.timer + dt
@@ -26,6 +29,7 @@ function Turret:update(dt)
         end
     end
 end
+
 
 function Turret:draw(mode)
     local _y = self.y + (-self.y+self.z)*mode
@@ -42,31 +46,31 @@ function Turret:draw(mode)
         -- shoot line
         love.graphics.setColor(1, 1, 0)
         love.graphics.line(self.x, _y,
-        self.x + self.sx*len, _y + (self.sy + (-self.sy+self.sz)*mode) * len )
+        self.x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
     else
         -- warning
         if self.timer > timeMax * (1-0.3) then
             love.graphics.setColor(1, 0, 0, 0.35)
             love.graphics.line(self.x, _y,
-            self.x + self.sx*len, _y + (self.sy + (-self.sy+self.sz)*mode) * len )
+            self.x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
         end
     end
 end
 
-
-function Turret:hit(mode, player)
+-- player/rectangle
+function Turret:hit(player)
     local flag = false
     -- xy
-    if mode == 0 and self.turnOn then
+    if self.turnOn then
         -- x
         local xLeft = self.x
-        local xRight = self.x + self.sx*len
+        local xRight = self.x + self.sx * self.len
         if xLeft > xRight then
             xLeft, xRight = xRight, xLeft
         end
         -- y
         local yTop = self.y
-        local yBottom = self.y + self.sy*len
+        local yBottom = self.y + self.sy * self.len
         if yTop > yBottom then
             yTop, yBottom = yBottom, yTop
         end
@@ -95,4 +99,45 @@ function Turret:hit(mode, player)
     end
     --
     return flag
+end
+
+
+--ball
+function Turret:hitBall(obj)
+    local flag = false
+
+    -- turret to ball
+    local lenX = math.abs(self.x - obj.x)
+    local lenY = math.abs(self.y - obj.y)
+    local tanBall = lenX/lenY
+    local dirBall = math.atan(tanBall)
+    -- real
+    local tanReal = self.sx/self.sy
+    local dirReal = math.atan(tanReal)
+    -- min
+    local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenY, 2))
+    local sin = obj.radius/c
+    local dirMin = math.asin(sin)
+    --
+    if math.abs(dirBall - dirReal) < dirMin then
+        flag = true
+    end
+
+    return flag
+end
+
+-- ball
+function Turret:block(obj)
+    if self:hitBall(obj) then
+        local lenX = math.abs(self.x - obj.x)
+        local lenY = math.abs(self.y - obj.y)
+        local lenMax = lenX
+        --max        
+        if lenY > lenMax then
+            lenMax = lenY
+        end
+        self.len = lenMax
+    else
+        self.len = len
+    end
 end
