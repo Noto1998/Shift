@@ -72,7 +72,6 @@ function Level:update(dt)
 			shapeList[i]:update(dt, shiftMode, shapeList)
 
 			-- hit player
-			print(shapeList[i]:hit(player))
 			if shiftMode == 1 and shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)

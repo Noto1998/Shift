@@ -11,7 +11,7 @@ function Screen:activate()
 	local cubeLenX2 = 50
 	local cubeLenY2 = 50
 	-- levelName
-	local levelName = "教学"
+	local levelName = "败者食尘"
 	-- player location
 	local playerX = base.guiWidth/5
 	local playerY = base.guiHeight/5
@@ -34,7 +34,7 @@ function Screen:activate()
     Screen:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
 	-- tips
-	Screen:addTipsList(5, base.guiHeight+10, 20,		"败者食尘")
+	Screen:addTipsList(5, base.guiHeight+10, 20,		"黄色很危险。")
 
 	-- add drawList
 	Screen:addDrawList()
