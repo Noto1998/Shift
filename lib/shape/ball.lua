@@ -84,10 +84,30 @@ end
 
 function Ball:draw(mode)
     local _y = self.y + (-self.y+self.z)*mode
+
+    local cTable = {1,1,0,1}--yellow
+    for i = 1, #self.cFill do
+        cTable[i] = self.cFill[i]*(1-mode) + cTable[i]*mode
+    end
+
+
     -- fill
-    love.graphics.setColor(self.cFill)
+    love.graphics.setColor(cTable)
     love.graphics.circle("fill", self.x, _y, self.radius)
     -- line
     love.graphics.setColor(self.cLine)
     love.graphics.circle("line", self.x, _y, self.radius)
+end
+
+function Ball:hit(player)
+    local flag = false
+
+    for i = 1, 2 do
+        if player:isCollisionXZ(i, self) then
+            flag = true
+            break
+        end
+    end
+
+    return flag
 end

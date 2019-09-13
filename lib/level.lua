@@ -60,7 +60,7 @@ function Level:update(dt)
 				love.audio.play(sfx_restart)
 				break
 			end
-			-- ball can block laser
+			-- ball block laser
 			for j = 1, #shapeList do
 				if shapeList[j]:is(Ball) then
 					shapeList[i]:block(shapeList[j])
@@ -70,6 +70,17 @@ function Level:update(dt)
 		-- Ball
 		elseif shapeList[i]:is(Ball) then
 			shapeList[i]:update(dt, shiftMode, shapeList)
+
+			-- hit player
+			print(shapeList[i]:hit(player))
+			if shiftMode == 1 and shapeList[i]:hit(player) and not finishFlag then
+				-- reset
+				self.screen:view(resetLevelString)
+				-- sfx
+				sfx_restart:seek(0.15)
+				love.audio.play(sfx_restart)
+				break
+			end
 		end
 	end
 

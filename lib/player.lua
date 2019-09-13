@@ -110,30 +110,7 @@ local function collisionXY(self, dt, obj)
 	end
 end
 -- xz
-local function isCollisionXZ(self, i, table)
-	local flag = false
-	--
-	for key, obj in pairs(table) do
-		if obj:is(Cuboid) then
-			if	endPoint[i].x >= obj.x -1
-			and endPoint[i].x <= obj.x + obj.lenX +1
-			and endPoint[i].z >= obj.z -1
-			and endPoint[i].z <= obj.z + obj.lenZ +1 then
-				flag = true
-			end
-		elseif obj:is(Rectangle) then
-			flag = obj:isCollisionXZ(endPoint[i].x, endPoint[i].z)
-		elseif obj:is(Circle) then
-			--
-		end	
-		-- jump
-		if flag then
-			break
-		end
-	end
 
-	return flag
-end
 local function setDir(dir, dt, sign)
 	local spdDir = spdMoveXZ
 	dir = dir + sign * spdDir * dt
@@ -267,7 +244,14 @@ function Player:update(dt, mode, shapelist)
 		spdZ = 0
 		-- onGround
 		for i = 1, 2 do
-			endPoint[i].onGround = isCollisionXZ(self, i, shapelist)
+			local flag = false
+			for key, obj in pairs(shapelist) do
+				if self:isCollisionXZ(i, obj) then
+					flag = true
+					break
+				end
+			end
+			endPoint[i].onGround = flag
 
 			--
 			if endPoint[i].onGround == false then
@@ -389,11 +373,41 @@ function Player:touch(destination, mode)
 		-- any endPoint 
 		for i = 1, 2 do
 			local p = endPoint[i]
-			if isCollisionXZ(self, i, {destination}) then
+			if self:isCollisionXZ(i, destination) then
 				flag = true
 				break
 			end
 		end
 	end
     return flag
+end
+
+
+
+function Player:isCollisionXZ(i, obj)
+	local flag = false
+	
+	-- Cuboid
+	if obj:is(Cuboid) then
+		if	endPoint[i].x >= obj.x -1
+		and endPoint[i].x <= obj.x + obj.lenX +1
+		and endPoint[i].z >= obj.z -1
+		and endPoint[i].z <= obj.z + obj.lenZ +1 then
+			flag = true
+		end
+	-- Rectangle
+	elseif obj:is(Rectangle) then
+		flag = obj:isCollisionXZ(endPoint[i].x, endPoint[i].z)
+	-- Ball
+	elseif obj:is(Ball) then
+		local lenX = math.abs(endPoint[i].x - obj.x)
+		local lenZ = math.abs(endPoint[i].z - obj.z)
+		local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenZ, 2))
+
+		if c < obj.radius then
+			flag = true
+		end
+	end
+
+	return flag
 end
