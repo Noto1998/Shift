@@ -2,13 +2,13 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "按钮"
+	local levelName = "激光"
 	-- player location
 	local playerX = 27
-	local playerY = 116
-	local playerZ = 118
+	local playerY = 116-30
+	local playerZ = 108
 	-- destination location
-	local destinationX = 250
+	local destinationX = 10
 	local destinationY = 900
 	local destinationZ = 200
 	-- create player and destination
@@ -16,16 +16,22 @@ function Screen:activate()
     
 	-- Screen:addShapeList(Cuboid,	70, 60,130-20,50,50,50)
     Screen:addShapeList(Cuboid,	2, 2,220,328,238,18)
-    Screen:addShapeList(Cuboid, 2,0,120,100,240,20)
-    Screen:addShapeList(Cuboid, 115,-220,2,10,120,120)
+    Screen:addShapeList(Cuboid, 2,0,110,100,240-100,20)
+    Screen:addShapeList(Cuboid, 115,-220,0,10,120,95)
     Screen:addShapeList(Cuboid, 115,2,155,190,50,35)
-	Screen:addShapeList(Turret, 115,2,155,0,1,1)
-	Screen:addShapeList(Turret, 145,2,155,0,1,1)
-	Screen:addShapeList(Turret, 175,2,155,0,1,1)
-	Screen:addShapeList(Turret, 205,2,155,0,1,1)
-	Screen:addShapeList(Turret, 235,2,155,0,1,1)
-	Screen:addShapeList(Cuboid, 145,-50,85,30,30,30)
-	Screen:addShapeList(Cuboid, 165,500,125,75,60,15)
+	Screen:addShapeList(Turret, 130,3,155,0,1,1)
+	Screen:addShapeList(Turret, 170,3,155,0,1,1)
+	Screen:addShapeList(Turret, 210,3,155,0,1,1)
+	Screen:addShapeList(Turret, 250,3,155,0,1,1)
+	Screen:addShapeList(Turret, 290,3,155,0,1,1)
+	Screen:addShapeList(Cuboid, 125,-390,85,65,80,10)
+	Screen:addShapeList(Cuboid, 185,-220,12+10,10,120,83-10)
+	Screen:addShapeList(Cuboid, 234,-220,12+20,10,120,93-30)
+	Screen:addShapeList(Cuboid, 235,-390,85,65,80,10)
+	Screen:addShapeList(Cuboid, 299,-220,12+30,10,120,93-40)
+    Screen:addShapeList(Cuboid,	103,0,-40,238,52,18)
+	
+	-- Screen:addShapeList(Cuboid, 165,500,125,75,60,15)
 
 
 	-- Screen:addShapeList(Cuboid,	273, 2,2,20,238,185)
