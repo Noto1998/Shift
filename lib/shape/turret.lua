@@ -106,21 +106,39 @@ end
 function Turret:hitBall(obj)
     local flag = false
 
-    -- turret to ball
-    local lenX = math.abs(self.x - obj.x)
-    local lenY = math.abs(self.y - obj.y)
-    local tanBall = lenX/lenY
-    local dirBall = math.atan(tanBall)
-    -- real
-    local tanReal = self.sx/self.sy
-    local dirReal = math.atan(tanReal)
-    -- min
-    local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenY, 2))
-    local sin = obj.radius/c
-    local dirMin = math.asin(sin)
-    --
-    if math.abs(dirBall - dirReal) < dirMin then
-        flag = true
+    -- x
+    local xLeft = self.x
+    local xRight = self.x + self.sx * self.len
+    if xLeft > xRight then
+        xLeft, xRight = xRight, xLeft
+    end
+    -- z
+    local zTop = self.z
+    local zBottom = self.z + self.sz * self.len
+    if zTop > zBottom then
+        zTop, zBottom = zBottom, zTop
+    end
+    -- check rectangle
+    if  obj.x > xLeft   - obj.radius
+    and obj.x < xRight  + obj.radius
+    and obj.y > zTop    - obj.radius
+    and obj.y < zBottom + obj.radius then
+        -- turret to ball
+        local lenX = math.abs(self.x - obj.x)
+        local lenY = math.abs(self.y - obj.y)
+        local tanBall = lenX/lenY
+        local dirBall = math.atan(tanBall)
+        -- real
+        local tanReal = self.sx/self.sy
+        local dirReal = math.atan(tanReal)
+        -- min
+        local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenY, 2))
+        local sin = obj.radius/c
+        local dirMin = math.asin(sin)
+        --
+        if math.abs(dirBall - dirReal) < dirMin then
+            flag = true
+        end
     end
 
     return flag
