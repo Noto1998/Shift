@@ -46,9 +46,9 @@ local function isCollisionXY(self, obj)
 	local flag = false
 	-- Rectangle
 	if obj:is(Rectangle) or obj:is(Cuboid) then
-		if 	self.y <= obj.y + obj.lenY
+		if 	self.y - self.lenY <= obj.y + obj.lenY
 		and self.y + self.lenY >= obj.y
-		and self.x-self.lenX <= obj.x + obj.lenX
+		and self.x - self.lenX <= obj.x + obj.lenX
 		and self.x + self.lenX >= obj.x then
 			flag = true
 		end
