@@ -31,8 +31,6 @@ function Screen:activate()
 	
 	Screen:addShapeList(Ball,		cR, base.guiHeight/2, 50,		cR)
 
-	--Screen:addShapeList(Turret,		1,1,1, 1,1,1)
-
 	-- add drawList
 	Screen:addDrawList()
 end

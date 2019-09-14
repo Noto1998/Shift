@@ -6,10 +6,11 @@ local level = {
     "level_Invisible",
     "level_Tunnel",
     "level_RockClimbing",
+    "level_Tutorial_Ball",
+    "level_DonkeyKong",
     "level_Tutorial_Turret",
     "level_Contour",
     "level_Skull",
-    "level_Tutorial_Ball",
     "level_BlockLaser",
     
     "level_FinishScreen",   -- FinishScreen
