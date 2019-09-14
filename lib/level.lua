@@ -61,11 +61,7 @@ function Level:update(dt)
 				break
 			end
 			-- ball block laser
-			for j = 1, #shapeList do
-				if shapeList[j]:is(Ball) then
-					shapeList[i]:block(shapeList[j])
-				end
-			end
+			shapeList[i]:blockTable(shapeList)
 
 		-- Ball
 		elseif shapeList[i]:is(Ball) then

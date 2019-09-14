@@ -2,7 +2,6 @@ Ball = Shape:extend()
 
 local spd = 25
 local spdG = 80
-local spdX, spdZ
 
 local function  isCollision(self, table)
     local flag = false
@@ -35,8 +34,8 @@ function Ball:new(x, y, z, radius, cFill, cLine, cMesh)
     self.radius = radius
     self.onGround = false
 
-    spdX = 0
-    spdZ = 0
+    self.spdX = 0
+    self.spdZ = 0
 end
 
 
@@ -46,38 +45,38 @@ function Ball:update(dt, mode, list)
        -- onGround
         self.onGround = isCollision(self, list)
         -- gravity
-        spdZ = 0
+        self.spdZ = 0
         if not self.onGround then
-            spdZ = spdG
+            self.spdZ = spdG
         end
 
         -- roll
-        if spdX ~= 0 then
+        if self.spdX ~= 0 then
             local slowSpd = 10*dt
-            if math.abs(spdX) > slowSpd then
-                spdX = spdX - base.sign(spdX)*slowSpd
+            if math.abs(self.spdX) > slowSpd then
+                self.spdX = self.spdX - base.sign(self.spdX)*slowSpd
             else
-                spdX = 0
+                self.spdX = 0
             end
         end
         for key, obj in pairs(list) do
             if obj:is(Rectangle) then
-                if obj:isCollisionXZ(self.x, self.z+self.radius+spdZ*dt) then
+                if obj:isCollisionXZ(self.x, self.z+self.radius+self.spdZ*dt) then
                     local signX = 0
                     if obj.dir < math.pi/2 then
                         signX = 1
                     elseif obj.dir > math.pi/2 then
                         signX = -1
                     end
-                    spdX = spd*signX
+                    self.spdX = spd*signX
                     break
                 end
             end
         end
 
         --
-        self.x = self.x + spdX*dt
-        self.z = self.z + spdZ*dt
+        self.x = self.x + self.spdX*dt
+        self.z = self.z + self.spdZ*dt
     end
 end
 

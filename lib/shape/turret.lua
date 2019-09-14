@@ -153,6 +153,7 @@ end
 
 -- ball
 function Turret:block(obj)
+    self.len = len
     if self:hitBall(obj) then
         local lenX = math.abs(self.x - obj.x)
         local lenY = math.abs(self.y - obj.y)
@@ -162,7 +163,27 @@ function Turret:block(obj)
             lenMax = lenY
         end
         self.len = lenMax
-    else
-        self.len = len
     end
+end
+
+function Turret:blockTable(table)
+    local lenMin = len
+
+    for key, obj in pairs(table) do
+        if obj:is(Ball) and self:hitBall(obj) then
+            local lenX = math.abs(self.x - obj.x)
+            local lenY = math.abs(self.y - obj.y)
+            local lenMax = lenX
+            --max        
+            if lenY > lenMax then
+                lenMax = lenY
+            end
+            -- record min len
+            if lenMin > lenMax then
+                lenMin = lenMax
+            end
+        end
+    end
+
+    self.len = lenMin
 end
