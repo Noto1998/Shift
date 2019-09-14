@@ -2,7 +2,7 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "Block"
+	local levelName = "我来挡住"
 	
 	-- shape value
 	local cLenX = 40*2
