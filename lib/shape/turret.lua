@@ -41,14 +41,21 @@ function Turret:draw(mode)
     love.graphics.circle("line", self.x, _y, radius)
     love.graphics.circle("line", self.x, _y, radius*2)
     
-    -- draw line
+    -- draw shoot line
     if self.turnOn then
-        -- shoot line
-        love.graphics.setColor(1, 1, 0)
+        local cTable1 = {0.5,0.5,0.5}
+        local cTable2 = {1, 1, 0}
+
+        for i = 1, #cTable1 do
+            cTable1[i] = cTable1[i]*mode + cTable2[i]*(1-mode)
+        end
+
+        love.graphics.setColor(cTable1)
         love.graphics.line(self.x, _y,
         self.x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
+        
+    -- warning
     else
-        -- warning
         if self.timer > timeMax * (1-0.3) then
             love.graphics.setColor(1, 0, 0, 0.35)
             love.graphics.line(self.x, _y,
