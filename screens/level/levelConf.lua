@@ -10,10 +10,11 @@ local level = {
     "level_Contour",
     "level_Skull",
     "level_Tutorial_Ball",
+    "level_BlockLaser",
     
     "level_FinishScreen",   -- FinishScreen
     
-    "level_Laser"           -- Final
+    "level_SuperLaser"           -- Final
 }
 
 return level

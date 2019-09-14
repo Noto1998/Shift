@@ -38,7 +38,7 @@ function Screen:activate()
 	---
 
 	-- levelName
-	local levelName = "最终试炼"
+	local levelName = "不可能的任务"
 	-- player location
 	local playerX = 50
 	local playerY = 116-30

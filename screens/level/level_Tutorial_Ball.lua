@@ -2,7 +2,7 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "Rolling"
+	local levelName = "滚石"
 	
 	-- shape value
 	local cLenX = base.guiWidth-1*2
