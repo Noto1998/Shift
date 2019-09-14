@@ -36,9 +36,7 @@ function Screen:activate()
 		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
 
-	-- bgm
-	bgm_mainScreens:setLooping(true)
-	love.audio.play(bgm_mainScreens)
+	
 end
 
 function Screen:draw()
@@ -46,6 +44,9 @@ function Screen:draw()
 	love.graphics.setColor(base.cWhite)
 	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
 	
+	-- bgmManager
+	bgmManager:draw()
+
 	-- tips
 	t1:draw(shiftMode)
 	for key, obj in pairs(tipsList) do
@@ -54,6 +55,9 @@ function Screen:draw()
 end
 
 function Screen:keypressed(key)
+	-- bgmManager
+	bgmManager:keypressed(key)
+
 	-- shift
 	Screen.super.keypressed(self, key)
 	

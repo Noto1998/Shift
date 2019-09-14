@@ -165,11 +165,16 @@ function Level:draw()
 		end
 	end
 
-	love.graphics.setColor(base.cWhite)
 	-- draw levelName
+	love.graphics.setColor(base.cWhite)
 	base.print(self.levelName, 0, base.guiHeight, "right", "bottom")
+	
+	-- bgmManager
+	bgmManager:draw()
 	-- draw bottom tips
-	base.print("select 重置关卡", base.guiWidth, base.guiHeight, "left", "bottom")
+	love.graphics.setColor(base.cWhite)
+	base.print("select 重置", base.guiWidth, base.guiHeight, "left", "bottom")
+	
 
 	-- draw stuck warning
 	if shiftMode == 0 and player.stuck then
@@ -189,6 +194,9 @@ end
 
 
 function Level:keypressed(key)
+	-- bgmManager
+	bgmManager:keypressed(key)
+
 	-- shift
 	if Player:onGround(shiftMode) and not finishFlag then
 		Level.super.keypressed(self, key)

@@ -11,8 +11,6 @@ Object = require "lib.classic"
 keys = require "lib.keys"
 -- baseClassic
 base = require "lib.base"
--- screenManager
-require "lib.screenManager"
 -- shape
 require "lib.shape.shape"
 require "lib.shape.rectangle"
@@ -24,12 +22,15 @@ require "lib.shape.ball"
 require "lib.shape.tips"
 -- player
 require "lib.player"
+-- destination
+require "lib.destination"
 -- level
 require "lib.shift"-- frist
 require "lib.level"
--- destination
-require "lib.destination"
-
+-- screenManager
+local ScreenManager = require "lib.screenManager"
+-- bgmManager
+local BgmManager = require("lib.bgmManager")
 ---
 
 --- LOAD SCREENS
@@ -39,10 +40,8 @@ levelString = require "screens.level.levelConf"
 local LevelScreen = {}
 for i, value in ipairs(levelString) do
     local file = love.filesystem.getInfo("screens/level/" .. value .. ".lua")
-    --io.open("screens/level/" .. value .. ".lua")
     if file ~= nil then
         table.insert(LevelScreen, require("screens.level." .. value))
-        --file:close()
     end
 end
 ---
@@ -51,25 +50,26 @@ end
 function love.load()
     -- DEBUG
     debugMode = true
-    debugLevel = nil-- pressed f2 to type, pressed f1 to run level
+    debugLevel = nil-- pressed f1 to run level
     
     -- level
     levelChoice = 1-- for goto next level
     resetLevelString = nil-- for reset level, set in screenManager.lua
     
     -- font
-    local font = love.graphics.newFont("font/sarasa-mono-sc-medium.ttf", 20)--SourceHanSansCN-Normal.otf
+    local font = love.graphics.newFont("font/sarasa-mono-sc-medium.ttf", 20)
     love.graphics.setFont(font)
 
     -- sound
-    sfx_menu = love.audio.newSource("sound/bibi.wav", "static")
-    sfx_touchGound = love.audio.newSource("sound/touchGound.wav", "static")
-    sfx_shift = love.audio.newSource("sound/shift.wav", "static")
-    sfx_finish = love.audio.newSource("sound/leida.wav", "static")
-    sfx_restart = love.audio.newSource("sound/switch.wav", "static")
-    sfx_shoot = love.audio.newSource("sound/leida2.wav", "static")
+    sfx_menu        = love.audio.newSource("sound/bibi.wav", "static")
+    sfx_touchGound  = love.audio.newSource("sound/touchGound.wav", "static")
+    sfx_shift       = love.audio.newSource("sound/shift.wav", "static")
+    sfx_finish      = love.audio.newSource("sound/leida.wav", "static")
+    sfx_restart     = love.audio.newSource("sound/switch.wav", "static")
+    sfx_shoot       = love.audio.newSource("sound/leida2.wav", "static")
 
     bgm_mainScreens = love.audio.newSource("sound/test.wav", "stream")
+    bgmManager = BgmManager(bgm_mainScreens)
 
     --- canvas
     canvasBG = love.graphics.newCanvas()
