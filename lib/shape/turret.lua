@@ -82,10 +82,10 @@ function Turret:hit(player)
             yTop, yBottom = yBottom, yTop
         end
         -- check rectangle
-        if  player.x > xLeft - player.lenX
-        and player.x < xRight + player.lenX
-        and player.y > yTop - player.lenY
-        and player.y < yBottom + player.lenY then
+        if  player.x + player.lenX > xLeft
+        and player.x - player.lenX < xRight
+        and player.y + player.lenY > yTop
+        and player.y - player.lenY < yBottom then
             if self.sx == 0 and self.sy == 0 then
                 -- point, do nothing
             elseif self.sx == 0 or self.sy == 0 then
@@ -98,7 +98,7 @@ function Turret:hit(player)
                 local dx = dy / a
                 local checkX = self.x + dx*base.sign(self.sx)
                 --
-                if math.abs(player.x - checkX) < player.lenX+math.abs(player.lenY*a) then
+                if math.abs(player.x - checkX) < player.lenX + math.abs(player.lenY/a) then
                     flag = true
                 end
             end
@@ -152,20 +152,6 @@ function Turret:hitBall(obj)
 end
 
 -- ball
-function Turret:block(obj)
-    self.len = len
-    if self:hitBall(obj) then
-        local lenX = math.abs(self.x - obj.x)
-        local lenY = math.abs(self.y - obj.y)
-        local lenMax = lenX
-        --max        
-        if lenY > lenMax then
-            lenMax = lenY
-        end
-        self.len = lenMax
-    end
-end
-
 function Turret:blockTable(table)
     local lenMin = len
 
