@@ -32,7 +32,7 @@ function Screen:activate()
 		Tips(base.guiWidth/2,185,-50, "←→选择\tA开始", "center"),
 		--credits
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code|art|music|level\tNotoj", "center"),
-		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design|level|test\tYaolaotou", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design|level|test\tJcat", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
 
