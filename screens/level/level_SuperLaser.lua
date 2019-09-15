@@ -21,7 +21,7 @@ function Screen:activate()
 	local leftLenY = 50
 	local leftLenZ = 200
 	local leftX = hX1-1
-	local leftY = -100
+	local leftY = -200
 	local leftZ = hZ - leftLenZ + hLenZ
 
 	-- ball
@@ -30,7 +30,7 @@ function Screen:activate()
 	-- turret
 	local tX = 3.5*40
 	local tBorderX = 40
-	local tY = leftY-50
+	local tY = -100
 	local tZ = 100
 	local tSX = 0
 	local tSY = 1

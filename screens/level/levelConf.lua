@@ -13,6 +13,7 @@ local level = {
     "level_Skull",
     "level_BlockLaser",
     "level_OneShot",
+    "level_Cross",
     
     "level_FinishScreen",   -- FinishScreen
     "level_SuperLaser",     -- FinalTest

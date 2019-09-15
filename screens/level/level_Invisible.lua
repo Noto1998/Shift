@@ -6,6 +6,7 @@ function Screen:activate()
 	local cubeLenX = 150
 	local cubeLenY = base.guiHeight-1-1
 	local cubeLenZ = 50
+	local cLenZ2 = 50 + 2
 
 	-- levelName
 	local levelName = "隐形"
@@ -24,10 +25,8 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
-	
-	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,		cubeLenX, cubeLenY, cubeLenZ-40)
-
-	Screen:addShapeList(Cuboid,		250, 50+100, cubeZ-50,		50, 50, 50)
+	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,			cubeLenX, cubeLenY, cubeLenZ-40)
+	Screen:addShapeList(Cuboid,		destinationX-1, destinationY+100, cubeZ-cLenZ2,					cLenZ2, cLenZ2, cLenZ2)
 
 	-- tips
 	Screen:addTipsList(10, -80, 20,	"来找我们。")

@@ -31,7 +31,7 @@ function Screen:activate()
 	-- tips
 	Screen:addTipsList(10, 5, 80, "用方向键移动。")
 	Screen:addTipsList(destination.x-50, destination.y-50, destination.z-50, "到达绿色终点。")
-	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ, "祝你好运。")
+	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ+10, "祝你好运。")
 end
 
 

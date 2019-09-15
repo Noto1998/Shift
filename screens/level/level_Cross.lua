@@ -10,7 +10,7 @@ function Screen:activate()
 	-- destination location
 	local destinationX = 20
 	local destinationY = 20
-	local destinationZ = 160
+	local destinationZ = -160
 	-- Side Wall
 	local SWx = -12
 	local SWy = 0
@@ -28,6 +28,9 @@ function Screen:activate()
 	--
 	local Sx=1
 	local Sy = 240/(320-2*(Lx-50))
+	--Slope
+	local dir= math.pi/8
+	
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
@@ -39,10 +42,10 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,SWx,SWy,SWz,SWLx,SWLy,SWLz)
 	Screen:addShapeList(Cuboid,SWx+325,SWy,SWz,SWLx,SWLy,SWLz)
 	--Laser
-	Screen:addShapeList(Turret,Lx,Ly,Lz,LLx,LLy,LLz)--chuizhi
-	Screen:addShapeList(Turret,Lx-50,Ly,Lz,Sx,Sy,LLz)--right
-	Screen:addShapeList(Turret,Lx+50,Ly,Lz,-Sx,Sy,LLz)--left
-	Screen:addShapeList(Turret,0,Ly+210,Lz,1,0,LLz)
+	Screen:addShapeList(Turret,Lx,	 Ly-4,210-40/2,	LLx,LLy,LLz)--chuizhi
+	Screen:addShapeList(Turret,Lx-50,Ly-4,210-40/2,	Sx,Sy,LLz)--right
+	Screen:addShapeList(Turret,Lx+50,Ly-4,210-40/2,	-Sx,Sy,LLz)--left
+	Screen:addShapeList(Turret,0,Ly+210,Lz,1,0,0)
 	--Middle Wall
 	Screen:addShapeList(Cuboid,55,100,110,210,30,30)
 	Screen:addShapeList(Cuboid,150,50,190,20,55,20)
@@ -53,7 +56,10 @@ function Screen:activate()
 	--Ball
 	Screen:addShapeList(Ball,85,115,150,12.5)
 	--Slope
-	Screen:addShapeList(Rectangle,80,105,210,70,25,math.pi/2-math.pi/4)
+	Screen:addShapeList(Rectangle,80,105,210,	80/math.cos(dir),25,	math.pi/2-dir)
+
+	-- tips
+	Screen:addTipsList(20,-80,10,	"犹豫就会败北。")
 
 	Screen:addDrawList()
 end

@@ -170,7 +170,7 @@ function Level:draw()
 
 	-- draw levelName
 	love.graphics.setColor(base.cWhite)
-	base.print(self.levelName, 0, base.guiHeight, "right", "bottom")
+	base.print(self.levelName, 5, base.guiHeight, "right", "bottom")
 	
 	-- bgmManager
 	bgmManager:draw()

@@ -50,7 +50,7 @@ end
 --- LOAD GAME
 function love.load()
     -- DEBUG
-    debugMode = true
+    debugMode = false-- close
     debugLevel = nil-- pressed f1 to run level
     
     -- level

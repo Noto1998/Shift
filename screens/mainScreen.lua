@@ -31,8 +31,8 @@ function Screen:activate()
 		-- key tips
 		Tips(base.guiWidth/2,185,-50, "←→选择\tA开始", "center"),
 		--credits
-		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code & art & level\tNotoj", "center"),
-		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design & level\tYaolaotou", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code|art|music|level\tNotoj", "center"),
+		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design|level|test\tYaolaotou", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
 
@@ -62,6 +62,8 @@ function Screen:keypressed(key)
 	Screen.super.keypressed(self, key)
 	
 	if shiftMode == 0 then
+		local levelMax = #levelString-3--finishScreen
+
 		-- start level
 		if key == keys.A then
 			levelChoice = page
@@ -69,7 +71,6 @@ function Screen:keypressed(key)
 		end
 
 		-- choice level
-		local levelMax = #levelString-2--finishScreen
 		if key == keys.DPad_right then
 			if page < levelMax then
 				page = page + 1
