@@ -1,6 +1,6 @@
 --- LOADING SCREEN
-love.graphics.clear(255,255,255)
-love.graphics.print("loading test")
+love.graphics.clear(1, 1, 1)
+love.graphics.draw(love.graphics.newImage( "img/loading.jpg") )
 love.graphics.present()
 ---
 

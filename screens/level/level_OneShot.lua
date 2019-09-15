@@ -14,7 +14,7 @@ function Screen:activate()
 	local reY = 0-reLenY
 	local reZ = 70
 	local reDir = math.pi/20
-	local lenXReal = (base.guiWidth-math.cos(reDir)*reLenX)
+	local lenXReal = base.guiWidth - math.cos(reDir)*reLenX
 	local reZBorder = 75
 	--ball
 	local bR = 20
