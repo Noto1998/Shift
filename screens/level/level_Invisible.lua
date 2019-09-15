@@ -30,7 +30,7 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		250, 50+100, cubeZ-50,		50, 50, 50)
 
 	-- tips
-	Screen:addTipsList(10,-80,20,"来找我们。")
+	Screen:addTipsList(10, -80, 20,	"来找我们。")
 
 	-- add drawList
 	Screen:addDrawList()

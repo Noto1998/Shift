@@ -15,8 +15,8 @@ local level = {
     "level_OneShot",
     
     "level_FinishScreen",   -- FinishScreen
-    
-    "level_SuperLaser"           -- Final
+    "level_SuperLaser",     -- FinalTest
+    "level_fourD"           -- End
 }
 
 return level

@@ -20,6 +20,7 @@ require "lib.shape.cuboid"
 require "lib.shape.turret"
 require "lib.shape.ball"
 require "lib.shape.tips"
+require "lib.shape.fourD"
 -- player
 require "lib.player"
 -- destination

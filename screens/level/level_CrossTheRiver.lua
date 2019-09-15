@@ -6,7 +6,7 @@ function Screen:activate()
 	local cubeLenX = 150
 	local cubeLenY = base.guiHeight-1-1
 	local cubeLenZ = 50
-	local cubeLenZ3 = 50+2
+	local cubeLenZ3 = 50+3
 
 	-- levelName
 	local levelName = "过河"
