@@ -30,7 +30,9 @@ function Screen:activate()
 	local Sy = 240/(320-2*(Lx-50))
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
-    --Floor
+	
+	--here to create the shape
+	--Floor
 	Screen:addShapeList(Cuboid,	2,2,210,318,238,30)
 	
 	--Side Wall
@@ -44,25 +46,15 @@ function Screen:activate()
 	--Middle Wall
 	Screen:addShapeList(Cuboid,55,100,110,210,30,30)
 	Screen:addShapeList(Cuboid,150,50,190,20,55,20)
+	Screen:addShapeList(Cuboid,170,110,190,1,15,20)
 	Screen:addShapeList(Cuboid,150,130,190,20,55,20)
 	Screen:addShapeList(Cuboid,290,100,110,22,30,30)
 	Screen:addShapeList(Cuboid,10,100,110,22,30,30)
-	--Bottom Wall
-	-- Screen:addShapeList(Cuboid,1) 
+	--Ball
+	Screen:addShapeList(Ball,85,115,150,12.5)
+	--Slope
+	Screen:addShapeList(Rectangle,80,105,210,70,25,math.pi/2-math.pi/4)
 
-
-
-
-	--- here to create shape
-	-- use [ Screen:addShapeList(shape,...) ] to create shape:
-	-- Rectangle,	x, y, z, lenX, lenY
-	-- Circle,		x, y, z, radius
-	-- Cuboid,		x, y, z, lenX, lenY, lenZ
-	-- Cylinder,	x, y, z, radius, height
-
-	-- e.g. Screen:addShapeList(Circle, 0, 0, 0, 50)
-	
-	-- add drawList
 	Screen:addDrawList()
 end
 
