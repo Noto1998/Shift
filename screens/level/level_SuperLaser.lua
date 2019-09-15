@@ -46,7 +46,7 @@ function Screen:activate()
 	-- destination location
 	local destinationX = playerX-50/2
 	local destinationY = base.guiHeight+10
-	local destinationZ = base.guiHeight-20-50
+	local destinationZ = base.guiHeight-20-50+50/2
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
     

@@ -84,11 +84,6 @@ function ScreenManager:registerEvents()
 			end
 		end
 		---
-		--- [debug] f2, turn on/off
-		if select(1, ...) == 'f2' then
-			debugMode = not debugMode
-		end
-		---
 
 		_self:event('keypressed', ...)
 	end
