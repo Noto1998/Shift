@@ -94,7 +94,7 @@ function Turret:hit(player)
             else
                 -- both ~= 0
                 local dy = math.abs(self.y - player.y)
-                local a = math.abs(self.sy)/math.abs(self.sx)
+                local a = math.abs(self.sy/self.sx)
                 local dx = dy / a
                 local checkX = self.x + dx*base.sign(self.sx)
                 --
@@ -119,32 +119,40 @@ function Turret:hitBall(obj)
     if xLeft > xRight then
         xLeft, xRight = xRight, xLeft
     end
-    -- z
-    local zTop = self.z
-    local zBottom = self.z + self.sz * self.len
-    if zTop > zBottom then
-        zTop, zBottom = zBottom, zTop
+    -- y
+    local yTop = self.y
+    local yBottom = self.y + self.sy * self.len
+    if yTop > yBottom then
+        yTop, yBottom = yBottom, yTop
     end
     -- check rectangle
-    if  obj.x > xLeft   - obj.radius
-    and obj.x < xRight  + obj.radius
-    and obj.y > zTop    - obj.radius
-    and obj.y < zBottom + obj.radius then
-        -- turret to ball
-        local lenX = math.abs(self.x - obj.x)
-        local lenY = math.abs(self.y - obj.y)
-        local tanBall = lenX/lenY
-        local dirBall = math.atan(tanBall)
-        -- real
-        local tanReal = self.sx/self.sy
-        local dirReal = math.atan(tanReal)
-        -- min
-        local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenY, 2))
-        local sin = obj.radius/c
-        local dirMin = math.asin(sin)
-        --
-        if math.abs(dirBall - dirReal) < dirMin then
+    if  obj.x + obj.radius > xLeft
+    and obj.x - obj.radius < xRight
+    and obj.y + obj.radius > yTop
+    and obj.y - obj.radius < yBottom then
+        if self.sx == 0 and self.sy == 0 then
+            -- point, do nothing
+        elseif self.sx == 0 or self.sy == 0 then
+            -- vertical or horizontal
             flag = true
+        else
+            -- both ~= 0
+            -- turret to ball
+            local lenX = self.x - obj.x
+            local lenY = self.y - obj.y
+            local tanBall = lenX/lenY
+            local dirBall = math.atan(tanBall)
+            -- real
+            local tanReal = self.sx/self.sy
+            local dirReal = math.atan(tanReal)
+            -- min
+            local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenY, 2))
+            local sin = obj.radius/c
+            local dirMin = math.asin(sin)
+            --
+            if math.abs(dirBall - dirReal) < dirMin then
+                flag = true
+            end
         end
     end
 
@@ -156,18 +164,18 @@ function Turret:blockTable(table)
     local lenMin = len
 
     for key, obj in pairs(table) do
-        if obj:is(Ball) and self:hitBall(obj) then
+        if self:hitBall(obj) then
             local lenX = math.abs(self.x - obj.x)
             local lenY = math.abs(self.y - obj.y)
-            local lenMax = lenX
-            --max        
-            if lenY > lenMax then
-                lenMax = lenY
-            end
+            local c = math.sqrt(math.pow(lenX, 2)+math.pow(lenY, 2))
+            local c2 = math.sqrt(math.pow(self.sx, 2)+math.pow(self.sy, 2))
+            local _len = c/c2
+
             -- record min len
-            if lenMin > lenMax then
-                lenMin = lenMax
+            if _len < lenMin then
+                lenMin = _len
             end
+
         end
     end
 

@@ -60,8 +60,15 @@ function Level:update(dt)
 				love.audio.play(sfx_restart)
 				break
 			end
+			
 			-- ball block laser
-			shapeList[i]:blockTable(shapeList)
+			local ballTable = {}
+			for i = 1, #shapeList do
+				if shapeList[i]:is(Ball) then
+					table.insert(ballTable, shapeList[i])
+				end
+			end
+			shapeList[i]:blockTable(ballTable)
 
 		-- Ball
 		elseif shapeList[i]:is(Ball) then
