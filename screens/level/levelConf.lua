@@ -12,6 +12,7 @@ local level = {
     "level_Contour",
     "level_Skull",
     "level_BlockLaser",
+    "level_OneShot",
     
     "level_FinishScreen",   -- FinishScreen
     
