@@ -38,7 +38,7 @@ function Screen:activate()
 	---
 
 	-- levelName
-	local levelName = "不可能的任务"
+	local levelName = lang.level_SuperLaser
 	-- player location
 	local playerX = 50
 	local playerY = 116-30

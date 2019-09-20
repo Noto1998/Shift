@@ -176,13 +176,13 @@ function Level:draw()
 	bgmManager:draw()
 	-- draw bottom tips
 	love.graphics.setColor(base.cWhite)
-	base.print("select 重置", base.guiWidth, base.guiHeight, "left", "bottom")
+	base.print(lang.ui_key_reset, base.guiWidth, base.guiHeight, "left", "bottom")
 	
 
 	-- draw stuck warning
 	if shiftMode == 0 and player.stuck then
 		love.graphics.setColor(base.cWhite)
-		base.print("player stuck", base.guiWidth/2, base.guiHeight/2, "center", "center")
+		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 
 	-- finish level
@@ -190,8 +190,8 @@ function Level:draw()
 		love.graphics.setColor(0,0,0, 0.75)
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
 		love.graphics.setColor(base.cWhite)
-		base.print("关卡完成", base.guiWidth/2, base.guiHeight/3, "center", "center")
-		base.print("按A继续", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+		base.print(lang.ui_level_finish, base.guiWidth/2, base.guiHeight/3, "center", "center")
+		base.print(lang.ui_pressed_A_to_continue, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 	end
 end
 

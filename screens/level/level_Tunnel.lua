@@ -15,7 +15,7 @@ function Screen:activate()
 	local cubeLenZ3 = 60
 
 	-- levelName
-	local levelName = "隧道"
+	local levelName = lang.level_Tunnel
 	-- player location
 	local playerX = 100
 	local playerY =50

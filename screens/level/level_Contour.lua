@@ -16,7 +16,7 @@ function Screen:activate()
 	local cLenY3 = base.guiHeight/2
 
 	-- levelName
-	local levelName = "等高线"
+	local levelName = lang.level_Contour
 	-- player location
 	local playerX = base.guiWidth/4
 	local playerY = base.guiHeight/4

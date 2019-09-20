@@ -10,7 +10,7 @@ function Screen:activate()
 	local cubeLenZ3 = 50+2
 	
 	-- levelName
-	local levelName = "教学"
+	local levelName = lang.level_Tutorial_Shift
 	-- player location
 	local playerX = 80
 	local playerY = base.guiHeight/2
@@ -29,8 +29,8 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(180, 50, -50, "按Y切换维度。")
-	Screen:addTipsList(180, 350, 20, "←→移动。")
+	Screen:addTipsList(180, 50, -50, lang.tips_pressed_Y_to_shift)
+	Screen:addTipsList(180, 350, 20, lang.tips_left_and_right_to_move)
 end
 
 return Screen

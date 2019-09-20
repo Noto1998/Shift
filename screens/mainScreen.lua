@@ -26,24 +26,18 @@ function Screen:activate()
 	
 	-- tips
 	local x = 20
-	t1 = Tips(base.guiWidth/2,145,-50, "<\t第" .. page .. "关 " .. getLevelName(page) .. "\t>", "center")
+	t1 = Tips(base.guiWidth/2,145,-50, lang.ui_level_choice(page, getLevelName(page)), "center")
 	tipsList = {
 		-- key tips
-		Tips(base.guiWidth/2,185,-50, "←→选择\tA开始", "center"),
+		Tips(base.guiWidth/2,185,-50, lang.ui_key_start_and_move, "center"),
 		--credits
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code|art|music|level\tNotoj", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design|level|test\tJcat", "center"),
 		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
 	}
-
-	
 end
 
 function Screen:draw()
-	-- logo
-	love.graphics.setColor(base.cWhite)
-	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
-	
 	-- bgmManager
 	bgmManager:draw()
 
@@ -52,6 +46,10 @@ function Screen:draw()
 	for key, obj in pairs(tipsList) do
 		obj:draw(shiftMode)
 	end
+
+	-- logo
+	love.graphics.setColor(base.cWhite)
+	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
 end
 
 function Screen:keypressed(key)
@@ -87,7 +85,7 @@ function Screen:keypressed(key)
 
 		-- update string
 		if key ==keys.DPad_right or key == keys.DPad_left then
-			t1.string = "<\t第" .. page .. "关 " .. getLevelName(page) .. "\t>"
+			t1.string = lang.ui_level_choice(page, getLevelName(page))
 
 			--sfx
 			love.audio.play(sfx_menu)

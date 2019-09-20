@@ -2,13 +2,7 @@ local Screen = Level:extend()
 
 local tipsTime
 local tipsFlag
-local tipsTable = {
-	"恭喜你，你做到了。",
-	"就像我们其他同胞那样。",
-	"我们需要生存的方法。",
-	"但四维从不回应。",
-	"希望我们能再次相见。",
-}
+local tipsTable = lang.tips_fourD
 
 function Screen:activate()
 	-- shape value
@@ -57,7 +51,6 @@ function Screen:update(dt)
 	(shiftMode >= (1-mode1)-modeMin and shiftMode <= (1-mode1)+modeMin) then
 		f1.lenX, f1.lenY = f1.lenY, f1.lenX
 	end
-
 
 	--
 	tipsFlag = (shiftMode == 0)

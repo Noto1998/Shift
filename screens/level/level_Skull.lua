@@ -14,7 +14,7 @@ function Screen:activate()
 	local floorLenY = 50*2
 
 	-- levelName
-	local levelName = "骷髅"
+	local levelName = lang.level_Skull
 	-- player location
 	local playerX = 50
 	local playerY = 70

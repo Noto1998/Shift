@@ -2,7 +2,7 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "交叉"
+	local levelName = lang.level_Cross
 	-- player location
 	local playerX = 275
 	local playerY = 45
@@ -59,7 +59,7 @@ function Screen:activate()
 	Screen:addShapeList(Rectangle,80,105,210,	80/math.cos(dir),25,	math.pi/2-dir)
 
 	-- tips
-	Screen:addTipsList(20,-80,10,	"犹豫就会败北。")
+	Screen:addTipsList(20,-80,10,	lang.tips_mayoiba_yabureru)
 
 	Screen:addDrawList()
 end

@@ -2,7 +2,7 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "一次机会"
+	local levelName = lang.level_OneShot
 	
 	-- shape value
 	local cZ = 200

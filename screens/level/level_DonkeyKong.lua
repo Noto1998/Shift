@@ -2,7 +2,7 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	-- levelName
-	local levelName = "大金刚"
+	local levelName = lang.level_DonkeyKong
 
 	-- Rectangle
 	local reZ = 100

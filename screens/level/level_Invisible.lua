@@ -9,7 +9,7 @@ function Screen:activate()
 	local cLenZ2 = 50 + 2
 
 	-- levelName
-	local levelName = "隐形"
+	local levelName = lang.level_Invisible
 	-- player location
 	local playerX = 100
 	local playerY = 180
@@ -29,7 +29,7 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		destinationX-1, destinationY+100, cubeZ-cLenZ2,					cLenZ2, cLenZ2, cLenZ2)
 
 	-- tips
-	Screen:addTipsList(10, -80, 20,	"来找我们。")
+	Screen:addTipsList(10, -80, 20,	lang.tips_find_us)
 
 	-- add drawList
 	Screen:addDrawList()

@@ -8,7 +8,7 @@ function Screen:activate()
 	local cubeLenZ = 40
 
 	-- levelName
-	local levelName = "攀岩"
+	local levelName = lang.level_RockClimbing
 	-- player location
 	local playerX = 100
 	local playerY = 180

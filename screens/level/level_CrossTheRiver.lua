@@ -9,7 +9,7 @@ function Screen:activate()
 	local cubeLenZ3 = 50+3
 
 	-- levelName
-	local levelName = "过河"
+	local levelName = lang.level_CrossTheRiver
 	-- player location
 	local playerX = 100
 	local playerY = 180

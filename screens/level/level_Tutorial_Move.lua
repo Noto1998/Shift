@@ -10,7 +10,7 @@ function Screen:activate()
 	local cubeLenZ3 = 50+2
 	
 	-- levelName
-	local levelName = "教学"
+	local levelName = lang.level_Tutorial_Move
 	-- player location
 	local playerX = 80
 	local playerY = base.guiHeight/2
@@ -20,7 +20,7 @@ function Screen:activate()
 	local destinationY = playerY-50/2
 	local destinationZ = cubeZ-50
 	-- create player and destination
-	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
+	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
 	Screen:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
@@ -29,9 +29,9 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(10, 5, 80, "用方向键移动。")
-	Screen:addTipsList(destination.x-50, destination.y-50, destination.z-50, "到达绿色终点。")
-	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ+10, "祝你好运。")
+	Screen:addTipsList(10, 5, 80, lang.tips_use_arrows_to_move)
+	Screen:addTipsList(destinationX-50, destinationY-50, destinationZ-50, lang.tips_touch_the_green_goal)
+	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ+10, lang.tips_good_luck)
 end
 
 
