@@ -46,10 +46,6 @@ function Screen:keypressed(key)
 		--
 		self.screen:view('MainScreen')
 	end
-
-	if key == keys.B then
-		lang = require "lib.lang.lang_eng"
-	end
 end
 
 return Screen
