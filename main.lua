@@ -1,6 +1,7 @@
 --- LOADING SCREEN
 love.graphics.clear(1, 1, 1)
-love.graphics.draw(love.graphics.newImage( "img/loading.jpg") )
+local img = love.graphics.newImage("img/loading.jpg")
+love.graphics.draw(img)
 love.graphics.present()
 ---
 
@@ -31,7 +32,7 @@ require "lib.level"
 -- screenManager
 local ScreenManager = require "lib.screenManager"
 -- bgmManager
-local BgmManager = require("lib.bgmManager")
+local BgmManager = require"lib.bgmManager"
 ---
 
 --- LOAD SCREENS
@@ -40,7 +41,8 @@ local MainScreen = require "screens.mainScreen"
 levelString = require "screens.level.levelConf"
 local LevelScreen = {}
 for i, value in ipairs(levelString) do
-    local file = love.filesystem.getInfo("screens/level/" .. value .. ".lua")
+    local fileName = "screens/level/" .. value .. ".lua"
+    local file = love.filesystem.getInfo(fileName)
     if file ~= nil then
         table.insert(LevelScreen, require("screens.level." .. value))
     end
@@ -50,12 +52,12 @@ end
 --- LOAD GAME
 function love.load()
     -- DEBUG
-    debugMode = false-- close
-    debugLevel = nil-- pressed f1 to run level
+    debugMode = false       -- close
+    debugLevel = nil        -- pressed f1 to run level
     
     -- level
-    levelChoice = 1-- for goto next level
-    resetLevelString = nil-- for reset level, set in screenManager.lua
+    levelChoice = 1         -- for goto next level
+    resetLevelString = nil  -- for reset level, set in screenManager.lua
     
     -- font
     local font = love.graphics.newFont("font/sarasa-mono-sc-medium.ttf", 20)
@@ -68,7 +70,6 @@ function love.load()
     sfx_finish      = love.audio.newSource("sound/leida.wav", "static")
     sfx_restart     = love.audio.newSource("sound/switch.wav", "static")
     sfx_shoot       = love.audio.newSource("sound/leida2.wav", "static")
-
     bgm_mainScreens = love.audio.newSource("sound/test.wav", "stream")
     bgmManager = BgmManager(bgm_mainScreens)
 
@@ -77,7 +78,7 @@ function love.load()
     love.graphics.setCanvas(canvasBG)
         love.graphics.clear()
         local lineBorder = 40
-        love.graphics.setColor(0.25, 0.25, 0.25)
+        love.graphics.setColor(base.cDarkGray)
         for i = 1, base.guiHeight/lineBorder-1 do
             local y = i * lineBorder
             love.graphics.line(0, y, base.guiWidth, y)
@@ -93,8 +94,8 @@ function love.load()
     local screenManager = ScreenManager()
     screenManager:register('/', MainScreen)
     for i, level in ipairs(LevelScreen) do
-        local levelName = --"levelScreen" .. i
-        screenManager:register(levelString[i], level)
+        local levelName = levelString[i]
+        screenManager:register(levelName, level)
     end
 end
 ---

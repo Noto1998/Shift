@@ -6,7 +6,8 @@ local spdMoveXZ = math.pi/2.5
 local spdX
 local spdY
 local spdZ
-local cFill = {0.5, 0.5, 0.5, 0.5}--test
+local cFill = base.cloneTable(base.cGray)
+cFill[4] = 0.5
 ---endPoint
 local dir
 local lockPoint
@@ -326,9 +327,9 @@ function Player:draw(mode)
 		love.graphics.line(endPoint[1].x, endPoint[1].z, endPoint[2].x, endPoint[2].z)
 		local rPoint = 3
 		for i = 1, 2 do
-			local cPoint = {0.25, 0.25, 0.25}
+			local cPoint = base.cDarkGray
 			if endPoint[i].onGround then
-				cPoint = {1, 1, 1}
+				cPoint = base.cWhite
 			end
 			love.graphics.setColor(cPoint)
 			love.graphics.circle("fill", endPoint[i].x, endPoint[i].z, rPoint)

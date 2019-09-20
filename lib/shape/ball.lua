@@ -84,7 +84,7 @@ end
 function Ball:draw(mode)
     local _y = self.y + (-self.y+self.z)*mode
 
-    local cTable = {1,1,0,1}--yellow
+    local cTable = base.cloneTable(base.cYellow)
     for i = 1, #self.cFill do
         cTable[i] = self.cFill[i]*(1-mode) + cTable[i]*mode
     end

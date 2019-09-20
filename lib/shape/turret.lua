@@ -43,8 +43,8 @@ function Turret:draw(mode)
     
     -- draw shoot line
     if self.turnOn then
-        local cTable1 = {0.5,0.5,0.5}
-        local cTable2 = {1, 1, 0}
+        local cTable1 = base.cloneTable(base.cGray)
+        local cTable2 = base.cloneTable(base.cYellow)
 
         for i = 1, #cTable1 do
             cTable1[i] = cTable1[i]*mode + cTable2[i]*(1-mode)
@@ -57,7 +57,7 @@ function Turret:draw(mode)
     -- warning
     else
         if self.timer > timeMax * (1-0.3) then
-            love.graphics.setColor(1, 0, 0, 0.35)
+            love.graphics.setColor(base.cWarning)
             love.graphics.line(self.x, _y,
             self.x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
         end

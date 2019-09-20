@@ -36,8 +36,7 @@ function Screen:activate()
 	--- here to create shape
 	Screen:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
 
-	f1 = FourD(base.guiWidth/2, base.guiHeight/2, base.guiHeight/4,		30,  50,
-	{0.92, 0.02, 0.76, 0.25}, {0.02, 0.92, 0.7, 0.25})
+	f1 = FourD(base.guiWidth/2, base.guiHeight/2, base.guiHeight/4,		30,  50)
 	table.insert(shapeList, f1)
 
 	-- tips

@@ -1,13 +1,10 @@
 FourD = Shape:extend()
 
-
-function FourD:new(x, y, z, lenX, lenY, c1, c2)
+function FourD:new(x, y, z, lenX, lenY)
     FourD.super.new(self, x, y, z)
 
     self.lenX = lenX
     self.lenY = lenY
-    self.c1 = c1
-    self.c2 = c2
 end
 
 
@@ -35,9 +32,9 @@ function FourD:draw(mode)
     --
     local modeMin = 0.01
     --
-    love.graphics.setColor(self.c1)
+    love.graphics.setColor(base.cfourD1)
     love.graphics.polygon("fill", tableT1)
-    love.graphics.setColor(self.c2)
+    love.graphics.setColor(base.cfourD2)
     love.graphics.polygon("fill", tableT2)
     --
     love.graphics.setColor(base.cWhite)
