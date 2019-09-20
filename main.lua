@@ -57,13 +57,13 @@ function love.load()
     love.graphics.setFont(font)
 
     -- sound
-    sfx_menu        = love.audio.newSource("sound/bibi.wav", "static")
-    sfx_touchGound  = love.audio.newSource("sound/touchGound.wav", "static")
-    sfx_shift       = love.audio.newSource("sound/shift.wav", "static")
-    sfx_finish      = love.audio.newSource("sound/leida.wav", "static")
-    sfx_restart     = love.audio.newSource("sound/switch.wav", "static")
-    sfx_shoot       = love.audio.newSource("sound/leida2.wav", "static")
-    bgm_mainScreens = love.audio.newSource("sound/test.wav", "stream")
+    sfx_menu        = love.audio.newSource("sound/bibi_MP3.mp3", "static")
+    sfx_touchGound  = love.audio.newSource("sound/touchGound_MP3.mp3", "static")
+    sfx_shift       = love.audio.newSource("sound/shift_MP3.mp3", "static")
+    sfx_finish      = love.audio.newSource("sound/leida_MP3.mp3", "static")
+    sfx_restart     = love.audio.newSource("sound/switch_MP3.mp3", "static")
+    sfx_shoot       = love.audio.newSource("sound/leida2_MP3.mp3", "static")
+    bgm_mainScreens = love.audio.newSource("sound/test_MP3.mp3", "stream")
     bgmManager = BgmManager(bgm_mainScreens)
 
     --- canvas
