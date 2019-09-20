@@ -4,6 +4,7 @@ local lang = {}
 function lang.ui_level_choice(Num, Name)   return "<\t第" .. Num .. "关 " .. Name .. "\t>"    end
 lang.ui_key_start_and_move = "←→选择\tA开始"
 lang.ui_key_reset = "select 重置"
+lang.ui_key_music = "start ♫"
 lang.ui_player_stuck = "玩家卡住"
 lang.ui_level_finish = "关卡完成"
 lang.ui_pressed_A_to_continue = "按A继续"
@@ -43,7 +44,6 @@ lang.tips_fourD = {
 lang.tips_pressed_Y_to_shift = "按Y切换维度。"
 lang.tips_left_and_right_to_move = "←→移动。"
 lang.tips_yellow_is_dangerous = "黄色很危险。"
-lang.tips_B_language_switch = "B language switch"
 
 
 return lang
