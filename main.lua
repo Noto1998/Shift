@@ -5,6 +5,7 @@ love.graphics.draw(img)
 love.graphics.present()
 ---
 
+
 --- IMPORT CLASSIC
 -- object-oriented
 Object = require "lib.classic"
@@ -35,6 +36,7 @@ local BgmManager = require "lib.bgmManager"
 -- lang
 lang = require "lib.lang.lang_cn"       -- cn default
 ---
+
 
 --- LOAD SCREENS
 local MainScreen = require "screens.mainScreen"

@@ -27,14 +27,14 @@ function Screen:activate()
 	
 	-- tips
 	local x = 20
-	t1 = Tips(base.guiWidth/2,145,-50, lang.ui_level_choice(page, getLevelName(page)), "center")
+	t1 = Tips(lang.ui_level_choice(page, getLevelName(page)), base.guiWidth/2,145,-50, "center")
 	tipsList = {
 		-- key tips
-		Tips(base.guiWidth/2,185,-50, lang.ui_key_start_and_move, "center"),
+		Tips(lang.ui_key_start_and_move,	base.guiWidth/2, 185, -50, "center"),
 		--credits
-		Tips(base.guiWidth/2, base.guiHeight+50,120+40*2,	"code|art|music|level\tNotoj", "center"),
-		Tips(base.guiWidth/2, base.guiHeight+50,120+40, 	"design|level|test\tJcat", "center"),
-		Tips(base.guiWidth/2, base.guiHeight+50,120, 		"Mofish", "center"),
+		Tips("code|art|music|level\tNotoj", base.guiWidth/2, base.guiHeight+50,120+40*2,	"center"),
+		Tips("design|level|test\tJcat", 	base.guiWidth/2, base.guiHeight+50,120+40, 		"center"),
+		Tips("Mofish", 						base.guiWidth/2, base.guiHeight+50,120, 		"center"),
 	}
 end
 

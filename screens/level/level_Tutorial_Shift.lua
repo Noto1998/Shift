@@ -25,12 +25,12 @@ function Screen:activate()
 	--- here to create shape
 	Screen:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 
+	-- tips
+	Screen:addTipsList(lang.tips_pressed_Y_to_shift,		180, 50, -50)
+	Screen:addTipsList(lang.tips_left_and_right_to_move,	180, 350, 20)
+
 	-- add drawList
 	Screen:addDrawList()
-
-	-- tips
-	Screen:addTipsList(180, 50, -50, lang.tips_pressed_Y_to_shift)
-	Screen:addTipsList(180, 350, 20, lang.tips_left_and_right_to_move)
 end
 
 return Screen

@@ -29,9 +29,9 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(10, 5, 80, lang.tips_use_arrows_to_move)
-	Screen:addTipsList(destinationX-50, destinationY-50, destinationZ-50, lang.tips_touch_the_green_goal)
-	Screen:addTipsList(base.guiWidth/2-50, 300, cubeZ+10, lang.tips_good_luck)
+	Screen:addTipsList(lang.tips_use_arrows_to_move,	10, 5, 80)
+	Screen:addTipsList(lang.tips_touch_the_green_goal,	destinationX-50, destinationY-50, destinationZ-50)
+	Screen:addTipsList(lang.tips_good_luck,				base.guiWidth/2-50, 300, cubeZ+10)
 end
 
 

@@ -11,24 +11,18 @@ function Screen:activate()
 	langFile = langFile
 end
 
-function Screen:draw()
-	love.graphics.clear()
-	love.graphics.setColor(base.cWhite)
-	base.print("A: 中文\nB: English")
-end
-
-function Screen:keypressed(key)
+function Screen:update(dt)
 	-- switch lang
-	if key == keys.A or key == keys.B then
+	if base.isDown(base.keys.enter) or base.isDown(base.keys.cancel) then
 		local langFile
-		if key == keys.A then
+		if base.isDown(base.keys.enter) then
 			langFile = "lib.lang.lang_cn"
-		elseif key == keys.B then
+		elseif base.isDown(base.keys.cancel) then
 			langFile = "lib.lang.lang_eng"
 		end
 		lang = require(langFile)
 
-		-- level
+		-- load level data
 		levelString = require "screens.level.levelConf"
 		local LevelScreen = {}
 		for i, value in ipairs(levelString) do
@@ -38,14 +32,20 @@ function Screen:keypressed(key)
 				table.insert(LevelScreen, require("screens.level." .. value))
 			end
 		end
-		---
+		-- register level
 		for i, level in ipairs(LevelScreen) do
 			local levelName = levelString[i]
 			screenManager:register(levelName, level)
 		end
-		--
+		-- goto MainScreen
 		self.screen:view('MainScreen')
 	end
+end
+
+function Screen:draw()
+	love.graphics.clear()
+	love.graphics.setColor(base.cWhite)
+	base.print("A: 中文\nB: English")
 end
 
 return Screen

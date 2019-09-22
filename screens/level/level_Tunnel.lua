@@ -39,7 +39,7 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(10, -200, 20, "/......?")
+	Screen:addTipsList("/......?", 10, -200, 20)
 end
 
 return Screen

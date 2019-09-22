@@ -34,7 +34,7 @@ function Screen:activate()
 	table.insert(shapeList, f1)
 
 	-- tips
-	t1 = Tips(10, -50, 20, "test")
+	t1 = Tips("test", 10, -50, 20)
 	table.insert(tipsList, t1)
 
 	-- add drawList

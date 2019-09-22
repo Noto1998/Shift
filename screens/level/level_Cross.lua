@@ -59,7 +59,7 @@ function Screen:activate()
 	Screen:addShapeList(Rectangle,80,105,210,	80/math.cos(dir),25,	math.pi/2-dir)
 
 	-- tips
-	Screen:addTipsList(20,-80,10,	lang.tips_mayoiba_yabureru)
+	Screen:addTipsList(lang.tips_mayoiba_yabureru, 20, -80, 10)
 
 	Screen:addDrawList()
 end

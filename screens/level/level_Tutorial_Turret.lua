@@ -34,7 +34,7 @@ function Screen:activate()
     Screen:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
 	-- tips
-	Screen:addTipsList(5, base.guiHeight+10, 20,		lang.tips_yellow_is_dangerous)
+	Screen:addTipsList(lang.tips_yellow_is_dangerous,		5, base.guiHeight+10, 20)
 
 	-- add drawList
 	Screen:addDrawList()

@@ -29,7 +29,7 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		destinationX-1, destinationY+100, cubeZ-cLenZ2,					cLenZ2, cLenZ2, cLenZ2)
 
 	-- tips
-	Screen:addTipsList(10, -80, 20,	lang.tips_find_us)
+	Screen:addTipsList(lang.tips_find_us, 10, -80, 20)
 
 	-- add drawList
 	Screen:addDrawList()

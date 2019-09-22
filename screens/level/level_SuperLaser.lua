@@ -67,12 +67,12 @@ function Screen:activate()
 	
 	-- hole1
 	Screen:addShapeList(Cuboid, hX1, leftY, hZ,					hLenX, leftLenY, hLenZ)
-	Screen:addShapeList(Ball, hX1+ballR, leftY, hZ-ballR,		ballR)
+	Screen:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,		ballR)
 	
 
 	-- hole2
 	Screen:addShapeList(Cuboid, hX2, leftY, hZ,						hLenX, leftLenY, hLenZ)
-	Screen:addShapeList(Ball, hX2+ballR, leftY, hZ-ballR,			ballR)
+	Screen:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
 	
 
 	-- Turret

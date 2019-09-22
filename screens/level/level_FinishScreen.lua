@@ -27,35 +27,34 @@ function Screen:activate()
 	Screen:addDrawList()
 	
 	-- tips
-	Screen:addTipsList(base.guiWidth/2, base.guiHeight/3-9, -50*4,	lang.tips_save_us, "center", "center")
-	Screen:addTipsList(base.guiWidth/2, base.guiHeight/3, 	-100,	lang.tips_congratulations, "center", "center")
-	Screen:addTipsList(base.guiWidth/2, base.guiHeight/3 *2,-50*3,	lang.tips_save_us, "center", "center")
-	Screen:addTipsList(base.guiWidth/2, base.guiHeight/3 *2,-100,	lang.ui_pressed_A_to_continue, "center", "center")
+	Screen:addTipsList(lang.tips_save_us, 				base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
+	Screen:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
+	Screen:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
+	Screen:addTipsList(lang.ui_pressed_A_to_continue,	base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
 	--
 	local _x = base.guiWidth/2
-	Screen:addTipsList(_x, base.guiHeight, 	-50*2, 		lang.tips_save_us, "center")
-	Screen:addTipsList(_x, base.guiHeight+100,   -50,	lang.tips_save_us, "center")
-	Screen:addTipsList(_x, base.guiHeight+100*2, 50*0,	lang.tips_save_us, "center")
-	Screen:addTipsList(_x, base.guiHeight+100*3, 50*1,	lang.tips_save_us, "center")
-	Screen:addTipsList(_x, base.guiHeight+100*4, 50*2,	lang.tips_save_us, "center")
+	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight, 		-50*2, 	"center")
+	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100,   -50,	"center")
+	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*2, 50*0,	"center")
+	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*3, 50*1,	"center")
+	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*4, 50*2,	"center")
 	-- random location
 	for i = 0, 10 do
 		local _x = love.math.random(0, base.guiWidth)
 		local _y = love.math.random(0, base.guiHeight)
 		local _z = love.math.random(0, base.guiHeight-80)
-		Screen:addTipsList(_x, base.guiHeight+_y, 	_z, lang.tips_save_us, "center")
+		Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+_y, _z, "center")
 	end
 end
 
-function Screen:keypressed(key)
-	-- goto mainScreens
-	if shiftMode == 0 and key == keys.A then
-		love.load()
-		--love.event.quit( "restart" )
-	end
+function Screen:update(dt)
+	-- shift and bgm
+	Screen.super.update(self, dt)
 
-	-- should under [goto mainScreens], or no work
-	Screen.super.keypressed(self, key)
+	-- goto mainScreens
+	if self.shiftMode == 0 and base.isPressed(base.keys.enter) then
+		love.load()
+	end
 end
 
 
