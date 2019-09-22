@@ -21,19 +21,20 @@ for i = 1, 2 do
 end
 local sfxPoint = {true, true}
 
+
 -- xy
 local function moveXY()
 	-- move
-	if love.keyboard.isDown(keys.DPad_left) then
+	if base.isDown(base.keys.left) then
 		spdX = -spdMoveXY
-	elseif love.keyboard.isDown(keys.DPad_right) then
+	elseif base.isDown(base.keys.right) then
 		spdX = spdMoveXY
 	else
 		spdX = 0
 	end
-	if love.keyboard.isDown(keys.DPad_up) then
+	if base.isDown(base.keys.up) then
 		spdY = -spdMoveXY
-	elseif love.keyboard.isDown(keys.DPad_down) then
+	elseif base.isDown(base.keys.down) then
 		spdY = spdMoveXY
 	else
 		spdY = 0
@@ -110,8 +111,8 @@ local function collisionXY(self, dt, obj)
 		-- other
 	end
 end
--- xz
 
+-- xz
 local function setDir(dir, dt, sign)
 	local spdDir = spdMoveXZ
 	dir = dir + sign * spdDir * dt
@@ -167,10 +168,10 @@ local function getOtherEndPointNum(num)
 	end
 end
 local function keyPressedLock(self, dt)
-	if love.keyboard.isDown(keys.DPad_left) then
+	if base.isDown(base.keys.left) then
 		dir = setDir(dir, dt, 1)
 		updateXZ(self, lockPoint)
-	elseif love.keyboard.isDown(keys.DPad_right) then
+	elseif base.isDown(base.keys.right) then
 		dir = setDir(dir, dt, -1)
 		updateXZ(self, lockPoint)
 	else
@@ -185,7 +186,7 @@ local function endPointSetting(self, dt, num)
 		lock = true
 	end
 	-- Player control
-	if love.keyboard.isDown(keys.DPad_left) or love.keyboard.isDown(keys.DPad_right) then
+	if base.isDown(base.keys.left) or base.isDown(base.keys.right) then
 		keyPressedLock(self, dt)
 	-- garvity
 	else
@@ -276,12 +277,12 @@ function Player:update(dt, mode, shapelist)
 						rightPoint = i
 					end
 				end
-				if love.keyboard.isDown(keys.DPad_left) then
+				if base.isDown(base.keys.left) then
 					-- take the left
 					lockPoint = getOtherEndPointNum(rightPoint)
 					setLockPointXZ(lockPoint)
 					lock = true
-				elseif love.keyboard.isDown(keys.DPad_right) then
+				elseif base.isDown(base.keys.right) then
 					-- take the right
 					lockPoint = rightPoint
 					setLockPointXZ(lockPoint)
@@ -365,6 +366,7 @@ function Player:onGround(mode)
 	return flag
 end
 
+
 -- player touch
 function Player:touch(destination, mode)
     local flag = false
@@ -382,7 +384,6 @@ function Player:touch(destination, mode)
 	end
     return flag
 end
-
 
 
 function Player:isCollisionXZ(i, obj)

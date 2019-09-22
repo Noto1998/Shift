@@ -16,6 +16,7 @@ local function getLevelName(page)
 	return string
 end
 
+
 function Screen:activate()
 	-- shift
 	Screen.super.activate(self)
@@ -37,14 +38,53 @@ function Screen:activate()
 	}
 end
 
+
+function Screen:update(dt)
+	-- shift and bgmManager
+	Screen.super.update(self, dt)
+	
+	-- switch level
+	if self.shiftMode == 0 and
+	(base.isPressed(base.keys.right) or base.isPressed(base.keys.left)) then
+		local levelMax = #levelString-3		-- hide finishScreen
+		
+		-- change page
+		if base.isPressed(base.keys.right) then
+			if page < levelMax then
+				page = page + 1
+			else
+				page = 1
+			end
+		elseif base.isPressed(base.keys.left) then
+			if page > 1 then
+				page = page - 1
+			else
+				page = levelMax
+			end
+		end
+		
+		-- update string
+		t1.string = lang.ui_level_choice(page, getLevelName(page))
+		-- sfx
+		love.audio.play(sfx_menu)
+	end
+
+	-- start level
+	if base.isPressed(base.keys.enter) then
+		levelChoice = page
+		self.screen:view(levelString[levelChoice])
+	end
+end
+
+
 function Screen:draw()
 	-- bgmManager
 	bgmManager:draw()
 
 	-- tips
-	t1:draw(shiftMode)
+	t1:draw(self.shiftMode)
 	for key, obj in pairs(tipsList) do
-		obj:draw(shiftMode)
+		obj:draw(self.shiftMode)
 	end
 
 	-- logo
@@ -52,45 +92,5 @@ function Screen:draw()
 	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
 end
 
-function Screen:keypressed(key)
-	-- bgmManager
-	bgmManager:keypressed(key)
-
-	-- shift
-	Screen.super.keypressed(self, key)
-	
-	if shiftMode == 0 then
-		local levelMax = #levelString-3--finishScreen
-
-		-- start level
-		if key == keys.A then
-			levelChoice = page
-			self.screen:view(levelString[levelChoice])
-		end
-
-		-- choice level
-		if key == keys.DPad_right then
-			if page < levelMax then
-				page = page + 1
-			else
-				page = 1
-			end
-		elseif key == keys.DPad_left then
-			if page > 1 then
-				page = page - 1
-			else
-				page = levelMax
-			end
-		end
-
-		-- update string
-		if key ==keys.DPad_right or key == keys.DPad_left then
-			t1.string = lang.ui_level_choice(page, getLevelName(page))
-
-			--sfx
-			love.audio.play(sfx_menu)
-		end
-	end
-end
 
 return Screen

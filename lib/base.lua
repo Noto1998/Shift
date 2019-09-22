@@ -12,12 +12,45 @@ base.cYellow = {1, 1, 0}
 base.cGray = {0.5, 0.5, 0.5}
 base.cDarkGray = {0.25, 0.25, 0.25}
 base.cDestination = {0.5, 1, 0.5}
-base.cWarning = {1, 0, 0, 0.35}--loaser
+base.cWarning = {1, 0, 0, 0.35}         --loaser
 base.cfourD1 = {0.92, 0.02, 0.76, 0.25}
 base.cfourD2 = {0.02, 0.92, 0.7, 0.25}
 
 base.cFill = base.cBlack
 base.cLine = base.cWhite
+
+--- keys
+local function keyCreater(keyboard, gamepad)
+    local table = {}
+
+    table.keyboard = keyboard
+    table.gamepad = gamepad
+    table.isPressed = false
+    -- set default released
+    table.released = false
+    table.timer = 0
+    table.timerMax = 0
+
+    return table
+end
+
+-- gamepad
+local joysticks = love.joystick.getJoysticks()
+local joystick = joysticks[1]
+
+-- all key
+base.keys = {}
+base.keys.up    = keyCreater(keys.DPad_up,      "dpup")
+base.keys.down  = keyCreater(keys.DPad_down,    "dpdown")
+base.keys.left  = keyCreater(keys.DPad_left,    "dpleft")
+base.keys.right  = keyCreater(keys.DPad_right,  "dpright")
+base.keys.shift  = keyCreater(keys.Y,           "y")
+base.keys.enter  = keyCreater(keys.A,           "a")
+base.keys.cancel = keyCreater(keys.B,           "b")
+base.keys.music  = keyCreater(keys.Select,      "back")
+base.keys.reset  = keyCreater(keys.Start,       "start")
+---
+
 
 -- function
 function base.sign(number)
@@ -61,6 +94,41 @@ function base.cloneTable(table)
     end
 
     return t1
+end
+
+function base.isDown(keyName)
+    return love.keyboard.isDown(keyName.keyboard) or (joystick ~= nil and joystick:isGamepadDown(keyName.gamepad))
+end
+
+function base.pressedSetting(keyName, dt)
+    local flag = false
+    
+    -- reset
+    if not base.isDown(keyName) then
+        keyName.released = true
+        keyName.timerMax = 0
+        keyName.timer = 0
+    else
+        keyName.timer = keyName.timer + dt
+        if keyName.timerMax == 0 then   -- only 1 frame
+            keyName.timerMax = dt
+        end
+
+        -- only 1 frame
+        if keyName.timer > keyName.timerMax then
+            keyName.released = false
+        end
+
+        if keyName.released then
+            flag = true
+        end
+    end
+
+    return flag
+end
+
+function base.isPressed(keyName)
+    return keyName.isPressed
 end
 
 return base

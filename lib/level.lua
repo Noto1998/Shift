@@ -40,8 +40,19 @@ end
 
 
 function Level:update(dt)
-	-- shift
-	Level.super.update(self, dt)
+	-- shift and bgmManager
+	local canShift = Player:onGround(self.shiftMode) and not finishFlag
+	Level.super.update(self, dt, canShift)
+	-- reset
+	if base.isPressed(base.keys.reset) then
+		self.screen:view(resetLevelString)
+	end
+	-- goto next level
+	if finishFlag and base.isPressed(base.keys.enter) then
+		levelChoice = levelChoice + 1
+		local levelName = levelString[levelChoice]
+		self.screen:view(levelName)
+	end
 
 	-- shape update
 	for i = 1, #shapeList do
@@ -52,7 +63,7 @@ function Level:update(dt)
 				shapeList[i]:update(dt)
 			end
 			-- hit player
-			if shiftMode == 0 and shapeList[i]:hit(player) and not finishFlag then
+			if self.shiftMode == 0 and shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				-- sfx
@@ -72,10 +83,10 @@ function Level:update(dt)
 
 		-- Ball
 		elseif shapeList[i]:is(Ball) then
-			shapeList[i]:update(dt, shiftMode, shapeList)
+			shapeList[i]:update(dt, self.shiftMode, shapeList)
 
 			-- hit player
-			if shiftMode == 1 and shapeList[i]:hit(player) and not finishFlag then
+			if self.shiftMode == 1 and shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				-- sfx
@@ -88,11 +99,11 @@ function Level:update(dt)
 
 	-- player's move and update location
 	if not finishFlag then
-		player:update(dt, shiftMode, shapeList)
+		player:update(dt, self.shiftMode, shapeList)
 	end
 	
 	-- finish level
-	if player:touch(destination, shiftMode) then
+	if player:touch(destination, self.shiftMode) then
 		if not finishFlag then
 			finishFlag = true
 			--sfx
@@ -101,7 +112,7 @@ function Level:update(dt)
 	end
 
 	--- sort drawList
-	if shiftMode == 0 then
+	if self.shiftMode == 0 then
 		-- sort by z
 		for i=1, #drawList do
 			local j = i
@@ -112,7 +123,7 @@ function Level:update(dt)
 			end
 			drawList[i], drawList[j] = drawList[j], drawList[i]
 		end
-	elseif shiftMode == 1 then
+	elseif self.shiftMode == 1 then
 		-- then sort by y
 		for i=1, #drawList do
 			local j = i
@@ -157,14 +168,14 @@ function Level:draw()
 	-- draw all obj in drawList
 	if drawList ~= nil then
 		for key, value in pairs(drawList) do
-			value:draw(shiftMode)
+			value:draw(self.shiftMode)
 		end
 	end
 
 	-- tips
 	if tipsList ~= nil then
 		for i = 1, #tipsList do
-			tipsList[i]:draw(shiftMode)
+			tipsList[i]:draw(self.shiftMode)
 		end
 	end
 
@@ -180,7 +191,7 @@ function Level:draw()
 	
 
 	-- draw stuck warning
-	if shiftMode == 0 and player.stuck then
+	if self.shiftMode == 0 and player.stuck then
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
@@ -192,29 +203,6 @@ function Level:draw()
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_level_finish, base.guiWidth/2, base.guiHeight/3, "center", "center")
 		base.print(lang.ui_pressed_A_to_continue, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
-	end
-end
-
-
-function Level:keypressed(key)
-	-- bgmManager
-	bgmManager:keypressed(key)
-
-	-- shift
-	if Player:onGround(shiftMode) and not finishFlag then
-		Level.super.keypressed(self, key)
-	end
-
-	-- reset
-	if key == keys.Select then
-		self.screen:view(resetLevelString)
-	end
-
-	-- goto next level
-	if finishFlag and key == keys.A then
-		levelChoice = levelChoice + 1
-		local levelName = levelString[levelChoice]
-		self.screen:view(levelName)
 	end
 end
 
@@ -237,10 +225,12 @@ function Level:addDrawList()
 	table.insert(shapeList, destination)
 end
 
+
 -- shapeList
 function Level:addShapeList(obj, ...)
 	table.insert(shapeList, obj(...))
 end
+
 
 -- tipsList
 function Level:addTipsList(...)

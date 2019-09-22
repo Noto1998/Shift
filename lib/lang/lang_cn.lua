@@ -3,8 +3,8 @@ local lang = {}
 -- ui
 function lang.ui_level_choice(Num, Name)   return "<\t第" .. Num .. "关 " .. Name .. "\t>"    end
 lang.ui_key_start_and_move = "←→选择\tA开始"
-lang.ui_key_reset = "select 重置"
-lang.ui_key_music = "start ♫"
+lang.ui_key_reset = "Start 重置"
+lang.ui_key_music = "Select ♫"
 lang.ui_player_stuck = "玩家卡住"
 lang.ui_level_finish = "关卡完成"
 lang.ui_pressed_A_to_continue = "按A继续"
