@@ -40,7 +40,6 @@ end
 
 
 function Ball:update(dt, mode, list)
-    
     if mode == 1 then
        -- onGround
         self.onGround = isCollision(self, list)
