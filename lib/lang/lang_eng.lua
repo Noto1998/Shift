@@ -5,7 +5,7 @@ function lang.ui_level_choice(Num, Name)   return "<\tlevel " .. Num .. " " .. N
 lang.ui_key_start_and_move = "←→selct\tA start game"
 lang.ui_key_reset = "Start reset"
 lang.ui_key_music = "Select ♫"
-lang.ui_key_gotoMainScreen = "B MainMenu"
+lang.ui_key_gotoMainScreen = "B(hold) MainMenu"
 lang.ui_player_stuck = "player stuck"
 lang.ui_level_finish = "level finish"
 lang.ui_pressed_A_to_continue = "pressed A to continue"

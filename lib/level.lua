@@ -2,6 +2,7 @@ Level = Shift:extend()
 
 local finishFlag
 local finishTimer
+local gotoMainScreenTimer
 
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	-- shift
@@ -10,6 +11,7 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	-- finishLevelTimer
 	finishFlag = false
 	finishTimer = 0
+	gotoMainScreenTimer = 0
 
 	-- shapeList, when start a new level, release shape
 	if shapeList ~= nil then
@@ -54,10 +56,14 @@ function Level:update(dt)
 		self.screen:view(levelName)
 	end
 	-- goto MainScreens
-	if base.isPressed(base.keys.cancel) then
+	if base.isDown(base.keys.cancel) then
+		gotoMainScreenTimer = gotoMainScreenTimer + dt
+	else
+		gotoMainScreenTimer = 0
+	end
+	if gotoMainScreenTimer > 1 then
 		self.screen:view("MainScreen")
 	end
-
 
 	-- shape update
 	for i = 1, #shapeList do
