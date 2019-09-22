@@ -5,7 +5,9 @@ love.graphics.draw(img)
 love.graphics.present()
 ---
 
-
+--- font
+local font = love.graphics.newFont("font/SourceHanSansCN-Medium.otf", 20)
+love.graphics.setFont(font)
 --- IMPORT CLASSIC
 -- object-oriented
 Object = require "lib.classic"
@@ -29,6 +31,8 @@ require "lib.destination"
 -- level
 require "lib.shift"-- frist
 require "lib.level"
+-- keyTips
+require "lib.keyTips"
 -- screenManager
 local ScreenManager = require "lib.screenManager"
 -- bgmManager
@@ -52,10 +56,6 @@ function love.load()
     -- level
     levelChoice = 1         -- for goto next level
     resetLevelString = nil  -- for reset level, set in screenManager.lua
-    
-    -- font
-    local font = love.graphics.newFont("font/SourceHanSansCN-Medium.otf", 20)
-    love.graphics.setFont(font)
 
     -- sound
     sfx_menu        = love.audio.newSource("sound/bibi_MP3.mp3", "static")

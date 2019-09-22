@@ -3,11 +3,12 @@ Level = Shift:extend()
 local finishFlag
 local finishTimer
 local gotoMainScreenTimer
+local keyTips
 
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	-- shift
 	Level.super.activate(self)
-
+	
 	-- finishLevelTimer
 	finishFlag = false
 	finishTimer = 0
@@ -38,12 +39,15 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	if levelName ~= nil then
 		self.levelName = levelName
 	end
+
+	-- keyTips
+	keyTips = KeyTips()
 end
 
 
 function Level:update(dt)
 	-- shift and bgmManager
-	local canShift = Player:onGround(self.shiftMode) and not finishFlag
+	local canShift = Player:onGround(self.shiftMode) and (not finishFlag) and (not keyTips:getShowFlag())
 	Level.super.update(self, dt, canShift)
 	-- reset
 	if base.isPressed(base.keys.reset) then
@@ -64,6 +68,9 @@ function Level:update(dt)
 	if gotoMainScreenTimer > 1 then
 		self.screen:view("MainScreen")
 	end
+
+	-- keyTips
+	keyTips:update()
 
 	-- shape update
 	for i = 1, #shapeList do
@@ -107,9 +114,9 @@ function Level:update(dt)
 			end
 		end
 	end
-
+	
 	-- player's move and update location
-	if not finishFlag then
+	if not finishFlag and not keyTips:getShowFlag() then
 		player:update(dt, self.shiftMode, shapeList)
 	end
 	
@@ -194,12 +201,9 @@ function Level:draw()
 	love.graphics.setColor(base.cWhite)
 	base.print(self.levelName, base.guiBorder, base.guiHeight, "right", "bottom")
 	
-	-- bgmManager
-	bgmManager:draw()
-	-- draw bottom tips
+	-- draw keyTips text
 	love.graphics.setColor(base.cDarkGray)
-	base.print(lang.ui_key_reset, base.guiWidth-base.guiBorder, base.guiHeight, "left", "bottom")
-	base.print(lang.ui_key_gotoMainScreen, base.guiBorder)
+	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "left", "bottom")
 	
 
 	-- draw stuck warning
@@ -207,6 +211,9 @@ function Level:draw()
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
+
+	-- keyTips
+	keyTips:draw()
 
 	-- finish level
 	if finishFlag then

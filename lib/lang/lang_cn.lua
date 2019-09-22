@@ -3,9 +3,14 @@ local lang = {}
 -- ui
 function lang.ui_level_choice(Num, Name)   return "<\t第" .. Num .. "关 " .. Name .. "\t>"    end
 lang.ui_key_start_and_move = "←→选择\tA开始"
-lang.ui_key_reset = "Start 重置"
-lang.ui_key_music = "Select ♫"
-lang.ui_key_gotoMainScreen = "B(长按) 主界面"
+lang.ui_key_keyTips = "X 按键说明"
+lang.ui_key_keyTipsList = {
+	"\t方向键 - 移动\t\t",
+	"\tY - 维度切换\t\t",
+	"\tStart - 重置关卡\t\t",
+	"\tSelect - ♫开关\t\t",
+	"\tB(长按) - 返回主界面\t\t"
+}
 lang.ui_player_stuck = "玩家卡住"
 lang.ui_level_finish = "关卡完成"
 lang.ui_pressed_A_to_continue = "按A继续"

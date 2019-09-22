@@ -4,8 +4,8 @@ base = require "lib.const"
 -- gui
 base.guiWidth = love.graphics.getWidth()
 base.guiHeight = love.graphics.getHeight()
-
 base.guiBorder = base.guiWidth/30
+base.guiFontHeight = love.graphics.getFont():getHeight()
 
 -- color
 base.cBlack = {0, 0, 0}
@@ -49,6 +49,7 @@ base.keys.right  = keyCreater(keys.DPad_right,  "dpright")
 base.keys.shift  = keyCreater(keys.Y,           "y")
 base.keys.enter  = keyCreater(keys.A,           "a")
 base.keys.cancel = keyCreater(keys.B,           "b")
+base.keys.keyTips= keyCreater(keys.X,           "x")
 base.keys.music  = keyCreater(keys.Select,      "back")
 base.keys.reset  = keyCreater(keys.Start,       "start")
 ---
@@ -72,7 +73,7 @@ function base.print(string, x, y, xMode, yMode)
         love.graphics.print(string, x, y)
     else
         local w = love.graphics.getFont():getWidth(string) * 2
-        local h = love.graphics.getFont():getHeight()
+        local h = base.guiFontHeight
         local y2 = y
         -- yMode
         if yMode == "top" or yMode == nil then

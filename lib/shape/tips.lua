@@ -25,7 +25,6 @@ end
 function Tips:draw(mode)
     local font = love.graphics.getFont()
     local fWidth = font:getWidth(self.string)
-    local fHeight = font:getHeight()
     local reWidth = fWidth + radius*2
     local _y = self.y + (-self.y +self.z)*mode
     local _x = self.x
@@ -40,9 +39,9 @@ function Tips:draw(mode)
     end
     if self.yMode ~= nil then
         if self.yMode == "center" then
-            _y = _y - fHeight/2
+            _y = _y - base.guiFontHeight/2
         elseif self.yMode == "bottom" then
-            _y = _y - fHeight
+            _y = _y - base.guiFontHeight
         end
     end
 
@@ -51,7 +50,7 @@ function Tips:draw(mode)
     local x1 = _x           +radius
     local y1 = _y           +radius
     local x2 = _x + reWidth -radius
-    local y2 = _y + fHeight -radius
+    local y2 = _y + base.guiFontHeight -radius
     local xyTable = {
         {x1, y1},
         {x2, y1},
@@ -67,8 +66,8 @@ function Tips:draw(mode)
     for i = 1, 4 do
         love.graphics.arc("fill", xyTable[i][1], xyTable[i][2], radius, dirTable[i][1], dirTable[i][2])
     end
-    love.graphics.rectangle("fill", _x, y1, reWidth, fHeight-radius*2)
-    love.graphics.rectangle("fill", x1, _y, reWidth-radius*2, fHeight)
+    love.graphics.rectangle("fill", _x, y1, reWidth,          base.guiFontHeight-radius*2)
+    love.graphics.rectangle("fill", x1, _y, reWidth-radius*2, base.guiFontHeight)
 
     -- text
     love.graphics.setColor(base.cBlack)
