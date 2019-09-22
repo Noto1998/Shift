@@ -53,6 +53,11 @@ function Level:update(dt)
 		local levelName = levelString[levelChoice]
 		self.screen:view(levelName)
 	end
+	-- goto MainScreens
+	if base.isPressed(base.keys.cancel) then
+		self.screen:view("MainScreen")
+	end
+
 
 	-- shape update
 	for i = 1, #shapeList do
@@ -181,13 +186,14 @@ function Level:draw()
 
 	-- draw levelName
 	love.graphics.setColor(base.cWhite)
-	base.print(self.levelName, 5, base.guiHeight, "right", "bottom")
+	base.print(self.levelName, base.guiBorder, base.guiHeight, "right", "bottom")
 	
 	-- bgmManager
 	bgmManager:draw()
 	-- draw bottom tips
-	love.graphics.setColor(base.cWhite)
-	base.print(lang.ui_key_reset, base.guiWidth, base.guiHeight, "left", "bottom")
+	love.graphics.setColor(base.cDarkGray)
+	base.print(lang.ui_key_reset, base.guiWidth-base.guiBorder, base.guiHeight, "left", "bottom")
+	base.print(lang.ui_key_gotoMainScreen, base.guiBorder)
 	
 
 	-- draw stuck warning

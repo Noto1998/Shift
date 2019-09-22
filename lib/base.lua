@@ -5,6 +5,8 @@ base = require "lib.const"
 base.guiWidth = love.graphics.getWidth()
 base.guiHeight = love.graphics.getHeight()
 
+base.guiBorder = base.guiWidth/30
+
 -- color
 base.cBlack = {0, 0, 0}
 base.cWhite = {1, 1, 1}
