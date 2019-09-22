@@ -1,11 +1,11 @@
 Ball = Shape:extend()
 
-local spd = 25
+local spd = 32
 local spdG = 80
 
 local function  isCollision(self, table)
     local flag = false
-    local _z = self.z+self.radius
+    local _z = self.z + self.radius
 
     for index, obj in ipairs(table) do
         -- Cuboid

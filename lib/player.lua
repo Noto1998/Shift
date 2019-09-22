@@ -2,7 +2,7 @@ Player = Object:extend()
 
 local len = 25
 local spdMoveXY = 100
-local spdMoveXZ = math.pi/2.5
+local spdMoveXZ = math.pi/1.85
 local spdX
 local spdY
 local spdZ
