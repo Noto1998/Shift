@@ -1,7 +1,7 @@
 local Screen = Shift:extend()
 
 local page
-local img
+local imgGameLogo, imgMofishLogo
 local t1
 local tipsList
 
@@ -21,20 +21,20 @@ function Screen:activate()
 	-- shift
 	Screen.super.activate(self)
 
-	--
+	-- img
 	page = 1
-	img = love.graphics.newImage("img/logo.bmp")
-	
+	imgGameLogo = love.graphics.newImage("img/gameLogo.png")
+	imgMofishLogo = love.graphics.newImage("img/mofishLogo.png")
+
 	-- tips
 	local x = 20
 	t1 = Tips(lang.ui_level_choice(page, getLevelName(page)), base.guiWidth/2,145,-50, "center")
 	tipsList = {
 		-- key tips
 		Tips(lang.ui_key_start_and_move,	base.guiWidth/2, 185, -50, "center"),
-		--credits
+		-- credits
 		Tips("code|art|music|level\tNotoj", base.guiWidth/2, base.guiHeight+50,120+40*2,	"center"),
 		Tips("design|level|test\tJcat", 	base.guiWidth/2, base.guiHeight+50,120+40, 		"center"),
-		Tips("Mofish", 						base.guiWidth/2, base.guiHeight+50,120, 		"center"),
 	}
 end
 
@@ -79,15 +79,28 @@ end
 
 
 function Screen:draw()
+	-- draw BG
+	love.graphics.setColor(base.cBlack)
+	love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+	-- logo
+	local c1 = base.cloneTable(base.cWhite)
+	local c2 = base.cloneTable(base.cWhite)
+	c1[4] = 1 - self.shiftMode
+	c2[4] = self.shiftMode
+	love.graphics.setColor(c1)
+	love.graphics.draw(imgGameLogo, 30, 20, 0, 0.75, 0.75)
+	love.graphics.setColor(c2)
+	love.graphics.draw(imgMofishLogo, 30, 0, 0, 0.75, 0.75)
+
 	-- tips
 	t1:draw(self.shiftMode)
 	for key, obj in pairs(tipsList) do
 		obj:draw(self.shiftMode)
 	end
 
-	-- logo
-	love.graphics.setColor(base.cWhite)
-	love.graphics.draw(img, 30, 20, 0, 0.75, 0.75)
+	-- credits
+	love.graphics.setColor(base.cDarkGray)
+	base.print(lang.ui_key_credits, base.guiWidth-base.guiBorder, 0, "left")
 end
 
 
