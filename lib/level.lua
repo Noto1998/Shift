@@ -46,31 +46,41 @@ end
 
 
 function Level:update(dt)
-	-- shift and bgmManager
+	-- shift/bgmManager/pressedSetting
 	local canShift = Player:onGround(self.shiftMode) and (not finishFlag) and (not keyTips:getShowFlag())
 	Level.super.update(self, dt, canShift)
-	-- reset
-	if base.isPressed(base.keys.reset) then
-		self.screen:view(resetLevelString)
+	
+	-- keyTips
+	keyTips:update()
+
+	--
+	if (not finishFlag) and (not keyTips:getShowFlag()) then
+		-- reset
+		if base.isPressed(base.keys.reset) then
+			self.screen:view(resetLevelString)
+		end
+		
+		-- goto MainScreens
+		if base.isDown(base.keys.cancel) then
+			gotoMainScreenTimer = gotoMainScreenTimer + dt
+		else
+			gotoMainScreenTimer = 0
+		end
+		if gotoMainScreenTimer > 1 then
+			self.screen:view("MainScreen")
+		end
+		
+		-- player move
+		player:update(dt, self.shiftMode, shapeList)
 	end
+	
+	
 	-- goto next level
 	if finishFlag and base.isPressed(base.keys.enter) then
 		levelChoice = levelChoice + 1
 		local levelName = levelString[levelChoice]
 		self.screen:view(levelName)
 	end
-	-- goto MainScreens
-	if base.isDown(base.keys.cancel) then
-		gotoMainScreenTimer = gotoMainScreenTimer + dt
-	else
-		gotoMainScreenTimer = 0
-	end
-	if gotoMainScreenTimer > 1 then
-		self.screen:view("MainScreen")
-	end
-
-	-- keyTips
-	keyTips:update()
 
 	-- shape update
 	for i = 1, #shapeList do
@@ -113,11 +123,6 @@ function Level:update(dt)
 				break
 			end
 		end
-	end
-	
-	-- player's move and update location
-	if not finishFlag and not keyTips:getShowFlag() then
-		player:update(dt, self.shiftMode, shapeList)
 	end
 	
 	-- finish level
@@ -180,7 +185,7 @@ end
 
 function Level:draw()
 	-- draw BG
-	love.graphics.setColor(base.cFill)
+	love.graphics.setColor(base.cBlack)
 	love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
 
 	-- draw all obj in drawList

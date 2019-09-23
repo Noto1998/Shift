@@ -71,7 +71,6 @@ function Shift:update(dt, canShift)
 			end
 		end
 	end
-	
 	-- switch shiftMode
 	if (canShift==nil or canShift==true)
 	and base.isPressed(base.keys.shift) and not shifting then

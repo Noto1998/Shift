@@ -40,7 +40,7 @@ end
 
 
 function Screen:update(dt)
-	-- shift and bgmManager
+	-- shift/bgmManager/pressedSetting
 	Screen.super.update(self, dt)
 	
 	-- switch level

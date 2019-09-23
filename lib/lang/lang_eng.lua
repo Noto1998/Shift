@@ -3,12 +3,18 @@ local lang = {}
 -- ui
 function lang.ui_level_choice(Num, Name)   return "<\tlevel " .. Num .. " " .. Name .. "\t>"    end
 lang.ui_key_start_and_move = "←→selct\tA start game"
-lang.ui_key_reset = "Start reset"
-lang.ui_key_music = "Select ♫"
-lang.ui_key_gotoMainScreen = "B(hold) MainMenu"
+lang.ui_key_keyTips = "X control tips"
 lang.ui_player_stuck = "player stuck"
 lang.ui_level_finish = "level finish"
 lang.ui_pressed_A_to_continue = "pressed A to continue"
+lang.ui_key_credits = "Y credits"
+lang.ui_key_keyTipsList = {
+	"\tArrows - Move\t\t",
+	"\tY - Shift Dimensions\t\t",
+	"\tStart - Reset Level\t\t",
+	"\tSelect - ♫Off/On\t\t",
+	"\tB(hold) - go MainMenu\t\t"
+}
 
 --level
 lang.level_BlockLaser = "Block"
