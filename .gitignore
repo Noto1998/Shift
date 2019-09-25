@@ -1,2 +1,6 @@
+# use boon to build
 /boon
+# build dir
+/release
+# debug dir
 /screens/debug
