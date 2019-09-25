@@ -15,6 +15,10 @@ lang.ui_key_keyTipsList = {
 	"\tSelect - ♫开关\t\t",
 	"\tB(长按) - 返回主界面\t\t"
 }
+lang.ui_credits = {
+	"程序|美术|音乐|关卡\tNotoj",
+	"策划|关卡\tJcat(Yaolaotou)"
+}
 
 --level
 lang.level_BlockLaser = "我来挡住"

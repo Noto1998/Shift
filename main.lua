@@ -38,13 +38,22 @@ local ScreenManager = require "lib.screenManager"
 -- bgmManager
 local BgmManager = require "lib.bgmManager"
 -- lang
-lang = require "lib.lang.lang_cn"       -- cn default
+lang = {}
 ---
-
 
 --- LOAD SCREENS
 local MainScreen = require "screens.mainScreen"
 local LangSwitchScreen = require "screens.langSwitchScreen"
+-- load level data
+levelString = require "screens.level.levelConf"
+local LevelScreen = {}
+for i, value in ipairs(levelString) do
+    local fileName = "screens/level/" .. value .. ".lua"
+    local file = love.filesystem.getInfo(fileName)
+    if file ~= nil then
+        table.insert(LevelScreen, require("screens.level." .. value))
+    end
+end
 
 
 --- LOAD GAME
@@ -86,8 +95,12 @@ function love.load()
 
     -- register screens
     screenManager = ScreenManager()
-    screenManager:register('/', LangSwitchScreen)
+    screenManager:register('/', LangSwitchScreen)   -- frist
     screenManager:register('MainScreen', MainScreen)
-    
+    -- register level
+    for i, level in ipairs(LevelScreen) do
+        local levelName = levelString[i]
+        screenManager:register(levelName, level)
+    end
 end
 ---

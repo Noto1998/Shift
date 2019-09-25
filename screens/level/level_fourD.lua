@@ -3,6 +3,7 @@ local Screen = Level:extend()
 local tipsTime
 local tipsFlag
 local tipsTable = lang.tips_fourD
+local f1, t1
 
 function Screen:activate()
 	-- shape value
@@ -41,33 +42,29 @@ function Screen:activate()
 	Screen:addDrawList()
 end
 
+
 function Screen:update(dt)
+	-- shift
 	Screen.super.update(self, dt)
 
-	--
+	-- update fourD len
 	local modeMin = 0.1
 	local mode1 = 0.33
-	if (shiftMode >= mode1-modeMin and shiftMode <= mode1+modeMin) or
-	(shiftMode >= (1-mode1)-modeMin and shiftMode <= (1-mode1)+modeMin) then
+	if (self.shiftMode >= mode1-modeMin and self.shiftMode <= mode1+modeMin) or
+	(self.shiftMode >= (1-mode1)-modeMin and self.shiftMode <= (1-mode1)+modeMin) then
 		f1.lenX, f1.lenY = f1.lenY, f1.lenX
 	end
 
-	--
-	tipsFlag = (shiftMode == 0)
-end
-
-function Screen:keypressed(key)
-	Screen.super.keypressed(self, key)
-
-	--
-	if key == keys.Y and tipsFlag then
+	-- update tips
+	if base.isPressed(base.keys.shift) and (self.shiftMode == 0) then
 		tipsTime = tipsTime + 1
 		if tipsTime <= #tipsTable then
 			t1.string = tipsTable[tipsTime]
 		else
-			love.load()
+			self.screen:view("MainScreen")
 		end
 	end
 end
+
 
 return Screen
