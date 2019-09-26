@@ -4,9 +4,9 @@ function Screen:activate()
 	-- shape value
 	local cubeZ = 130
 	local cubeLenX = 150
-	local cubeLenY = base.guiHeight-1-1
+	local cubeLenY = base.guiHeight-1*2
 	local cubeLenZ = 50
-	local cubeLenZ3 = 50+3
+	local cubeLenZ3 = 50 + 2*2
 
 	-- levelName
 	local levelName = lang.level_CrossTheRiver
@@ -26,7 +26,7 @@ function Screen:activate()
 	
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
-	Screen:addShapeList(Cuboid,		250-1, 150, cubeZ-cubeLenZ3,		cubeLenZ3, cubeLenZ3, cubeLenZ3)
+	Screen:addShapeList(Cuboid,		destinationX-2, 150, cubeZ-cubeLenZ3,		cubeLenZ3, cubeLenZ3, cubeLenZ3)
 
 	-- add drawList
 	Screen:addDrawList()

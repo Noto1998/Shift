@@ -19,7 +19,7 @@ function Screen:activate()
 	-- destination location
 	local destinationX = base.guiWidth-playerX - 50/2
 	local destinationY = base.guiHeight-playerY - 50/2
-	local destinationZ = -50
+	local destinationZ = -100
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
@@ -34,7 +34,7 @@ function Screen:activate()
     Screen:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
 	-- tips
-	Screen:addTipsList(lang.tips_yellow_is_dangerous,		5, base.guiHeight+10, 20)
+	Screen:addTipsList(lang.tips_yellow_means_danger,		5, base.guiHeight+10, 20)
 
 	-- add drawList
 	Screen:addDrawList()

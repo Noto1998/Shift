@@ -4,9 +4,9 @@ function Screen:activate()
 	-- shape value
 	local cubeZ = 130
 	local cubeLenX = 150
-	local cubeLenY = base.guiHeight-1-1
+	local cubeLenY = base.guiHeight-1*2
 	local cubeLenZ = 50
-	local cLenZ2 = 50 + 2
+	local cLenZ2 = 50 + 2*2
 
 	-- levelName
 	local levelName = lang.level_Invisible
@@ -26,10 +26,11 @@ function Screen:activate()
 	
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,			cubeLenX, cubeLenY, cubeLenZ-40)
-	Screen:addShapeList(Cuboid,		destinationX-1, destinationY+100, cubeZ-cLenZ2,					cLenZ2, cLenZ2, cLenZ2)
+	
+	Screen:addShapeList(Cuboid,		destinationX-2, destinationY+100, cubeZ-cLenZ2,		cLenZ2, cLenZ2, cLenZ2)
 
 	-- tips
-	Screen:addTipsList(lang.tips_find_us, 10, -80, 20)
+	Screen:addTipsList(lang.tips_where_is_it, base.guiBorder, base.guiBorder, -80)
 
 	-- add drawList
 	Screen:addDrawList()

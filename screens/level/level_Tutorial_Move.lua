@@ -3,7 +3,7 @@ local Screen = Level:extend()
 function Screen:activate()
 	-- shape value
 	local border = 40
-	local cubeZ = 130
+	local cubeZ = base.guiHeight/2
 	local cubeLenX = base.guiWidth-border*2
 	local cubeLenY = base.guiHeight-border*2
 	local cubeLenZ = 50
@@ -29,9 +29,9 @@ function Screen:activate()
 	Screen:addDrawList()
 
 	-- tips
-	Screen:addTipsList(lang.tips_use_arrows_to_move,	10, 5, 80)
-	Screen:addTipsList(lang.tips_touch_the_green_goal,	destinationX-50, destinationY-50, destinationZ-50)
-	Screen:addTipsList(lang.tips_good_luck,				base.guiWidth/2-50, 300, cubeZ+10)
+	Screen:addTipsList(lang.tips_use_arrows_to_move,	base.guiBorder, 5, playerZ-50)
+	Screen:addTipsList(lang.tips_touch_the_green_goal,	base.guiWidth-base.guiBorder, destinationY-40, destinationZ-50, "right")
+	Screen:addTipsList(lang.tips_wait_not_teach_yet,	base.guiWidth/2, 300, base.guiHeight/2+50, "center", "center")
 end
 
 

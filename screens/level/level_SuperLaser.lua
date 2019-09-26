@@ -37,6 +37,9 @@ function Screen:activate()
 	local tSZ = 1
 	---
 
+	-- floor
+	local floorZ = base.guiHeight-20
+
 	-- levelName
 	local levelName = lang.level_SuperLaser
 	-- player location
@@ -46,13 +49,13 @@ function Screen:activate()
 	-- destination location
 	local destinationX = playerX-50/2
 	local destinationY = base.guiHeight+10
-	local destinationZ = base.guiHeight-20-50+50/2
+	local destinationZ = floorZ-50/2
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
     
 	--- here to create shape
 	-- floor
-    Screen:addShapeList(Cuboid,	1, 1, base.guiHeight-20,		base.guiWidth, base.guiHeight, 1)
+    Screen:addShapeList(Cuboid,	1, 1, floorZ,		base.guiWidth, base.guiHeight, 1)
 
 
 	-- player wall

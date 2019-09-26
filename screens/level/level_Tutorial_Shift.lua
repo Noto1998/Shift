@@ -26,8 +26,8 @@ function Screen:activate()
 	Screen:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 
 	-- tips
-	Screen:addTipsList(lang.tips_pressed_Y_to_shift,		180, 50, -50)
-	Screen:addTipsList(lang.tips_left_and_right_to_move,	180, 350, 20)
+	Screen:addTipsList(lang.tips_pressed_Y_to_shift,		base.guiWidth-base.guiBorder, 50, -50, "right")
+	Screen:addTipsList(lang.tips_left_and_right_to_move,	base.guiWidth-base.guiBorder, 350, 20, "right")
 
 	-- add drawList
 	Screen:addDrawList()
