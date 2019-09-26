@@ -1,7 +1,7 @@
 --- LOADING SCREEN
 love.graphics.clear(0, 0, 0)
 local img = love.graphics.newImage("img/loading.png")
-love.graphics.draw(img, 320/4, 240/4)
+love.graphics.draw(img)
 love.graphics.present()
 ---
 

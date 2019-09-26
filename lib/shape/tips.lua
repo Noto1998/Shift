@@ -1,7 +1,7 @@
 Tips = Object:extend()
 
-local radius = 8
-
+local radius = math.floor(base.guiFontHeight/3)
+local segments = 20
 
 function Tips:new(string, x, y, z, xMode, yMode)
     self.string = string
@@ -47,10 +47,10 @@ function Tips:draw(mode)
 
     -- bg
     love.graphics.setColor(base.cWhite)
-    local x1 = _x           +radius
-    local y1 = _y           +radius
-    local x2 = _x + reWidth -radius
-    local y2 = _y + base.guiFontHeight -radius
+    local x1 = _x + radius
+    local y1 = _y + radius
+    local x2 = _x + reWidth             - radius
+    local y2 = _y + base.guiFontHeight  - radius
     local xyTable = {
         {x1, y1},
         {x2, y1},
@@ -64,11 +64,11 @@ function Tips:draw(mode)
         {math.pi/2,     math.pi},
     }
     for i = 1, 4 do
-        love.graphics.arc("fill", xyTable[i][1], xyTable[i][2], radius, dirTable[i][1], dirTable[i][2])
+        love.graphics.arc("fill", xyTable[i][1], xyTable[i][2], radius, dirTable[i][1], dirTable[i][2], segments)
     end
     love.graphics.rectangle("fill", _x, y1, reWidth,          base.guiFontHeight-radius*2)
     love.graphics.rectangle("fill", x1, _y, reWidth-radius*2, base.guiFontHeight)
-
+    
     -- text
     love.graphics.setColor(base.cBlack)
     base.print(self.string, _x+reWidth/2, _y, "center")

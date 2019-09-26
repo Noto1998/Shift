@@ -85,12 +85,14 @@ function Screen:draw()
 	-- logo
 	local c1 = base.cloneTable(base.cWhite)
 	local c2 = base.cloneTable(base.cWhite)
+	local scale1 = 0.8
+	local scale2 = 0.6
 	c1[4] = 1 - self.shiftMode
 	c2[4] = self.shiftMode
 	love.graphics.setColor(c1)
-	love.graphics.draw(imgGameLogo, 30, 45, 0, 0.75, 0.75)
+	love.graphics.draw(imgGameLogo, 25, 30, 0, scale1, scale1)
 	love.graphics.setColor(c2)
-	love.graphics.draw(imgMofishLogo, 30, 0, 0, 0.75, 0.75)
+	love.graphics.draw(imgMofishLogo, base.guiWidth*(1-scale2)/2, 15, 0, scale2, scale2)
 
 	-- tips
 	t1:draw(self.shiftMode)
