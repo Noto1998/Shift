@@ -1,5 +1,5 @@
 -- base on https://github.com/Skayo/Gameshell-Love2D-Template, change a little bit
-ScreenManager = Object:extend()
+local ScreenManager = Object:extend()
 
 function ScreenManager:new()
 	self.routes = {}

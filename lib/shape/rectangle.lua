@@ -1,7 +1,6 @@
 Rectangle = Shape:extend()
 
---x, left
---z, bottom
+-- for draw shape right, x will always be left, z always be bottom
 
 function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
     Circle.super.new(self, x, y, z, cFill, cLine, cMesh)

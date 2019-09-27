@@ -4,36 +4,33 @@ local finishFlag
 local finishTimer
 local gotoMainScreenTimer
 local keyTips
+local player, destination
 
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	-- shift
 	Level.super.activate(self)
+	
+	-- player and destination
+	player = Player(playerX, playerY, playerZ)
+	destination = Destination(destinationX, destinationY, destinationZ)
+
+	-- shapeList
+	self.shapeList = {}
+	table.insert(self.shapeList, destination)
+	
+	-- drawList
+	self.drawList = {}
+	table.insert(self.drawList, player)
+	table.insert(self.drawList, destination)
+
+	-- tipsList
+	self.tipsList = {}
 	
 	-- finishLevelTimer
 	finishFlag = false
 	finishTimer = 0
 	gotoMainScreenTimer = 0
 
-	-- shapeList, when start a new level, release shape
-	if shapeList ~= nil then
-		for key, value in pairs(shapeList) do
-			if value.mesh ~= nil then
-				value.mesh:release()
-			end
-		end
-	end
-	shapeList = {}
-
-	-- drawList
-	drawList = {}
-
-	-- tipsList
-	tipsList = {}
-
-	-- player and destination
-	player = Player(playerX, playerY, playerZ)
-	destination = Destination(destinationX, destinationY, destinationZ)
-	
 	-- levelName
 	self.levelName = "levelName missing!"
 	if levelName ~= nil then
@@ -53,7 +50,7 @@ function Level:update(dt)
 	-- keyTips
 	keyTips:update()
 
-	--
+	-- some key staff
 	if (not finishFlag) and (not keyTips:getShowFlag()) then
 		-- reset
 		if base.isPressed(base.keys.reset) then
@@ -71,9 +68,8 @@ function Level:update(dt)
 		end
 		
 		-- player move
-		player:update(dt, self.shiftMode, shapeList)
+		player:update(dt, self.shiftMode, self.shapeList)
 	end
-	
 	
 	-- goto next level
 	if finishFlag and base.isPressed(base.keys.enter) then
@@ -83,15 +79,15 @@ function Level:update(dt)
 	end
 
 	-- shape update
-	for i = 1, #shapeList do
+	for i = 1, #self.shapeList do
 		-- turret
-		if shapeList[i]:is(Turret) then
+		if self.shapeList[i]:is(Turret) then
 			-- turn on/off
 			if not shifting then
-				shapeList[i]:update(dt)
+				self.shapeList[i]:update(dt)
 			end
 			-- hit player
-			if self.shiftMode == 0 and shapeList[i]:hit(player) and not finishFlag then
+			if self.shiftMode == 0 and self.shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				-- sfx
@@ -102,19 +98,19 @@ function Level:update(dt)
 			
 			-- ball block laser
 			local ballTable = {}
-			for i = 1, #shapeList do
-				if shapeList[i]:is(Ball) then
-					table.insert(ballTable, shapeList[i])
+			for i = 1, #self.shapeList do
+				if self.shapeList[i]:is(Ball) then
+					table.insert(ballTable, self.shapeList[i])
 				end
 			end
-			shapeList[i]:blockTable(ballTable)
+			self.shapeList[i]:blockTable(ballTable)
 
 		-- Ball
-		elseif shapeList[i]:is(Ball) then
-			shapeList[i]:update(dt, self.shiftMode, shapeList)
+		elseif self.shapeList[i]:is(Ball) then
+			self.shapeList[i]:update(dt, self.shiftMode, self.shapeList)
 
 			-- hit player
-			if self.shiftMode == 1 and shapeList[i]:hit(player) and not finishFlag then
+			if self.shiftMode == 1 and self.shapeList[i]:hit(player) and not finishFlag then
 				-- reset
 				self.screen:view(resetLevelString)
 				-- sfx
@@ -137,46 +133,47 @@ function Level:update(dt)
 	--- sort drawList
 	if self.shiftMode == 0 then
 		-- sort by z
-		for i=1, #drawList do
+		for i=1, #self.drawList do
 			local j = i
-			for k=i+1, #drawList do
-				if drawList[k].z > drawList[j].z then
+			for k=i+1, #self.drawList do
+				if self.drawList[k].z > self.drawList[j].z then
 					j, k = k, j
 				end
 			end
-			drawList[i], drawList[j] = drawList[j], drawList[i]
+			self.drawList[i], self.drawList[j] = self.drawList[j], self.drawList[i]
 		end
 	elseif self.shiftMode == 1 then
-		-- then sort by y
-		for i=1, #drawList do
+		-- sort by y
+		for i=1, #self.drawList do
 			local j = i
-			for k=i+1, #drawList do
-				if drawList[k].y < drawList[j].y then
+			for k=i+1, #self.drawList do
+				if self.drawList[k].y < self.drawList[j].y then
 					j, k = k, j
 				end
 			end
-			drawList[i], drawList[j] = drawList[j], drawList[i]
+			self.drawList[i], self.drawList[j] = self.drawList[j], self.drawList[i]
 		end
+	-- shifting, by z, then by y
 	else
 		-- sort by z
-		for i=1, #drawList do
+		for i=1, #self.drawList do
 			local j = i
-			for k=i+1, #drawList do
-				if drawList[k].z > drawList[j].z then
+			for k=i+1, #self.drawList do
+				if self.drawList[k].z > self.drawList[j].z then
 					j, k = k, j
 				end
 			end
-			drawList[i], drawList[j] = drawList[j], drawList[i]
+			self.drawList[i], self.drawList[j] = self.drawList[j], self.drawList[i]
 		end
-		-- then sort by y
-		for i=1, #drawList do
+		-- sort by y
+		for i=1, #self.drawList do
 			local j = i
-			for k=i+1, #drawList do
-				if drawList[k].z == drawList[j].z and drawList[k].y < drawList[j].y then
+			for k=i+1, #self.drawList do
+				if self.drawList[k].z == self.drawList[j].z and self.drawList[k].y < self.drawList[j].y then
 					j, k = k, j
 				end
 			end
-			drawList[i], drawList[j] = drawList[j], drawList[i]
+			self.drawList[i], self.drawList[j] = self.drawList[j], self.drawList[i]
 		end
 	end
 	---
@@ -189,16 +186,16 @@ function Level:draw()
 	love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
 
 	-- draw all obj in drawList
-	if drawList ~= nil then
-		for key, value in pairs(drawList) do
+	if self.drawList ~= nil then
+		for key, value in pairs(self.drawList) do
 			value:draw(self.shiftMode)
 		end
 	end
 
-	-- tips
-	if tipsList ~= nil then
-		for i = 1, #tipsList do
-			tipsList[i]:draw(self.shiftMode)
+	-- draw tips
+	if self.tipsList ~= nil then
+		for i = 1, #self.tipsList do
+			self.tipsList[i]:draw(self.shiftMode)
 		end
 	end
 
@@ -210,17 +207,16 @@ function Level:draw()
 	love.graphics.setColor(base.cDarkGray)
 	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "left", "bottom")
 	
-
 	-- draw stuck warning
 	if self.shiftMode == 0 and player.stuck then
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 
-	-- keyTips
+	-- draw keyTips
 	keyTips:draw()
 
-	-- finish level
+	-- draw finishLevel
 	if finishFlag then
 		love.graphics.setColor(0,0,0, 0.75)
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
@@ -231,32 +227,15 @@ function Level:draw()
 end
 
 
--- add obj to drawList
-function Level:addDrawList()
-	local arg = {}
-	-- add player and destination
-	table.insert(arg, player)
-	table.insert(arg, destination)
-	-- put all shape in drawList
-	for key, value in pairs(shapeList) do
-		if value ~= nil then
-			table.insert(arg, value)
-		end
-	end
-	--
-	drawList = arg
-	-- test add destination to shapeList
-	table.insert(shapeList, destination)
-end
-
-
--- shapeList
+-- add shapeList
 function Level:addShapeList(obj, ...)
-	table.insert(shapeList, obj(...))
+	table.insert(self.shapeList, obj(...))
+	-- add to drawList
+	table.insert(self.drawList, self.shapeList[#self.shapeList])
 end
 
 
--- tipsList
+-- add tipsList
 function Level:addTipsList(...)
-	table.insert(tipsList, Tips(...))
+	table.insert(self.tipsList, Tips(...))
 end

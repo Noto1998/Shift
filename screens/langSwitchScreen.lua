@@ -24,7 +24,7 @@ function Screen:update(dt)
 		lang = require(langFile)
 		
 		-- goto MainScreen
-		self.screen:view('MainScreen')
+		self.screen:view("MainScreen")
 	end
 end
 

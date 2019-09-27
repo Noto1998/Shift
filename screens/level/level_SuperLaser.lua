@@ -55,37 +55,33 @@ function Screen:activate()
     
 	--- here to create shape
 	-- floor
-    Screen:addShapeList(Cuboid,	1, 1, floorZ,		base.guiWidth, base.guiHeight, 1)
+    self:addShapeList(Cuboid,	1, 1, floorZ,		base.guiWidth, base.guiHeight, 1)
 
 
 	-- player wall
-	Screen:addShapeList(Cuboid, 1, 1, c1Z,							c1LenX, c1LenY, c1LenZ)
+	self:addShapeList(Cuboid, 1, 1, c1Z,							c1LenX, c1LenY, c1LenZ)
 	-- turret wall
-	Screen:addShapeList(Cuboid, 1+c1LenX, 1, c1Z+c1LenZ,			c2LenX, c2LenY, c2LenZ)
+	self:addShapeList(Cuboid, 1+c1LenX, 1, c1Z+c1LenZ,			c2LenX, c2LenY, c2LenZ)
 	
 
 	--left wall
-	Screen:addShapeList(Cuboid, leftX, leftY, leftZ,				10, leftLenY, leftLenZ)
+	self:addShapeList(Cuboid, leftX, leftY, leftZ,				10, leftLenY, leftLenZ)
 	
 	
 	-- hole1
-	Screen:addShapeList(Cuboid, hX1, leftY, hZ,					hLenX, leftLenY, hLenZ)
-	Screen:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,		ballR)
+	self:addShapeList(Cuboid, hX1, leftY, hZ,					hLenX, leftLenY, hLenZ)
+	self:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,		ballR)
 	
 
 	-- hole2
-	Screen:addShapeList(Cuboid, hX2, leftY, hZ,						hLenX, leftLenY, hLenZ)
-	Screen:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
+	self:addShapeList(Cuboid, hX2, leftY, hZ,						hLenX, leftLenY, hLenZ)
+	self:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
 	
 
 	-- Turret
 	for i = 0, 4 do
-		Screen:addShapeList(Turret, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
+		self:addShapeList(Turret, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
 	end
-
-
-	-- add drawList
-	Screen:addDrawList()
 end
 
 return Screen

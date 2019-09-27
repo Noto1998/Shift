@@ -30,21 +30,19 @@ function Screen:activate()
 	
 	--- here to create shape
 	-- left-top
-	Screen:addShapeList(Cuboid,		cX2, cY2, 50,							cLenX2, cLenY2, cLenZ1)
-	Screen:addShapeList(Cuboid,		0-10, -cLenY3, base.guiHeight-10,		cLenX3+10, cLenY3*2, cLenZ1)
+	self:addShapeList(Cuboid,		cX2, cY2, 50,							cLenX2, cLenY2, cLenZ1)
+	self:addShapeList(Cuboid,		0-10, -cLenY3, base.guiHeight-10,		cLenX3+10, cLenY3*2, cLenZ1)
 	-- right-top
-	Screen:addShapeList(Cuboid,		cX1+base.guiWidth/2, cY1, -1-94,		cLenX1, cLenY1, cLenZ1)
-	Screen:addShapeList(Cuboid,		cX2+base.guiWidth/2, cY2, -1,			cLenX2, cLenY2, cLenZ1)
-	Screen:addShapeList(Cuboid,		0+base.guiWidth/2, 0, 94,				cLenX3, cLenY3, cLenZ1)
+	self:addShapeList(Cuboid,		cX1+base.guiWidth/2, cY1, -1-94,		cLenX1, cLenY1, cLenZ1)
+	self:addShapeList(Cuboid,		cX2+base.guiWidth/2, cY2, -1,			cLenX2, cLenY2, cLenZ1)
+	self:addShapeList(Cuboid,		0+base.guiWidth/2, 0, 94,				cLenX3, cLenY3, cLenZ1)
 	-- right-bottom
-	Screen:addShapeList(Cuboid,		cX2+base.guiWidth/2, cY2+base.guiHeight/2, 200,					cLenX2, cLenY2, cLenZ1)
-	Screen:addShapeList(Cuboid,		0+base.guiWidth/2, 0+base.guiHeight/2, base.guiHeight+40,		cLenX3, cLenY3, cLenZ1)
+	self:addShapeList(Cuboid,		cX2+base.guiWidth/2, cY2+base.guiHeight/2, 200,					cLenX2, cLenY2, cLenZ1)
+	self:addShapeList(Cuboid,		0+base.guiWidth/2, 0+base.guiHeight/2, base.guiHeight+40,		cLenX3, cLenY3, cLenZ1)
 	-- left-bottom
-	Screen:addShapeList(Cuboid,		cX1, cY1+base.guiHeight/2, 94,					cLenX1, cLenY1, cLenZ1)
-	Screen:addShapeList(Cuboid,		cX2+1, cY2+base.guiHeight/2, 94+(94-50),		cLenX2, cLenY2, cLenZ1)
-	Screen:addShapeList(Cuboid,		0, 0+base.guiHeight/2, base.guiHeight+80,		cLenX3, cLenY3, cLenZ1)
-	-- add drawList
-	Screen:addDrawList()
+	self:addShapeList(Cuboid,		cX1, cY1+base.guiHeight/2, 94,					cLenX1, cLenY1, cLenZ1)
+	self:addShapeList(Cuboid,		cX2+1, cY2+base.guiHeight/2, 94+(94-50),		cLenX2, cLenY2, cLenZ1)
+	self:addShapeList(Cuboid,		0, 0+base.guiHeight/2, base.guiHeight+80,		cLenX3, cLenY3, cLenZ1)
 end
 
 return Screen

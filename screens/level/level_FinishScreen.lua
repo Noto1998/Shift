@@ -21,29 +21,26 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Cuboid,		1, 1+base.guiHeight, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
-
-	-- add drawList
-	Screen:addDrawList()
+	self:addShapeList(Cuboid,		1, 1+base.guiHeight, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
-	-- tips
-	Screen:addTipsList(lang.tips_save_us, 				base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
-	Screen:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
-	Screen:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
-	Screen:addTipsList(lang.ui_pressed_A_to_continue,	base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
+	-- here to create tips
+	self:addTipsList(lang.tips_save_us, 				base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
+	self:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
+	self:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
+	self:addTipsList(lang.ui_pressed_A_to_continue,	base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
 	--
 	local _x = base.guiWidth/2
-	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight, 		-50*2, 	"center")
-	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100,   -50,	"center")
-	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*2, 50*0,	"center")
-	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*3, 50*1,	"center")
-	Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*4, 50*2,	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight, 		-50*2, 	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100,   -50,	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*2, 50*0,	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*3, 50*1,	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*4, 50*2,	"center")
 	-- random location
 	for i = 0, 10 do
 		local _x = love.math.random(0, base.guiWidth)
 		local _y = love.math.random(0, base.guiHeight)
 		local _z = love.math.random(0, base.guiHeight-80)
-		Screen:addTipsList(lang.tips_save_us, _x, base.guiHeight+_y, _z, "center")
+		self:addTipsList(lang.tips_save_us, _x, base.guiHeight+_y, _z, "center")
 	end
 end
 

@@ -29,17 +29,14 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
+	self:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
 
 	f1 = FourD(base.guiWidth/2, base.guiHeight/2, base.guiHeight/4,		30,  50)
-	table.insert(shapeList, f1)
+	table.insert(self.shapeList, f1)
 
-	-- tips
+	-- here to create tips
 	t1 = Tips("test", 10, -50, 20)
-	table.insert(tipsList, t1)
-
-	-- add drawList
-	Screen:addDrawList()
+	table.insert(self.tipsList, t1)
 end
 
 

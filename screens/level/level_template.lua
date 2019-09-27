@@ -15,18 +15,14 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	-- use [ Screen:addShapeList(...) ] to create shape:
+	-- use [ self:addShapeList(...) ] to create shape:
 	-- Rectangle,	x, y, z, lenX, lenY, dir(math.pi/2)
 	-- Cuboid,		x, y, z, lenX, lenY, lenZ
 	-- Turret,		x, y, z, sx(0~1), sy(0~1), sz(0~1)
-
-	-- e.g. Screen:addShapeList(Circle, 0, 0, 0, 50)
+	-- e.g. self:addShapeList(Circle, 0, 0, 0, 50)
 
 	-- here to create tips
-	-- Screen:addTipsList(string, x, y, z, xMode, yMode)
-	
-	-- add drawList
-	Screen:addDrawList()
+	-- self:addTipsList(string, x, y, z [, xMode][, yMode])
 end
 
 return Screen

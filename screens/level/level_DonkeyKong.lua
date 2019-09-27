@@ -24,13 +24,10 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Ball,		base.guiWidth-80, 80, 0,			cR)
+	self:addShapeList(Ball,		base.guiWidth-80, 80, 0,			cR)
 
-	Screen:addShapeList(Rectangle, 80, 0, reZ,				reLenX, reLenY,			math.pi/2 +reDir)
-	Screen:addShapeList(Rectangle, 0, reLenY, reZ+50,		reLenX, reLenY, 		math.pi/2 -reDir)
-
-	-- add drawList
-	Screen:addDrawList()
+	self:addShapeList(Rectangle, 80, 0, reZ,			reLenX, reLenY,			math.pi/2 +reDir)
+	self:addShapeList(Rectangle, 0, reLenY, reZ+50,		reLenX, reLenY, 		math.pi/2 -reDir)
 end
 
 return Screen

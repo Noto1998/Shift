@@ -20,17 +20,14 @@ function Screen:activate()
 	local destinationY = base.guiHeight+2
 	local destinationZ = cubeZ-50
 	-- create player and destination
-	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, dialogTable)
+	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
-
-	-- tips
-	Screen:addTipsList(lang.tips_pressed_Y_to_shift,		base.guiWidth-base.guiBorder, 50, -50, "right")
-	Screen:addTipsList(lang.tips_left_and_right_to_move,	base.guiWidth-base.guiBorder, 350, 20, "right")
-
-	-- add drawList
-	Screen:addDrawList()
+	self:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
+	
+	-- here to create tips
+	self:addTipsList(lang.tips_pressed_Y_to_shift,		base.guiWidth-base.guiBorder, 50, -50, "right")
+	self:addTipsList(lang.tips_left_and_right_to_move,	base.guiWidth-base.guiBorder, 350, 20, "right")
 end
 
 return Screen

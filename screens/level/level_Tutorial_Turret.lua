@@ -24,20 +24,16 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
-    
+	-- floor
+	self:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
     -- wall
-    Screen:addShapeList(Cuboid,		base.guiWidth/2-cubeLenX2/2, base.guiHeight/2-cubeLenY2/2, cubeZ-cubeLenZ*2,		cubeLenX2, cubeLenY2, cubeLenZ*2)
-
+    self:addShapeList(Cuboid,		base.guiWidth/2-cubeLenX2/2, base.guiHeight/2-cubeLenY2/2, cubeZ-cubeLenZ*2,		cubeLenX2, cubeLenY2, cubeLenZ*2)
 	-- turret
-    Screen:addShapeList(Turret,		base.guiWidth/2, 0, cubeZ-cubeLenZ3,		0, 1, 0)
-    Screen:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
+    self:addShapeList(Turret,		base.guiWidth/2, 0, cubeZ-cubeLenZ3,		0, 1, 0)
+    self:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
-	-- tips
-	Screen:addTipsList(lang.tips_yellow_means_danger,		5, base.guiHeight+10, 20)
-
-	-- add drawList
-	Screen:addDrawList()
+	-- here to create tips
+	self:addTipsList(lang.tips_yellow_means_danger,		5, base.guiHeight+10, 20)
 end
 
 return Screen

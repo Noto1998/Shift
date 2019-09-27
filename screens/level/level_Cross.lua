@@ -38,33 +38,30 @@ function Screen:activate()
 	
 	--here to create the shape
 	--Floor
-	Screen:addShapeList(Cuboid,	2,2,210,318,238,30)
-	
+	self:addShapeList(Cuboid,	2,2,210,318,238,30)
 	--Side Wall
-	Screen:addShapeList(Cuboid,SWx,SWy,SWz,SWLx,SWLy,SWLz)
-	Screen:addShapeList(Cuboid,base.guiWidth-SWx-SWLx,SWy,SWz,SWLx,SWLy,SWLz)
+	self:addShapeList(Cuboid,SWx,SWy,SWz,SWLx,SWLy,SWLz)
+	self:addShapeList(Cuboid,base.guiWidth-SWx-SWLx,SWy,SWz,SWLx,SWLy,SWLz)
 	--Laser
-	Screen:addShapeList(Turret,Lx,	 Ly-4,210-40/2,	LLx,LLy,LLz)--chuizhi
-	Screen:addShapeList(Turret,Lx-50,Ly-4,210-40/2,	Sx,Sy,LLz)--right
-	Screen:addShapeList(Turret,Lx+50,Ly-4,210-40/2,	-Sx,Sy,LLz)--left
-	Screen:addShapeList(Turret,0,Ly+210,Lz,1,0,0)
+	self:addShapeList(Turret,Lx,	 Ly-4,210-40/2,	LLx,LLy,LLz)--chuizhi
+	self:addShapeList(Turret,Lx-50,Ly-4,210-40/2,	Sx,Sy,LLz)--right
+	self:addShapeList(Turret,Lx+50,Ly-4,210-40/2,	-Sx,Sy,LLz)--left
+	self:addShapeList(Turret,0,Ly+210,Lz,1,0,0)
 	--Middle Wall
-	Screen:addShapeList(Cuboid,150, 50, 190,		20,55,20)
-	Screen:addShapeList(Cuboid,170, 110, 190,		1,15,20)
-	Screen:addShapeList(Cuboid,150, 130, 190,		20,55,20)
-
-	Screen:addShapeList(Cuboid,55, 100, MWz,		210,30,30)
-	Screen:addShapeList(Cuboid,290, 100, MWz,		22,30,30)
-	Screen:addShapeList(Cuboid,10, 100, MWz,		22,30,30)
+	self:addShapeList(Cuboid,150, 50, 190,		20,55,20)
+	self:addShapeList(Cuboid,170, 110, 190,		1,15,20)
+	self:addShapeList(Cuboid,150, 130, 190,		20,55,20)
+	--
+	self:addShapeList(Cuboid,55, 100, MWz,		210,30,30)
+	self:addShapeList(Cuboid,290, 100, MWz,		22,30,30)
+	self:addShapeList(Cuboid,10, 100, MWz,		22,30,30)
 	--Ball
-	Screen:addShapeList(Ball,85,115,150,12.5)
+	self:addShapeList(Ball,85,115,150,12.5)
 	--Slope
-	Screen:addShapeList(Rectangle,80, 105, 210,		80/math.cos(dir), 25,		math.pi/2-dir)
+	self:addShapeList(Rectangle,80, 105, 210,		80/math.cos(dir), 25,		math.pi/2-dir)
 
-	-- tips
-	Screen:addTipsList(lang.tips_mayoiba_yabureru, 20, -80, 10)
-
-	Screen:addDrawList()
+	-- here to create tips
+	self:addTipsList(lang.tips_mayoiba_yabureru, 20, -80, 10)
 end
 
 return Screen

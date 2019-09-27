@@ -28,18 +28,15 @@ function Screen:activate()
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	Screen:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
+	self:addShapeList(Cuboid,		1, 1, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	-- gate
-	Screen:addShapeList(Cuboid,		1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
-	Screen:addShapeList(Cuboid,		base.guiWidth-cubeLenX2-1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
+	self:addShapeList(Cuboid,		1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
+	self:addShapeList(Cuboid,		base.guiWidth-cubeLenX2-1, cubeY2, cubeZ2,		cubeLenX2, cubeLenY2, cubeLenZ)
 	-- wall
-	Screen:addShapeList(Cuboid,		250-1, cubeY2, cubeZ-cubeLenZ3,		50, 50, cubeLenZ3)
-
-	-- add drawList
-	Screen:addDrawList()
-
-	-- tips
-	Screen:addTipsList("/......?", 10, -200, 20)
+	self:addShapeList(Cuboid,		250-1, cubeY2, cubeZ-cubeLenZ3,		50, 50, cubeLenZ3)
+	
+	-- here to create tips
+	self:addTipsList("/......?", 10, -200, 20)
 end
 
 return Screen

@@ -27,16 +27,13 @@ function Screen:activate()
 	
 	--- here to create shape
 	-- floor
-	Screen:addShapeList(Cuboid,		cX, cY, cZ,		cLenX, cLenY, cLenZ)
+	self:addShapeList(Cuboid,		cX, cY, cZ,		cLenX, cLenY, cLenZ)
 	
-	Screen:addShapeList(Rectangle,	0, base.guiHeight+10, 150,		base.guiWidth+40, base.guiHeight/2, 		 math.pi/2 -math.pi/10)
+	self:addShapeList(Rectangle,	0, base.guiHeight+10, 150,		base.guiWidth+40, base.guiHeight/2, 		 math.pi/2 -math.pi/10)
 	
-	Screen:addShapeList(Ball,		cR, 50+50, 0,		cR)
+	self:addShapeList(Ball,		cR, 50+50, 0,		cR)
 
-	Screen:addShapeList(Turret,		base.guiWidth/2, 1, 1,		0, 1, 1)
-
-	-- add drawList
-	Screen:addDrawList()
+	self:addShapeList(Turret,		base.guiWidth/2, 1, 1,		0, 1, 1)
 end
 
 return Screen

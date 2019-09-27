@@ -6,11 +6,15 @@ local t1, tipsList
 
 local function getLevelName(page)
 	local string = "bug"
-	local test = require ("screens.level." .. levelString[page])
-	
+	-- class
+	local Test = require ("screens.level." .. levelString[page])
+	-- obj
+	local test = Test()
+
 	test:activate()
 	string = test.levelName
-	test = nil--release
+	-- release
+	test = nil
 
 	return string
 end
