@@ -32,10 +32,11 @@ end
 
 
 function BgmManager:draw()
-    love.graphics.setColor(0.25, 0.25, 0.25)
-    base.print(lang.ui_key_music, base.guiWidth-base.guiBorder, 0, "left")
+    love.graphics.setColor(base.cDarkGray)
+    base.print("♫", base.guiWidth-base.guiBorder, 0, "right")
     if not self.turnOn then
-        base.print("\\", base.guiWidth-10, 0, "left")
+        love.graphics.setColor(base.cRed)
+        base.print("x", base.guiWidth-base.guiBorder, 0, "right")
     end
 end
 

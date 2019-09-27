@@ -45,7 +45,7 @@ function ScreenManager:view(path, ...)
 		end
 	end
 
-	-- test for reset level
+	-- for reset level
 	resetLevelString = path
 end
 

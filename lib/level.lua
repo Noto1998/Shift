@@ -201,12 +201,15 @@ function Level:draw()
 
 	-- draw levelName
 	love.graphics.setColor(base.cWhite)
-	base.print(self.levelName, base.guiBorder, base.guiHeight, "right", "bottom")
+	base.print(self.levelName, base.guiBorder, base.guiHeight, "left", "bottom")
 	
 	-- draw keyTips text
 	love.graphics.setColor(base.cDarkGray)
-	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "left", "bottom")
-	
+	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "right", "bottom")
+
+	-- bgmManager
+	bgmManager:draw()
+
 	-- draw stuck warning
 	if self.shiftMode == 0 and player.stuck then
 		love.graphics.setColor(base.cWhite)

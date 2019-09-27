@@ -1,8 +1,7 @@
 Destination = Cuboid:extend()
 
-local len = 50
-
 function Destination:new(x, y, z)
+    local len = 50
     local cFill = base.cDestination
     local cLine = base.cWhite
     local cMesh = {0, 0, 0, 0}

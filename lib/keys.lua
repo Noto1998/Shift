@@ -1,7 +1,7 @@
 -- GAMESHELL KEYMAP --
 -- See here: https://github.com/clockworkpi/Keypad/blob/master/keymaps.png
 
-keys = {}
+local keys = {}
 
 -- A, B, X, Y
 keys.Y = 'i'

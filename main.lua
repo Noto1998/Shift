@@ -5,9 +5,12 @@ love.graphics.draw(img)
 love.graphics.present()
 ---
 
---- font
+--- FONT
+-- for base. can get font's height
 local font = love.graphics.newFont("font/SourceHanSansCN-Medium.otf", 20)
 love.graphics.setFont(font)
+---
+
 --- IMPORT CLASSIC
 -- object-oriented
 Object = require "lib.classic"
@@ -29,7 +32,7 @@ require "lib.player"
 -- destination
 require "lib.destination"
 -- level
-require "lib.shift"-- frist
+require "lib.shift" -- frist
 require "lib.level"
 -- keyTips
 require "lib.keyTips"
@@ -94,9 +97,9 @@ function love.load()
     ---
 
     -- register screens
-    screenManager = ScreenManager()
-    screenManager:register('/', LangSwitchScreen)   -- frist
-    screenManager:register('MainScreen', MainScreen)
+    local screenManager = ScreenManager()
+    screenManager:register("/", LangSwitchScreen)   -- frist
+    screenManager:register("MainScreen", MainScreen)
     -- register level
     for i, level in ipairs(LevelScreen) do
         local levelName = levelString[i]

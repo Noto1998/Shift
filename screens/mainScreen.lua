@@ -30,7 +30,7 @@ function Screen:activate()
 	imgMofishLogo = love.graphics.newImage("img/mofishLogo.png")
 
 	-- tips
-	local y1 = base.guiHeight-base.guiBorder*2
+	local y1 = base.guiHeight-base.guiFontHeight
 	local y2 = y1-base.guiFontHeight-base.guiBorder
 	t1 = Tips(lang.ui_level_choice(page, getLevelName(page)), base.guiWidth/2, y2, -50, "center", "bottom")
 	tipsList = {
@@ -86,6 +86,10 @@ function Screen:draw()
 	-- draw BG
 	love.graphics.setColor(base.cBlack)
 	love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+
+	-- bgmManager
+	bgmManager:draw()
+	
 	-- logo
 	local c1 = base.cloneTable(base.cWhite)
 	local c2 = base.cloneTable(base.cWhite)
@@ -106,7 +110,7 @@ function Screen:draw()
 
 	-- credits
 	love.graphics.setColor(base.cDarkGray)
-	base.print(lang.ui_key_credits, base.guiWidth-base.guiBorder, 0, "left")
+	base.print(lang.ui_key_credits, base.guiWidth-base.guiBorder-base.guiFontHeight, 0, "right")
 end
 
 
