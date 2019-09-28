@@ -1,6 +1,7 @@
 local Screen = Shift:extend()
 
 local page
+local pageHide = 3	--hide
 local imgGameLogo, imgMofishLogo
 local t1, tipsList
 
@@ -15,6 +16,11 @@ local function getLevelName(page)
 	string = test.levelName
 	-- release
 	test = nil
+
+	-- hide
+	if page > (#levelString - pageHide) then
+		string = "???"
+	end
 
 	return string
 end
@@ -50,7 +56,7 @@ function Screen:update(dt)
 	-- switch level
 	if self.shiftMode == 0 then
 		if base.isPressed(base.keys.right) or base.isPressed(base.keys.left) then
-			local levelMax = #levelString-3		-- hide finishScreen
+			local levelMax = #levelString
 			
 			-- change page
 			if base.isPressed(base.keys.right) then
@@ -74,7 +80,7 @@ function Screen:update(dt)
 		end
 
 		-- start level
-		if base.isPressed(base.keys.enter) then
+		if base.isPressed(base.keys.enter) and page <= (#levelString - pageHide) then 
 			levelChoice = page
 			self.screen:view(levelString[levelChoice])
 		end
