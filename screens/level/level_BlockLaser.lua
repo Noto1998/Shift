@@ -1,27 +1,28 @@
 local Screen = Level:extend()
 
 function Screen:activate()
-	-- levelName
-	local levelName = lang.level_BlockLaser
-	
-	-- shape value
+	--- shape vnlue
+	-- Cuboid
 	local cLenX = 40*2
-	local cLenY = base.guiHeight-1*2
+	local cLenY = base.guiHeight*1.5
 	local cLenZ = 50
 	local cX = base.guiWidth/2 -cLenX/2
-	local cY = 0
+	local cY = -30
 	local cZ = base.guiHeight-cLenZ
-	--ball
-	local cR = 20
+	-- Ball
+	local bR = 20
+	---
 
+	-- levelName
+	local levelName = lang.level_BlockLaser
 	-- player location
-	local playerX = base.guiWidth/2
-	local playerY = 50
+	local playerX = base.guiWidth/2-base.player.len/2
+	local playerY = -25
 	local playerZ = 150
 	-- destination location
-	local destinationX = base.guiWidth/2-50/2
-	local destinationY = base.guiHeight-50/2
-	local destinationZ = -50
+	local destinationX = base.guiWidth/2-base.lenDestination/2
+	local destinationY = base.guiHeight-5
+	local destinationZ = -base.lenDestination
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
@@ -29,10 +30,9 @@ function Screen:activate()
 	-- floor
 	self:addShapeList(Cuboid,		cX, cY, cZ,		cLenX, cLenY, cLenZ)
 	
-	self:addShapeList(Rectangle,	0, base.guiHeight+10, 150,		base.guiWidth+40, base.guiHeight/2, 		 math.pi/2 -math.pi/10)
+	self:addShapeList(Rectangle,	base.guiWidth, base.guiHeight+10, 150,		base.guiWidth+40, base.guiHeight/2, 		 -math.pi+math.pi/10)
+	self:addShapeList(Ball,			bR, 80, 0,		bR)
 	
-	self:addShapeList(Ball,		cR, 50+50, 0,		cR)
-
 	self:addShapeList(Turret,		base.guiWidth/2, 1, 1,		0, 1, 1)
 end
 

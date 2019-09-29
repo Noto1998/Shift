@@ -1,10 +1,23 @@
 FourD = Shape:extend()
 
+
+local modeMin = 0.1
+local mode1 = 0.33
+
 function FourD:new(x, y, z, lenX, lenY)
     FourD.super.new(self, x, y, z)
 
     self.lenX = lenX
     self.lenY = lenY
+end
+
+
+function FourD:update(mode)
+    -- update fourD len
+    if (mode >= mode1-modeMin and mode <= mode1+modeMin)
+    or (mode >= (1-mode1)-modeMin and mode <= (1-mode1)+modeMin) then
+		self.lenX, self.lenY = self.lenY, self.lenX
+	end
 end
 
 

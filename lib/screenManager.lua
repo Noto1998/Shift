@@ -75,6 +75,8 @@ function ScreenManager:registerEvents()
 				fileName = value
 			end
 			if fileName ~= nil then
+				lang = require("lib.lang.lang_cn")
+				
 				local levelName = string.sub(fileName, 1, string.len(fileName)-string.len(".lua"))
 				self:register(levelName, require("screens.debug." .. levelName))
 				self:view(levelName)
@@ -102,7 +104,17 @@ function ScreenManager:registerEvents()
 	--function love.touchmoved(...) _self:event('touchmoved', ...) end
 	--function love.touchpressed(...) _self:event('touchpressed', ...) end
 	--function love.touchreleased(...) _self:event('touchreleased', ...) end
-	function love.update(...) _self:event('update', ...) end
+	function love.update(...)
+		local t = {...}
+		local dt = t[1]
+		--set FPS
+		local maxFPS = 60
+		if dt < 1/maxFPS then
+			love.timer.sleep(1/maxFPS - dt)
+		end
+
+		_self:event('update', ...)
+	end
 	function love.visible(...) _self:event('visible', ...) end
 	--function love.wheelmoved(...) _self:event('wheelmoved', ...) end
 end

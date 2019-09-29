@@ -1,12 +1,13 @@
 local Screen = Level:extend()
 
 function Screen:activate()
+	--- shape vnlue
 	local cLenX1 = 50
 	local cLenY1 = cLenX1
 	local cLenZ1 = 25
 	local cX1 = base.guiWidth/4-cLenX1/2
 	local cY1 = base.guiHeight/4-cLenY1/2
-
+	
 	local cLenX2 = base.guiWidth/2 - (base.guiWidth/2 - cLenX1)/2
 	local cLenY2 = base.guiHeight/2 - (base.guiHeight/2 - cLenY1)/2
 	local cX2 = base.guiWidth/4-cLenX2/2
@@ -14,17 +15,18 @@ function Screen:activate()
 
 	local cLenX3 = base.guiWidth/2
 	local cLenY3 = base.guiHeight/2
+	---
 
 	-- levelName
 	local levelName = lang.level_Contour
 	-- player location
-	local playerX = base.guiWidth/4
-	local playerY = base.guiHeight/4
+	local playerX = base.guiWidth/4-base.player.len/2
+	local playerY = base.guiHeight/4-base.player.len/2
 	local playerZ = 50
 	-- destination location
-	local destinationX = base.guiWidth-playerX-50/2
-	local destinationY = base.guiHeight-playerY-50/2
-	local destinationZ = 200-50
+	local destinationX = base.guiWidth-base.guiWidth/4-base.lenDestination/2
+	local destinationY = base.guiHeight-base.guiHeight/4-base.lenDestination/2
+	local destinationZ = 200-base.lenDestination
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	

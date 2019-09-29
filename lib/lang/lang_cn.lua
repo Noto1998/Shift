@@ -23,7 +23,7 @@ lang.ui_credits = {
 --level
 lang.level_BlockLaser		= "我来挡住"
 lang.level_Contour			= "等高线"
-lang.level_Cross			= "交叉"
+lang.level_Cross			= "十字架"
 lang.level_CrossTheRiver	= "过河"
 lang.level_DonkeyKong		= "大金刚"
 lang.level_Invisible		= "隐形"

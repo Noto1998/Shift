@@ -1,17 +1,18 @@
 local Screen = Level:extend()
 
 function Screen:activate()
-	-- shape value
+	--- shape value
 	local cubeZ = 50
 	local cubeLenX = 150
 	local cubeLenY = base.guiHeight-1-1
 	local cubeLenZ = 40
+	---
 
 	-- levelName
 	local levelName = lang.level_RockClimbing
 	-- player location
-	local playerX = 100
-	local playerY = 180
+	local playerX = 50
+	local playerY = 90
 	local playerZ = cubeZ - 1
 	-- destination location
 	local destinationX = cubeLenX - 50

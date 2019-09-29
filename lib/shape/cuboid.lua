@@ -1,4 +1,4 @@
-Cuboid = Shape:extend()--Rectangle
+Cuboid = Shape:extend()
 
 function Cuboid:new(x, y, z, lenX, lenY, lenZ, cFill, cLine, cMesh)
     Cuboid.super.new(self, x, y, z, cFill, cLine, cMesh)
@@ -8,7 +8,7 @@ function Cuboid:new(x, y, z, lenX, lenY, lenZ, cFill, cLine, cMesh)
 end
 
 function Cuboid:draw(mode)
-    local _dir = math.pi/2
+    local _dir = 0
     -- 0
     local _y = self.y
     local _lenY = self.lenY
@@ -23,4 +23,18 @@ function Cuboid:draw(mode)
     re1:draw(1 - mode)
     -- release
     re1 = nil
+end
+
+function Cuboid:collisionPointXZ(x, z)
+    local flag = false
+    local checkBorder = 2
+
+    if	x >= self.x - checkBorder
+    and z >= self.z - checkBorder
+    and x <= self.x + self.lenX + checkBorder
+    and z <= self.z + self.lenZ + checkBorder then
+        flag = true
+    end
+
+    return flag
 end

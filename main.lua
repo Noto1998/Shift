@@ -62,7 +62,7 @@ end
 --- LOAD GAME
 function love.load()
     -- DEBUG
-    debugMode = false       -- close
+    debugMode = true        -- work when ./debug/ have files, so remember not git ./debug/
     debugLevel = nil        -- pressed f1 to run level
     
     -- level

@@ -6,11 +6,9 @@ function Screen:new(ScreenManager)
 	self.screen = ScreenManager
 end
 
-
 function Screen:activate()
 	love.graphics.clear()
 end
-
 
 function Screen:update(dt)
 	-- switch lang

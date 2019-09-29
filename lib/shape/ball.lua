@@ -1,31 +1,22 @@
 Ball = Shape:extend()
 
-local spd = 32
-local spdG = 80
+local spd = 35
 
-local function  isCollision(self, table)
+local function isOnGround(self, shapeList)
     local flag = false
     local _z = self.z + self.radius
 
-    for index, obj in ipairs(table) do
-        -- Cuboid
-        if obj:is(Cuboid) then
-            if  self.x > obj.x
-            and self.x < obj.x+obj.lenX 
-            and _z > obj.z
-            and _z < obj.z+obj.lenZ then
-                flag = true
-            end
-        -- Rectangle
-        elseif obj:is(Rectangle) then
-            flag = obj:isCollisionXZ(self.x, _z)
+    for index, obj in ipairs(shapeList) do
+        -- Cuboid or Rectangle
+        if obj:is(Cuboid) or obj:is(Rectangle) then
+            flag = obj:collisionPointXZ(self.x, _z)
         end
         --
         if flag then
             break
         end
     end
-    --
+    
     return flag
 end
 
@@ -33,22 +24,20 @@ function Ball:new(x, y, z, radius, cFill, cLine, cMesh)
     Ball.super.new(self, x, y, z, cFill, cLine, cMesh)
     self.radius = radius
     self.onGround = false
-
     self.spdX = 0
     self.spdZ = 0
 end
 
 
-function Ball:update(dt, mode, list)
+function Ball:update(dt, mode, shapeList)
     if mode == 1 then
        -- onGround
-        self.onGround = isCollision(self, list)
+        self.onGround = isOnGround(self, shapeList)
         -- gravity
         self.spdZ = 0
         if not self.onGround then
-            self.spdZ = spdG
+            self.spdZ = base.garvity
         end
-
         -- roll
         if self.spdX ~= 0 then
             local slowSpd = 10*dt
@@ -58,13 +47,13 @@ function Ball:update(dt, mode, list)
                 self.spdX = 0
             end
         end
-        for key, obj in pairs(list) do
+        for key, obj in pairs(shapeList) do
             if obj:is(Rectangle) then
-                if obj:isCollisionXZ(self.x, self.z+self.radius+self.spdZ*dt) then
+                if obj:collisionPointXZ(self.x, self.z+self.radius+self.spdZ*dt) then
                     local signX = 0
-                    if obj.dir < math.pi/2 then
+                    if obj.dir < -math.pi/2 then
                         signX = 1
-                    elseif obj.dir > math.pi/2 then
+                    elseif obj.dir > -math.pi/2 then
                         signX = -1
                     end
                     self.spdX = spd*signX
@@ -97,15 +86,33 @@ function Ball:draw(mode)
     love.graphics.circle("line", self.x, _y, self.radius)
 end
 
+
+function Ball:collisionPointXZ(x, z)
+    local flag = false
+    -- local checkBorder = 2
+
+    local lenX = math.abs(x - self.x)
+    local lenZ = math.abs(z - self.z)
+    local c = math.sqrt(lenX^2 + lenZ^2)
+    
+    if c < self.radius then
+        flag = true
+    end
+
+    return flag
+end
+
 function Ball:hit(player)
     local flag = false
-
     for i = 1, 2 do
-        if player:isCollisionXZ(i, self) then
+        local x = player:getX(i)
+        local z = player:getZ(i)
+        
+        if self:collisionPointXZ(x, z) then
             flag = true
             break
         end
     end
-
+    
     return flag
 end

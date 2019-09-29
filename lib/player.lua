@@ -1,413 +1,263 @@
-Player = Object:extend()
-
-local len = 25
-local spdMoveXY = 100
-local spdMoveXZ = math.pi/1.85
-local spdX
-local spdY
-local spdZ
-local cFill = base.cloneTable(base.cGray)
-cFill[4] = 0.5
----endPoint
-local dir
-local lockPoint
-local lockPointX
-local lockPointZ
-local lock
-local spdGarvity = 100
-local endPoint = {}
-for i = 1, 2 do
-	endPoint[i] = {}
-end
-local sfxPoint = {true, true}
-
-
--- xy
-local function moveXY()
-	-- move
-	if base.isDown(base.keys.left) then
-		spdX = -spdMoveXY
-	elseif base.isDown(base.keys.right) then
-		spdX = spdMoveXY
-	else
-		spdX = 0
-	end
-	if base.isDown(base.keys.up) then
-		spdY = -spdMoveXY
-	elseif base.isDown(base.keys.down) then
-		spdY = spdMoveXY
-	else
-		spdY = 0
-	end
-	if math.abs(spdX) > 0 and math.abs(spdY) > 0 then	-- 45
-		spdX = spdMoveXY / math.sqrt(2) * base.sign(spdX)
-		spdY = spdMoveXY / math.sqrt(2) * base.sign(spdY)
-	end
-end
-local function isCollisionXY(self, obj)
-	local flag = false
-	-- Rectangle
-	if obj:is(Rectangle) or obj:is(Cuboid) then
-		if 	self.y - self.lenY <= obj.y + obj.lenY
-		and self.y + self.lenY >= obj.y
-		and self.x - self.lenX <= obj.x + obj.lenX
-		and self.x + self.lenX >= obj.x then
-			flag = true
-		end
-	-- Circle
-	elseif obj:is(Circle) then
-	else
-		-- other
-	end
-	return flag
-end
-local function collisionXY(self, dt, obj)
-	-- Rectangle
-	if obj:is(Rectangle) or obj:is(Cuboid) then
-		local tableX = {obj.x, obj.x+obj.lenX}
-		local tableY = {obj.y, obj.y+obj.lenY}
-		-- x
-		if self.y+self.lenY > obj.y and self.y-self.lenY < obj.y+obj.lenY then
-			-- check how far between x and the line
-			for key, xValue in pairs(tableX) do
-				local disX = math.abs(self.x - xValue)
-				local signX = base.sign(self.x - xValue)
-				local disMin = self.lenX
-				-- stuck
-				if disX + 1 < disMin then
-					self.stuck = true
-					spdY = 0
-					spdX = 0
-				-- push
-				elseif math.abs(disX * signX + spdX * dt) < disMin then
-					self.x = xValue + disMin * signX-- left or right
-					spdX = 0
-				end
-			end
-		end
-		-- y
-		if self.x+self.lenX > obj.x and self.x-self.lenX < obj.x+obj.lenX then
-			-- check how far between x and the line
-			for key, yValue in pairs(tableY) do
-				local disY = math.abs(self.y - yValue)
-				local signY = base.sign(self.y - yValue)
-				local disMin = self.lenY
-				-- stuck
-				if disY + 1 < disMin then
-					self.stuck = true
-					spdY = 0
-					spdX = 0
-				-- push
-				elseif math.abs(disY * signY + spdY * dt) < disMin then
-					self.y = yValue + disMin * signY
-					spdY = 0
-				end
-			end
-		end
-	-- Circle
-	elseif obj:is(Circle) then
-	
-	else
-		-- other
-	end
-end
-
--- xz
-local function setDir(dir, dt, sign)
-	local spdDir = spdMoveXZ
-	dir = dir + sign * spdDir * dt
-	-- allways positive
-	if dir >= math.pi*2 then
-		dir = 0
-	elseif dir < 0 then
-		dir = math.pi*2 - math.abs(dir)
-	end
-	return dir
-end
-local function getLenXZ(string)
-	local _dir = math.pi/2 - dir
-	local lenX = math.floor(math.cos(_dir) * len)
-	local lenZ = math.floor(math.sin(_dir) * len)
-	if string == "x" then
-		return lenX
-	elseif string == "z" then
-		return lenZ
-	end
-end
-local function updateXZ(self, lockPoint)
-	local sign = 0
-	local lenX = getLenXZ("x")
-	local lenZ = getLenXZ("z")
-	if lockPoint == 1 then
-		sign = 1
-	elseif lockPoint == 2 then
-		sign = -1
-	end
-	 -- update self.x/z
-	self.x = lockPointX + sign * lenX
-	self.z = lockPointZ + sign * lenZ
-end
-local function updateEndPoint(self)
-	local lenX = getLenXZ("x")
-	local lenZ = getLenXZ("z")
-	-- update endPoint
-	endPoint[1].x = self.x - lenX
-	endPoint[1].z = self.z - lenZ
-	endPoint[2].x = self.x + lenX
-	endPoint[2].z = self.z + lenZ
-end
-local function setLockPointXZ(lockPoint)
-	lockPointX = endPoint[lockPoint].x
-	lockPointZ = endPoint[lockPoint].z
-end
-local function getOtherEndPointNum(num)
-	if num == 2 then
-		return 1
-	elseif num == 1 then
-		return 2
-	end
-end
-local function keyPressedLock(self, dt)
-	if base.isDown(base.keys.left) then
-		dir = setDir(dir, dt, 1)
-		updateXZ(self, lockPoint)
-	elseif base.isDown(base.keys.right) then
-		dir = setDir(dir, dt, -1)
-		updateXZ(self, lockPoint)
-	else
-		lock = false
-	end
-end
-local function endPointSetting(self, dt, num)
-	-- setLockPointXZ
-	if not lock then
-		lockPoint = num
-		setLockPointXZ(lockPoint)
-		lock = true
-	end
-	-- Player control
-	if base.isDown(base.keys.left) or base.isDown(base.keys.right) then
-		keyPressedLock(self, dt)
-	-- garvity
-	else
-		local sign
-		if endPoint[num].x > endPoint[getOtherEndPointNum(num)].x then
-			sign = 1
-		else
-			sign = -1
-		end
-		dir = setDir(dir, dt, sign)
-		if dir < (math.pi/3) * dt then
-			dir = 0
-		end
-		updateXZ(self, lockPoint)
-	end
-end
-
+Player = Rectangle:extend()
 
 function Player:new(x, y, z)
-	self.x = x -- center
-	self.y = y -- center
-	self.z = z
-	self.lenX = len --half
-	self.lenY = len	--half
-	self.cFill = cFill
-	self.cLine = base.cLine
-	spdX = 0
-	spdY = 0
-	spdZ = 0
+	local len = base.player.len
+	local cFill = base.cloneTable(base.cGray)
+	cFill[4] = 0.5
+	local cMesh = {0,0,0,0}
+	--
+	Player.super.new(self, x, y, z, len, len, 0, cFill, base.cLine, cMesh)
+
 	self.stuck = false
-	-- endPoint
-	for i = 1, 2 do
-		endPoint[i].x = 0
-		endPoint[i].y = 0
-		endPoint[i].onGround = false
-	end
-	dir = math.pi/2
-	lockPoint = 0
-	lockPointX = 0
-	lockPointZ = 0
-	lock = false
-	updateEndPoint(self)
+	self.onGround = {false, false}
+	self.spdX = 0
+	self.spdY = 0
 end
 
 
-function Player:update(dt, mode, shapelist)
-	-- xy
+function Player:update(dt, mode, shapeList)
+	-- move
 	if mode == 0 then
-		moveXY()
-		-- collision
-		self.stuck = false
-		for key, obj in pairs(shapelist) do
-			collisionXY(self, dt, obj)
-		end
-	-- xz
+		self:moveXY(dt)
+		self:collisionXY(dt, shapeList)
+		--
+		self.x = self.x + self.spdX * dt
+		self.y = self.y + self.spdY * dt
 	elseif mode == 1 then
-		spdZ = 0
 		-- onGround
 		for i = 1, 2 do
-			local flag = false
-			for key, obj in pairs(shapelist) do
-				if self:isCollisionXZ(i, obj) then
-					flag = true
-					break
-				end
-			end
-			endPoint[i].onGround = flag
-
-			--
-			if endPoint[i].onGround == false then
-				sfxPoint[i] = false
-			end
-			if endPoint[i].onGround and not sfxPoint[i] then
-				sfxPoint[i] = true
-				--sfx
-				love.audio.play(sfx_touchGound)
-			end
+			self.onGround[i] = self:PointOnGround(i, shapeList)
 		end
-		-- both onGround
-		if endPoint[1].onGround and endPoint[2].onGround then
-			lock = false
-			-- setLockPointXZ
-			if not lock then
-				-- get the most right endPoint
-				local rightPoint = 1
-				for i, value in ipairs(endPoint) do
-					if value.x > endPoint[rightPoint].x then
-						rightPoint = i
-					end
-				end
-				if base.isDown(base.keys.left) then
-					-- take the left
-					lockPoint = getOtherEndPointNum(rightPoint)
-					setLockPointXZ(lockPoint)
-					lock = true
-				elseif base.isDown(base.keys.right) then
-					-- take the right
-					lockPoint = rightPoint
-					setLockPointXZ(lockPoint)
-					lock = true
-				end
-			end
-			-- Player control
-			keyPressedLock(self, dt)
-		-- endPoint 1 onGround
-		elseif endPoint[1].onGround then
-			endPointSetting(self, dt, 1)
-		-- endPoint 2 onGround
-		elseif endPoint[2].onGround then
-			endPointSetting(self, dt, 2)
-		-- both not onGround
-		else
-			lock = false
-			-- Player can't control
-			-- garvity
-			spdZ = spdGarvity
-		end
-	else
-		-- shifting
-		spdX = 0
-		spdY = 0
-		spdZ = 0
+		--
+		self:collisionXZ(dt)
 	end
-	-- update spdMoveXY and fix pixel
-	self.x = self.x + math.floor(math.abs(spdX * dt)) * base.sign(spdX)
-	self.y = self.y + math.floor(math.abs(spdY * dt)) * base.sign(spdY)
-	self.z = self.z + math.floor(math.abs(spdZ * dt)) * base.sign(spdZ)
-	-- update endPoint
-	updateEndPoint(self)
-	-- update LenX
-	self.lenX = math.abs(endPoint[1].x - self.x)
 end
 
 
 function Player:draw(mode)
+	Player.super.draw(self, mode)
+	
 	if mode == 1 then
-		-- draw endPoint
-		love.graphics.setColor(self.cLine)
-		love.graphics.line(endPoint[1].x, endPoint[1].z, endPoint[2].x, endPoint[2].z)
-		local rPoint = 3
+		-- point
 		for i = 1, 2 do
 			local cPoint = base.cDarkGray
-			if endPoint[i].onGround then
+			if self.onGround[i] then
 				cPoint = base.cWhite
 			end
+			--
 			love.graphics.setColor(cPoint)
-			love.graphics.circle("fill", endPoint[i].x, endPoint[i].z, rPoint)
+			love.graphics.circle("fill", self:getX(i), self:getZ(i), 3)
 		end
-	else
-		-- polygon
-		local table = {
-				endPoint[1].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[1].z) * mode,--
-				endPoint[2].x, self.y-self.lenY + (-(self.y-self.lenY) + endPoint[2].z) * mode,
-				endPoint[2].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[2].z) * mode,--
-				endPoint[1].x, self.y+self.lenY + (-(self.y+self.lenY) + endPoint[1].z) * mode,
-			}
-		love.graphics.setColor(self.cFill)
-		love.graphics.polygon("fill", table)
-		love.graphics.setColor(self.cLine)
-		love.graphics.polygon("line", table)
 	end
 end
 
 
--- if one endPoint not onGround, can't shift
-function Player:onGround(mode)
-	local flag
-	if mode ~= 1 then
-		flag = true
+function Player:moveXY(dt)
+	-- x
+	if base.isDown(base.keys.left) then
+		self.spdX = -base.player.spdXY
+	elseif base.isDown(base.keys.right) then
+		self.spdX = base.player.spdXY
 	else
-		if endPoint[1].onGround and endPoint[2].onGround then
+		self.spdX = 0
+	end
+	-- y
+	if base.isDown(base.keys.up) then
+		self.spdY = -base.player.spdXY
+	elseif base.isDown(base.keys.down) then
+		self.spdY = base.player.spdXY
+	else
+		self.spdY = 0
+	end
+	-- 45
+	if self.spdX ~= 0 and self.spdY ~= 0 then
+		self.spdX = base.player.spdXY / math.sqrt(2) * base.sign(self.spdX)
+		self.spdY = base.player.spdXY / math.sqrt(2) * base.sign(self.spdY)
+	end
+end
+
+function Player:moveXZ(dt)
+	local spdXZ
+
+	--
+	if base.isDown(base.keys.left) then
+		spdXZ = -base.player.spdXZ
+	elseif base.isDown(base.keys.right) then
+		spdXZ = base.player.spdXZ
+	else
+		spdXZ = 0
+	end
+	--
+	self.dir = self.dir + spdXZ * dt
+end
+
+function Player:collisionXY(dt, shapeList)
+	self.stuck = false
+
+	--
+	for key, obj in pairs(shapeList) do
+		if obj:is(Rectangle) or obj:is(Cuboid) then
+			local x1 = self:getX(self:getLeftX())
+			local x2 = self:getX(self:getRightX())
+			local y1 = self.y
+			local y2 = self.y + self.lenY
+			local centerX = (x1 + x2)/2
+			local centerY = (y1 + y2)/2
+
+			local oXList
+			local oYList = {obj.y, obj.y+obj.lenY}
+			--
+			if obj:is(Rectangle) then
+				oXList = {obj:getX(obj:getLeftX()), obj:getX(obj:getRightX())}
+			elseif obj:is(Cuboid) then
+				oXList = {obj.x, obj.x+obj.lenX}
+			end
+
+			-- x
+			if y2 > oYList[1] and y1 < oYList[2] then
+				-- check how far between x and the line
+				for key, xValue in pairs(oXList) do
+					local disX = math.abs(centerX - xValue)
+					local signX = base.sign(centerX - xValue)
+					local disMin = math.abs(self:getLenDX()/2)
+					-- stuck
+					if disX+1 < disMin then
+						self.stuck = true
+						self.spdY = 0
+						self.spdX = 0
+					-- push
+					elseif math.abs(disX*signX + self.spdX*dt) < disMin then
+						self.x = xValue + disMin*signX - self:getLenDX()/2
+						self.spdX = 0
+					end
+				end
+			end
+			-- y
+			if x2 > oXList[1] and x1 < oXList[2] then
+				-- check how far between y and the line
+				for key, yValue in pairs(oYList) do
+					local disY = math.abs(centerY - yValue)
+					local signY = base.sign(centerY - yValue)
+					local disMin = math.abs(self.lenY/2)
+					-- stuck
+					if disY+1 < disMin then
+						self.stuck = true
+						self.spdY = 0
+						self.spdX = 0
+					-- push
+					elseif math.abs(disY*signY + self.spdY*dt) < disMin then
+						self.y = yValue + disMin*signY -self.lenY/2
+						self.spdY = 0
+					end
+				end
+			end
+		end
+
+		
+	end
+end
+function Player:isCollisionXY(obj)
+	local flag = false
+	local x1 = self:getX(self:getLeftX())
+	local x2 = self:getX(self:getRightX())
+	local y1 = self.y
+	local y2 = self.y + self.lenY
+
+	if obj:is(Rectangle) then
+		if 	y1 <= obj.y + obj.lenY
+		and y2 >= obj.y
+		and x1 <= obj:getX(2)
+		and x2 >= obj:getX(1) then
 			flag = true
-		else
-			flag = false
+		end
+	elseif obj:is(Cuboid) then
+		if 	y1 <= obj.y + obj.lenY
+		and y2 >= obj.y
+		and x1 <= obj.x + obj.lenX
+		and x2 >= obj.x then
+			flag = true
 		end
 	end
+
 	return flag
 end
 
+function Player:PointOnGround(num, shapeList)
+	local flag = false
+	local x = self:getX(num)
+	local z = self:getZ(num)
 
--- player touch
-function Player:touch(destination, mode)
-    local flag = false
+	for key, obj in pairs(shapeList) do
+		if obj:is(Rectangle) or obj:is(Cuboid) or obj:is(Ball) then
+			flag = obj:collisionPointXZ(x, z)
+		end
+		--
+		if flag then
+			break
+		end
+	end
+	
+	return flag
+end
+
+function Player:collisionXZ(dt)
+	-- both not onGround
+	if not self.onGround[1] and not self.onGround[2] then
+		-- garvity
+		self.z = self.z + base.garvity * dt
+	else
+		--both onGround
+		if self.onGround[1] and self.onGround[2] then
+			-- setting main point
+			if (base.isDown(base.keys.left) and self.x ~= self:getX(self:getLeftX()))
+			or (base.isDown(base.keys.right) and self.x ~= self:getX(self:getRightX())) then
+				self.x = self:getX(2)
+				self.z = self:getZ(2)
+				self.dir = -(math.pi-self.dir)
+			end
+		-- one side onGround, set garvity
+		else
+			if not base.isDown(base.keys.left) and not base.isDown(base.keys.right) then
+				local spdG
+				--
+				if self:getLeftX() == 1 then
+					spdG = base.player.spdXZ
+				else
+					spdG = -base.player.spdXZ
+				end
+				--
+				self.dir = self.dir + spdG * dt
+			end
+		end
+		-- control dir
+		self:moveXZ(dt)
+		
+		-- fix dir
+		if self.dir <= -math.pi*2 then
+			self.dir = self.dir + math.pi*2
+		elseif self.dir >= math.pi*2 then
+			self.dir = self.dir - math.pi*2
+		end
+	end
+end
+
+function Player:isOnGround()
+	return self.onGround[1] and self.onGround[2]
+end
+
+function Player:touch(obj, mode)
+	local flag = false
+
 	if mode == 0 then
-		flag = isCollisionXY(self, destination)
+		if self:isCollisionXY(obj) then
+		flag = true
+		end
 	elseif mode == 1 then
-		-- any endPoint 
 		for i = 1, 2 do
-			local p = endPoint[i]
-			if self:isCollisionXZ(i, destination) then
+			if self:PointOnGround(i, {obj}) then
 				flag = true
 				break
 			end
-		end
-	end
-    return flag
-end
-
-
-function Player:isCollisionXZ(i, obj)
-	local flag = false
-	
-	-- Cuboid
-	if obj:is(Cuboid) then
-		if	endPoint[i].x >= obj.x -1
-		and endPoint[i].x <= obj.x + obj.lenX +1
-		and endPoint[i].z >= obj.z -1
-		and endPoint[i].z <= obj.z + obj.lenZ +1 then
-			flag = true
-		end
-	-- Rectangle
-	elseif obj:is(Rectangle) then
-		flag = obj:isCollisionXZ(endPoint[i].x, endPoint[i].z)
-	-- Ball
-	elseif obj:is(Ball) then
-		local lenX = math.abs(endPoint[i].x - obj.x)
-		local lenZ = math.abs(endPoint[i].z - obj.z)
-		local c = math.sqrt(math.pow(lenX, 2) + math.pow(lenZ, 2))
-
-		if c < obj.radius then
-			flag = true
 		end
 	end
 

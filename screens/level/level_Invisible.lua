@@ -1,12 +1,13 @@
 local Screen = Level:extend()
 
 function Screen:activate()
-	-- shape value
+	--- shape value
 	local cubeZ = 130
 	local cubeLenX = 150
 	local cubeLenY = base.guiHeight-1*2
 	local cubeLenZ = 50
 	local cLenZ2 = 50 + 2*2
+	---
 
 	-- levelName
 	local levelName = lang.level_Invisible

@@ -44,7 +44,7 @@ end
 
 function Level:update(dt)
 	-- shift/bgmManager/pressedSetting
-	local canShift = Player:onGround(self.shiftMode) and (not finishFlag) and (not keyTips:getShowFlag())
+	local canShift = (self.shiftMode~=1 or player:isOnGround()) and (not finishFlag) and (not keyTips:getShowFlag())
 	Level.super.update(self, dt, canShift)
 	
 	-- keyTips
@@ -83,27 +83,20 @@ function Level:update(dt)
 		-- turret
 		if self.shapeList[i]:is(Turret) then
 			-- turn on/off
-			if not shifting then
-				self.shapeList[i]:update(dt)
-			end
+			self.shapeList[i]:update(dt, self.shiftMode)
 			-- hit player
-			if self.shiftMode == 0 and self.shapeList[i]:hit(player) and not finishFlag then
-				-- reset
-				self.screen:view(resetLevelString)
-				-- sfx
-				sfx_restart:seek(0.15)
-				love.audio.play(sfx_restart)
-				break
+			if self.shiftMode == 0 and self.shapeList[i].turnOn and self.shapeList[i]:hit(player) and not finishFlag then
+				self:playerDead()
 			end
 			
 			-- ball block laser
-			local ballTable = {}
+			local ballList = {}
 			for i = 1, #self.shapeList do
 				if self.shapeList[i]:is(Ball) then
-					table.insert(ballTable, self.shapeList[i])
+					table.insert(ballList, self.shapeList[i])
 				end
 			end
-			self.shapeList[i]:blockTable(ballTable)
+			self.shapeList[i]:block(ballList)
 
 		-- Ball
 		elseif self.shapeList[i]:is(Ball) then
@@ -111,13 +104,11 @@ function Level:update(dt)
 
 			-- hit player
 			if self.shiftMode == 1 and self.shapeList[i]:hit(player) and not finishFlag then
-				-- reset
-				self.screen:view(resetLevelString)
-				-- sfx
-				sfx_restart:seek(0.15)
-				love.audio.play(sfx_restart)
-				break
+				self:playerDead()
 			end
+		-- FourD
+		elseif self.shapeList[i]:is(FourD) then
+			self.shapeList[i]:update(self.shiftMode)
 		end
 	end
 	
@@ -241,4 +232,12 @@ end
 -- add tipsList
 function Level:addTipsList(...)
 	table.insert(self.tipsList, Tips(...))
+end
+
+function Level:playerDead()
+	-- sfx
+	sfx_restart:seek(0.15)
+	love.audio.play(sfx_restart)
+	-- reset
+	self.screen:view(resetLevelString)
 end

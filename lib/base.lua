@@ -81,6 +81,12 @@ end
 function base.isPressed(keyName)
     return keyName.isPressed
 end
+function base.getDistance(x1, y1, x2, y2)
+    local disX = x1 - x2
+    local disY = y1 - y2
+    
+    return math.sqrt(disX^2 + disY^2)
+end
 local function keyCreater(keyboard, gamepad)
     local table = {}
 
@@ -140,5 +146,14 @@ base.keys.keyTips= keyCreater(keys.X,           "x")
 base.keys.music  = keyCreater(keys.Select,      "back")
 base.keys.reset  = keyCreater(keys.Start,       "start")
 ---
+
+base.garvity = 100
+-- player
+base.player = {}
+base.player.len = 50
+base.player.spdXY = 100
+base.player.spdXZ = math.pi/2
+-- 
+base.lenDestination = 50
 
 return base

@@ -1,7 +1,7 @@
 local Screen = Level:extend()
 
 function Screen:activate()
-	-- shape value
+	--- shape value
 	local cubeZ = 130
 	local cubeLenX = base.guiWidth-1*2
 	local cubeLenY = base.guiHeight-1*2
@@ -10,16 +10,18 @@ function Screen:activate()
 
 	local cubeLenX2 = 50
 	local cubeLenY2 = 50
+	---
+
 	-- levelName
 	local levelName = lang.level_Tutorial_Turret
 	-- player location
-	local playerX = base.guiWidth/5
-	local playerY = base.guiHeight/5
+	local playerX = base.guiWidth/4-base.player.len/2
+	local playerY = base.guiHeight/4-base.player.len/2
 	local playerZ = cubeZ - 1
 	-- destination location
-	local destinationX = base.guiWidth-playerX - 50/2
-	local destinationY = base.guiHeight-playerY - 50/2
-	local destinationZ = -100
+	local destinationX = base.guiWidth-playerX - base.lenDestination/2
+	local destinationY = base.guiHeight-playerY - base.lenDestination/2
+	local destinationZ = -200
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
@@ -32,7 +34,7 @@ function Screen:activate()
     self:addShapeList(Turret,		base.guiWidth/2, 0, cubeZ-cubeLenZ3,		0, 1, 0)
     self:addShapeList(Turret,		0, base.guiHeight/2, cubeZ-cubeLenZ3,		1, 0, 0)
 
-	-- here to create tips
+	--- here to create tips
 	self:addTipsList(lang.tips_yellow_means_danger,		5, base.guiHeight+10, 20)
 end
 

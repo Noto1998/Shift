@@ -1,11 +1,12 @@
 local Screen = Level:extend()
 
 function Screen:activate()
-	-- shape value
+	--- shape value
 	local cubeZ = base.guiHeight
 	local cubeLenX = base.guiWidth-1*2
 	local cubeLenY = base.guiHeight-1*2
 	local cubeLenZ = 50
+	---
 
 	-- levelName
 	local levelName = ""
@@ -23,15 +24,15 @@ function Screen:activate()
 	--- here to create shape
 	self:addShapeList(Cuboid,		1, 1+base.guiHeight, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
-	-- here to create tips
-	self:addTipsList(lang.tips_save_us, 				base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
+	--- here to create tips
+	self:addTipsList(lang.tips_save_us, 			base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
 	self:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
 	self:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
 	self:addTipsList(lang.ui_pressed_A_to_continue,	base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
 	--
 	local _x = base.guiWidth/2
-	self:addTipsList(lang.tips_save_us, _x, base.guiHeight, 		-50*2, 	"center")
-	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100,   -50,	"center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight,		 -50*2, "center")
+	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100,  -50*1,	"center")
 	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*2, 50*0,	"center")
 	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*3, 50*1,	"center")
 	self:addTipsList(lang.tips_save_us, _x, base.guiHeight+100*4, 50*2,	"center")
@@ -50,7 +51,7 @@ function Screen:update(dt)
 
 	-- goto mainScreens
 	if self.shiftMode == 0 and base.isPressed(base.keys.enter) then
-		love.load()
+		self.screen:view("MainScreen")
 	end
 end
 

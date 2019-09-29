@@ -1,19 +1,17 @@
 local Screen = Level:extend()
 
-local tipsTime
-local tipsFlag
-local tipsTable = lang.tips_fourD
-local f1, t1
+local tipsTime, tipsFlag, tipsTable, t1
 
 function Screen:activate()
-	-- shape value
+	--- shape value
 	local cZ = 180
 	local cLenX = base.guiWidth-1*2
 	local cLenY = base.guiHeight-1*2
 	local cLenZ = 50
-	
+	---
 	tipsTime = 0
 	tipsFlag = false
+	tipsTable = lang.tips_fourD
 
 	-- levelName
 	local levelName = "2²"
@@ -31,26 +29,16 @@ function Screen:activate()
 	--- here to create shape
 	self:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
 
-	f1 = FourD(base.guiWidth/2, base.guiHeight/2, base.guiHeight/4,		30,  50)
-	table.insert(self.shapeList, f1)
+	self:addShapeList(FourD,		base.guiWidth/2, base.guiHeight/2, base.guiHeight/4,		30,  50)
 
-	-- here to create tips
+	--- here to create tips
 	t1 = Tips("test", 10, -50, 20)
 	table.insert(self.tipsList, t1)
 end
 
 
 function Screen:update(dt)
-	-- shift
 	Screen.super.update(self, dt)
-
-	-- update fourD len
-	local modeMin = 0.1
-	local mode1 = 0.33
-	if (self.shiftMode >= mode1-modeMin and self.shiftMode <= mode1+modeMin) or
-	(self.shiftMode >= (1-mode1)-modeMin and self.shiftMode <= (1-mode1)+modeMin) then
-		f1.lenX, f1.lenY = f1.lenY, f1.lenX
-	end
 
 	-- update tips
 	if base.isPressed(base.keys.shift) and (self.shiftMode == 0) then

@@ -1,29 +1,26 @@
+-- dir (0~ -math.pi), so the z alway be bottom
 Rectangle = Shape:extend()
 
--- for draw shape right, x will always be left, z always be bottom
 
 function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
-    Circle.super.new(self, x, y, z, cFill, cLine, cMesh)
+    Rectangle.super.new(self, x, y, z, cFill, cLine, cMesh)
     self.lenX = lenX
     self.lenY = lenY
-    self.lenZ = 0
-    -- dir
-    self.dir = math.pi/2
-    if dir ~= nil then
+    self.dir = 0
+    if dir~=nil then
+        if dir > 0 or dir < -math.pi then
+            error("dir, expected 0 to -pi, got " .. dir)
+        end
         self.dir = dir
     end
-    -- update lenX/Z
-    if self.dir ~= math.pi/2 then
-        self.lenX = math.abs(math.cos(math.pi/2 - dir) * self.lenX)
-        self.lenZ = math.abs(math.tan(math.pi/2 - dir) * self.lenX)
-    end
+
     -- mesh
     local vertices ={}
     local xy = {
-        {self.x, self.y},
-        {self.x+self.lenX, self.y},
-        {self.x+self.lenX, self.y+self.lenY},
-        {self.x, self.y+self.lenY}
+        {self:getX(1), self.y},
+        {self:getX(2), self.y},
+        {self:getX(2), self.y + self.lenY},
+        {self:getX(1), self.y + self.lenY}
     }
     for i, value in ipairs(xy) do
         vertices[i] = {
@@ -36,76 +33,101 @@ function Rectangle:new(x, y, z, lenX, lenY, dir, cFill, cLine, cMesh)
     self.mesh:setTexture(canvasBG)
 end
 
-function Rectangle:draw(mode)
-    local _x2 = self.x + self.lenX
-    --
-    local _z = self.z
-    local _z2 = self.z - self.lenZ
-    if self.dir < math.pi/2 then
-        _z, _z2 = _z2, _z        
-    end
 
-    --line
+function Rectangle:draw(mode)
     if mode == 1 then
         love.graphics.setColor(self.cLine)
-        love.graphics.line(self.x, _z, _x2, _z2)
-    
-    -- polygon
+        love.graphics.line(self:getX(1), self:getZ(1), self:getX(2), self:getZ(2))
     else
         -- fill
-		local table = {
-            self.x, self.y+ (-self.y + _z) * mode,--
-            _x2,    self.y+ (-self.y + _z2) * mode,
-            _x2,    self.y+self.lenY + (-(self.y+self.lenY) + _z2)  * mode,--
-            self.x, self.y+self.lenY + (-(self.y+self.lenY) + _z)  * mode
+        local x1 = self:getX(1)
+        local y1 = self.y*(1-mode)
+        local x2 = self:getX(2)
+        local y2 = (self.y+self.lenY)*(1-mode)
+        local _table = {
+            x1, y1 + self:getZ(1) * mode,
+            x2, y1 + self:getZ(2) * mode,
+            x2, y2 + self:getZ(2) * mode,
+            x1, y2 + self:getZ(1) * mode,
         }
-        
         love.graphics.setColor(self.cFill)
-        love.graphics.polygon("fill", table)
+        love.graphics.polygon("fill", _table)
         
         -- mesh
         if mode ~= 0 then
             -- update point location
             for i = 2, 4*2, 2 do
-                self.mesh:setVertexAttribute(i/2, 1, table[i-1], table[i])
+                self.mesh:setVertexAttribute(i/2, 1, _table[i-1], _table[i])
             end
         end
         love.graphics.setColor(self.cMesh)
         love.graphics.draw(self.mesh)
 
         -- line
-		love.graphics.setColor(self.cLine)
-		love.graphics.polygon("line", table)
+        love.graphics.setColor(self.cLine)
+        love.graphics.polygon("line", _table)
     end
 end
 
-function  Rectangle:isCollisionXZ(x, z)
-    local flag = false
-    local centerX = self.x + self.lenX/2--left
-    local centerZ = self.z - self.lenZ/2--bottom
+
+function Rectangle:getLenDX()
+    local DX = math.cos(self.dir) * self.lenX
+
+    return DX
+end
+function Rectangle:getLenDZ()
+    local DZ = math.sin(self.dir) * self.lenX
+
+    return DZ
+end
+function Rectangle:getX(num)
+    if num == 1 then
+        return self.x
+    elseif num == 2 then
+        return self.x + self:getLenDX()
+    else
+        error("expected 1~2, got " .. num)
+    end
     
-    -- check in a rectangle
-    if 	math.abs(x - centerX) < self.lenX/2
-    and math.abs(z - centerZ) < self.lenZ/2 then
+end
+function Rectangle:getZ(num)
+    if num == 1 then
+        return self.z
+    elseif num == 2 then
+        return self.z + self:getLenDZ()
+    else
+        error("expected 1~2, got " .. num)
+    end
+    
+end
+function Rectangle:getRightX()
+	local pointRight = 1
+	if self:getX(2) > self:getX(pointRight) then
+		pointRight = 2
+	end
 
-        local _x2 = self.x + self.lenX
-        local _z = self.z
-        local _z2 = self.z - self.lenZ
-        local signX = -1
-        if self.dir < math.pi/2 then
-            _z, _z2 = _z2, _z
-            signX = 1
-        end
+	return pointRight
+end
+function Rectangle:getLeftX()
+	local pointLeft = 1
+	if self:getX(pointLeft) > self:getX(2) then
+		pointLeft = 2
+	end
 
-        --
-        local a = self.lenZ/self.lenX
-        local dx = math.abs(self.x - x)
-        local dz = dx * a
-        --
-        if math.abs((_z + dz*signX) - z) <= 1.5 then
+	return pointLeft
+end
+function Rectangle:collisionPointXZ(x, z)
+    local checkBorder = 2
+    local flag = false
+    local absX = math.abs(self:getLenDX())
+    
+    for i = 1, absX do
+        local oX = self:getX(1) + i*base.sign(self:getLenDX())
+        local oZ = self:getZ(1) + i*(self:getLenDZ()/absX)
+        if math.abs(x-oX) <= 1 and math.abs(z-oZ) <= checkBorder then
             flag = true
         end
     end
-    --
+
     return flag
 end

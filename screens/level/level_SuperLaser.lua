@@ -23,10 +23,8 @@ function Screen:activate()
 	local leftX = hX1-1
 	local leftY = -200
 	local leftZ = hZ - leftLenZ + hLenZ
-
 	-- ball
 	local ballR = hLenX/2
-
 	-- turret
 	local tX = 3.5*40
 	local tBorderX = 40
@@ -35,49 +33,38 @@ function Screen:activate()
 	local tSX = 0
 	local tSY = 1
 	local tSZ = 1
-	---
-
 	-- floor
 	local floorZ = base.guiHeight-20
+	---
 
 	-- levelName
 	local levelName = lang.level_SuperLaser
 	-- player location
-	local playerX = 50
-	local playerY = 116-30
+	local playerX = 30
+	local playerY = 50
 	local playerZ = c1Z-1
 	-- destination location
-	local destinationX = playerX-50/2
+	local destinationX = playerX-base.lenDestination/2
 	local destinationY = base.guiHeight+10
-	local destinationZ = floorZ-50/2
+	local destinationZ = floorZ-base.lenDestination/2
 	-- create player and destination
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
     
 	--- here to create shape
 	-- floor
-    self:addShapeList(Cuboid,	1, 1, floorZ,		base.guiWidth, base.guiHeight, 1)
-
-
+    self:addShapeList(Cuboid, 1, 1, floorZ,			base.guiWidth, base.guiHeight, 1)
 	-- player wall
-	self:addShapeList(Cuboid, 1, 1, c1Z,							c1LenX, c1LenY, c1LenZ)
+	self:addShapeList(Cuboid, 1, 1, c1Z,						c1LenX, c1LenY, c1LenZ)
 	-- turret wall
 	self:addShapeList(Cuboid, 1+c1LenX, 1, c1Z+c1LenZ,			c2LenX, c2LenY, c2LenZ)
-	
-
 	--left wall
 	self:addShapeList(Cuboid, leftX, leftY, leftZ,				10, leftLenY, leftLenZ)
-	
-	
 	-- hole1
 	self:addShapeList(Cuboid, hX1, leftY, hZ,					hLenX, leftLenY, hLenZ)
-	self:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,		ballR)
-	
-
+	self:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,			ballR)
 	-- hole2
-	self:addShapeList(Cuboid, hX2, leftY, hZ,						hLenX, leftLenY, hLenZ)
+	self:addShapeList(Cuboid, hX2, leftY, hZ,					hLenX, leftLenY, hLenZ)
 	self:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
-	
-
 	-- Turret
 	for i = 0, 4 do
 		self:addShapeList(Turret, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
