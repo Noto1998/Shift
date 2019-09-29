@@ -124,6 +124,8 @@ base.cDestination = {0.5, 1, 0.5}
 --loaser
 base.cWarning = base.cloneTable(base.cRed)
 base.cWarning[4] = 0.35
+base.cDanger = base.cYellow
+base.cSafe = base.cDarkGray
 -- fourD
 base.cfourD1 = {0.92, 0.02, 0.76, 0.25}
 base.cfourD2 = {0.02, 0.92, 0.7, 0.25}

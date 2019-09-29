@@ -197,7 +197,7 @@ function Level:draw()
 	-- draw keyTips text
 	love.graphics.setColor(base.cDarkGray)
 	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "right", "bottom")
-
+	
 	-- bgmManager
 	bgmManager:draw()
 
@@ -206,6 +206,9 @@ function Level:draw()
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
+
+	--- XYZ
+	self:drawXYZ()
 
 	-- draw keyTips
 	keyTips:draw()
@@ -221,15 +224,13 @@ function Level:draw()
 end
 
 
--- add shapeList
+-- function
 function Level:addShapeList(obj, ...)
 	table.insert(self.shapeList, obj(...))
 	-- add to drawList
 	table.insert(self.drawList, self.shapeList[#self.shapeList])
 end
 
-
--- add tipsList
 function Level:addTipsList(...)
 	table.insert(self.tipsList, Tips(...))
 end
@@ -240,4 +241,25 @@ function Level:playerDead()
 	love.audio.play(sfx_restart)
 	-- reset
 	self.screen:view(resetLevelString)
+end
+
+function Level:drawXYZ()
+	local w = 20
+	local _x = base.guiBorder+w*6
+	love.graphics.setColor(base.cDarkGray)
+	base.print("z", _x-w*1, 0, "center")
+	base.print("y", _x-w*3, 0, "center")
+	base.print("x", _x-w*5, 0, "center")
+	-- hight light
+	love.graphics.setColor(base.cWhite)
+	base.print("[", _x-w*(6-self.shiftMode*2), 0, "center")
+	base.print(",", _x-w*(4-self.shiftMode*2), 0, "center")
+	base.print("]", _x-w*(2-self.shiftMode*2), 0, "center")
+	if self.shiftMode == 0 then
+		base.print("y", _x-w*3, 0, "center")
+		base.print("x", _x-w*5, 0, "center")
+	elseif self.shiftMode == 1 then
+		base.print("z", _x-w*1, 0, "center")
+		base.print("y", _x-w*3, 0, "center")
+	end
 end

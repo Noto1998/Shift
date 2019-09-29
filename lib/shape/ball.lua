@@ -72,14 +72,14 @@ end
 function Ball:draw(mode)
     local _y = self.y + (-self.y+self.z)*mode
 
-    local cTable = base.cloneTable(base.cYellow)
-    for i = 1, #self.cFill do
-        cTable[i] = self.cFill[i]*(1-mode) + cTable[i]*mode
+    local cTable1 = base.cloneTable(base.cDanger)
+    local cTable2 = base.cloneTable(base.cSafe)
+    for i = 1, #cTable1 do
+        cTable1[i] = cTable1[i]*mode + cTable2[i]*(1-mode)
     end
 
-
     -- fill
-    love.graphics.setColor(cTable)
+    love.graphics.setColor(cTable1)
     love.graphics.circle("fill", self.x, _y, self.radius)
     -- line
     love.graphics.setColor(self.cLine)

@@ -27,7 +27,7 @@ function Screen:activate()
 	
 	--- here to create tips
 	self:addTipsList(lang.tips_pressed_Y_to_shift,		base.guiWidth-base.guiBorder, 50, -50, "right")
-	self:addTipsList(lang.tips_left_and_right_to_move,	base.guiWidth-base.guiBorder, 350, 20, "right")
+	self:addTipsList(lang.tips_left_and_right_to_move,	base.guiWidth-base.guiBorder, 350, 30, "right")
 end
 
 return Screen

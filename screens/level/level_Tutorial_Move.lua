@@ -26,8 +26,8 @@ function Screen:activate()
 	self:addShapeList(Cuboid,		border, border, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 
 	--- here to create tips
-	self:addTipsList(lang.tips_use_arrows_to_move,		base.guiBorder, 5, playerZ-50)
-	self:addTipsList(lang.tips_touch_the_green_goal,	base.guiWidth-base.guiBorder, destinationY-40, destinationZ-50, "right")
+	self:addTipsList(lang.tips_use_arrows_to_move,		base.guiBorder, base.guiHeight/2+40, playerZ-50)
+	self:addTipsList(lang.tips_touch_the_green_goal,	base.guiWidth-base.guiBorder, base.guiHeight/2-40, destinationZ-50, "right", "bottom")
 	self:addTipsList(lang.tips_wait_not_teach_yet,		base.guiWidth/2, 300, base.guiHeight/2+50, "center", "center")
 end
 
