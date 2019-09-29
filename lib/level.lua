@@ -5,8 +5,9 @@ local finishTimer
 local gotoMainScreenTimer
 local keyTips
 local player, destination
+local _isTutorial
 
-function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
+function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, isTutorial)
 	-- shift
 	Level.super.activate(self)
 	
@@ -26,17 +27,22 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	-- tipsList
 	self.tipsList = {}
 	
-	-- finishLevelTimer
-	finishFlag = false
-	finishTimer = 0
-	gotoMainScreenTimer = 0
-
 	-- levelName
 	self.levelName = "levelName missing!"
 	if levelName ~= nil then
 		self.levelName = levelName
 	end
 
+	-- for Tutorial switch
+	_isTutorial = false
+	if isTutorial ~= nil then
+		_isTutorial = isTutorial
+	end
+
+	-- finishLevelTimer
+	finishFlag = false
+	finishTimer = 0
+	gotoMainScreenTimer = 0
 	-- keyTips
 	keyTips = KeyTips()
 end
@@ -48,7 +54,9 @@ function Level:update(dt)
 	Level.super.update(self, dt, canShift)
 	
 	-- keyTips
-	keyTips:update()
+	if not _isTutorial then
+		keyTips:update()
+	end
 
 	-- some key staff
 	if (not finishFlag) and (not keyTips:getShowFlag()) then
@@ -194,10 +202,6 @@ function Level:draw()
 	love.graphics.setColor(base.cWhite)
 	base.print(self.levelName, base.guiBorder, base.guiHeight, "left", "bottom")
 	
-	-- draw keyTips text
-	love.graphics.setColor(base.cDarkGray)
-	base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "right", "bottom")
-	
 	-- bgmManager
 	bgmManager:draw()
 
@@ -207,11 +211,17 @@ function Level:draw()
 		base.print(lang.ui_player_stuck, base.guiWidth/2, base.guiHeight/2, "center", "center")
 	end
 
-	--- XYZ
+	-- XYZ
 	self:drawXYZ()
 
-	-- draw keyTips
-	keyTips:draw()
+	if not _isTutorial then
+		-- draw keyTips text
+		love.graphics.setColor(base.cDarkGray)
+		base.print(lang.ui_key_keyTips, base.guiWidth-base.guiBorder, base.guiHeight, "right", "bottom")
+		
+		-- draw keyTips
+		keyTips:draw()
+	end
 
 	-- draw finishLevel
 	if finishFlag then
@@ -244,22 +254,18 @@ function Level:playerDead()
 end
 
 function Level:drawXYZ()
-	local w = 20
+	local w = 15
 	local _x = base.guiBorder+w*6
-	love.graphics.setColor(base.cDarkGray)
+	local c1 = base.cloneTable(base.cDarkGray)
+	c1[4] = self.shiftMode
+	love.graphics.setColor(c1)
 	base.print("z", _x-w*1, 0, "center")
-	base.print("y", _x-w*3, 0, "center")
+	c1[4] = (1-self.shiftMode)
+	love.graphics.setColor(c1)
 	base.print("x", _x-w*5, 0, "center")
-	-- hight light
-	love.graphics.setColor(base.cWhite)
+	love.graphics.setColor(base.cDarkGray)
+	base.print("y", _x-w*3, 0, "center")
 	base.print("[", _x-w*(6-self.shiftMode*2), 0, "center")
 	base.print(",", _x-w*(4-self.shiftMode*2), 0, "center")
 	base.print("]", _x-w*(2-self.shiftMode*2), 0, "center")
-	if self.shiftMode == 0 then
-		base.print("y", _x-w*3, 0, "center")
-		base.print("x", _x-w*5, 0, "center")
-	elseif self.shiftMode == 1 then
-		base.print("z", _x-w*1, 0, "center")
-		base.print("y", _x-w*3, 0, "center")
-	end
 end
