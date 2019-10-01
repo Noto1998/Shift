@@ -1,11 +1,11 @@
 Level = Shift:extend()
 
-local finishFlag
-local finishTimer
+local finishFlag, finishTimer
 local gotoMainScreenTimer
 local keyTips
 local player, destination
 local _isTutorial
+local showDoc
 
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, isTutorial)
 	-- shift
@@ -43,8 +43,12 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	finishFlag = false
 	finishTimer = 0
 	gotoMainScreenTimer = 0
+	
 	-- keyTips
 	keyTips = KeyTips()
+
+	-- doc
+	showDoc = false
 end
 
 
@@ -80,10 +84,16 @@ function Level:update(dt)
 	end
 	
 	-- goto next level
-	if finishFlag and base.isPressed(base.keys.enter) then
-		levelChoice = levelChoice + 1
-		local levelName = levelString[levelChoice]
-		self.screen:view(levelName)
+	if finishFlag then
+		if not showDoc and base.isPressed(base.keys.enter) then
+			levelChoice = levelChoice + 1
+			local levelName = levelString[levelChoice]
+			self.screen:view(levelName)
+		end
+		-- show Doc
+		if lang.docList[levelChoice]~=nil and base.isPressed(base.keys.cancel) then
+			showDoc = not showDoc
+		end
 	end
 
 	-- shape update
@@ -214,6 +224,7 @@ function Level:draw()
 	-- XYZ
 	self:drawXYZ()
 
+	-- hide
 	if not _isTutorial then
 		-- draw keyTips text
 		love.graphics.setColor(base.cDarkGray)
@@ -230,6 +241,14 @@ function Level:draw()
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_level_finish, base.guiWidth/2, base.guiHeight/3, "center", "center")
 		base.print(lang.ui_pressed_A_to_continue, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+
+		if showDoc then
+			love.graphics.setColor(base.cWhite)
+			base.drawRoundedRectangle(base.guiBorder, base.guiBorder, base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2)
+			love.graphics.setColor(base.cBlack)
+			base.print(lang.docList[levelChoice], base.guiBorder*2, base.guiBorder*2)
+			base.print("B关闭文档", base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2, "right", "bottom")
+		end
 	end
 end
 

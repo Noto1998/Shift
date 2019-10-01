@@ -2,11 +2,11 @@ local lang = {}
 
 -- ui
 function lang.ui_level_choice(Num, Name)   return "<\t第" .. Num .. "关 " .. Name .. "\t>"    end
-lang.ui_key_start_and_move = "←→选择\tA开始"
+lang.ui_key_start_and_move = "←→ 选择\tA 开始"
 lang.ui_key_keyTips = "X 按键说明"
 lang.ui_player_stuck = "玩家卡住"
-lang.ui_level_finish = "关卡完成"
-lang.ui_pressed_A_to_continue = "按A继续"
+lang.ui_level_finish = "关卡完成！"
+lang.ui_pressed_A_to_continue = "A 下一关\tB 阅读文档"
 lang.ui_key_credits = "Y 名单"
 lang.ui_key_keyTipsList = {
 	"\t方向键 - 移动\t\t",
@@ -56,5 +56,8 @@ lang.tips_pressed_Y_to_shift = "按Y切换维度。"
 lang.tips_left_and_right_to_move = "←→移动。"
 lang.tips_yellow_means_danger = "黄颜色意味着危险。"
 
+lang.docList = {
+	"第一条doc。\n使用\\n来换行。测试测试。"
+}
 
 return lang
