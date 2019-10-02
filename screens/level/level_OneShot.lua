@@ -18,7 +18,7 @@ function Screen:activate()
 	local bX = base.guiWidth/8
 	local bY = base.guiHeight/6
 	local bZ = 0
-	-- Turret
+	-- Laser
 	local tX1 = 0
 	local tSY1 = base.guiHeight/base.guiWidth
 	local tX2 = base.guiWidth/3
@@ -49,11 +49,11 @@ function Screen:activate()
 	--ball to be wall
 	self:addShapeList(Ball,		tX2, base.guiHeight/2, cZ-bR,							bR)
 	self:addShapeList(Ball,		base.guiWidth-tX2, base.guiHeight/2, cZ-bR,				bR)
-	-- turret
-	self:addShapeList(Turret,		tX1, 0, 0,					1, tSY1, 1)
-	self:addShapeList(Turret,		tX2, 0, 0,					1, tSY2, 1)
-	self:addShapeList(Turret,		tX1, base.guiHeight, 0,		1, -tSY1, 1)
-	self:addShapeList(Turret,		tX2, base.guiHeight, 0,		1, -tSY2, 1)
+	-- laser
+	self:addShapeList(Laser,		tX1, 0, 0,					1, tSY1, 1)
+	self:addShapeList(Laser,		tX2, 0, 0,					1, tSY2, 1)
+	self:addShapeList(Laser,		tX1, base.guiHeight, 0,		1, -tSY1, 1)
+	self:addShapeList(Laser,		tX2, base.guiHeight, 0,		1, -tSY2, 1)
 end
 
 return Screen

@@ -112,6 +112,18 @@ function base.drawRoundedRectangle(x, y, width, height)
     love.graphics.rectangle("fill", x, y1, width,          height-radius*2)
     love.graphics.rectangle("fill", x1, y, width-radius*2, height)
 end
+function base.dirGetXY(dir, dis, xy)
+    local x = math.cos(dir)*dis
+    local y = math.sin(dir)*dis
+
+    if xy == 0 then
+        return x
+    elseif xy == 1 then
+        return y
+    else
+        return x, y
+    end
+end
 local function keyCreater(keyboard, gamepad)
     local table = {}
 

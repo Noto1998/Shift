@@ -35,7 +35,7 @@ lang.level_Tunnel			= "Tunnel"
 lang.level_Tutorial_Ball	= "Rolling Stones"
 lang.level_Tutorial_Move	= "Tutorial"
 lang.level_Tutorial_Shift	= "Tutorial"
-lang.level_Tutorial_Turret	= "Bit The Dust"
+lang.level_Tutorial_Laser	= "Bit The Dust"
 
 --tips
 lang.tips_use_arrows_to_move = "Use arrows to move."

@@ -7,7 +7,7 @@ function Screen:activate()
 	local c1LenX = 2.5*40
 	local c1LenY = 140
 	local c1LenZ = 80
-	-- turret wall
+	-- laser wall
 	local c2LenX = 40 * 4
 	local c2LenY = c1LenY
 	local c2LenZ = 20
@@ -25,7 +25,7 @@ function Screen:activate()
 	local leftZ = hZ - leftLenZ + hLenZ
 	-- ball
 	local ballR = hLenX/2
-	-- turret
+	-- laser
 	local tX = 3.5*40
 	local tBorderX = 40
 	local tY = -100
@@ -55,7 +55,7 @@ function Screen:activate()
     self:addShapeList(Cuboid, 1, 1, floorZ,			base.guiWidth, base.guiHeight, 1)
 	-- player wall
 	self:addShapeList(Cuboid, 1, 1, c1Z,						c1LenX, c1LenY, c1LenZ)
-	-- turret wall
+	-- laser wall
 	self:addShapeList(Cuboid, 1+c1LenX, 1, c1Z+c1LenZ,			c2LenX, c2LenY, c2LenZ)
 	--left wall
 	self:addShapeList(Cuboid, leftX, leftY, leftZ,				10, leftLenY, leftLenZ)
@@ -65,9 +65,9 @@ function Screen:activate()
 	-- hole2
 	self:addShapeList(Cuboid, hX2, leftY, hZ,					hLenX, leftLenY, hLenZ)
 	self:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
-	-- Turret
+	-- Laser
 	for i = 0, 4 do
-		self:addShapeList(Turret, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
+		self:addShapeList(Laser, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
 	end
 end
 

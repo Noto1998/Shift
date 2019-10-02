@@ -23,7 +23,7 @@ function Screen:activate()
 
 	-- Rectangle,	x, y, z, lenX, lenY, dir(0 ~ -math.pi)
 	-- Cuboid,		x, y, z, lenX, lenY, lenZ
-	-- Turret,		x, y, z, sx(0 ~ 1), sy(0 ~ 1), sz(0 ~ 1)
+	-- Laser,		x, y, z, sx(0 ~ 1), sy(0 ~ 1), sz(0 ~ 1)
 
 	--- here to create tips
 	-- self:addTipsList(string, x, y, z [, xMode][, yMode])

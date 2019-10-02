@@ -33,7 +33,7 @@ function Screen:activate()
 	self:addShapeList(Rectangle,	base.guiWidth, base.guiHeight+10, 150,		base.guiWidth+40, base.guiHeight/2, 		 -math.pi+math.pi/10)
 	self:addShapeList(Ball,			bR, 80, 0,		bR)
 	
-	self:addShapeList(Turret,		base.guiWidth/2, 1, 1,		0, 1, 1)
+	self:addShapeList(Laser,		base.guiWidth/2, 1, 1,		0, 1, 1)
 end
 
 return Screen

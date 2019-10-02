@@ -18,7 +18,7 @@ function Screen:activate()
 	local LLx = 0
 	local LLy = 1
 	local LLz = 1
-	-- Turret
+	-- Laser
 	local Sx=1
 	local Sy = 240/(320-2*(Lx-50))
 	-- Slope
@@ -45,10 +45,10 @@ function Screen:activate()
 	self:addShapeList(Cuboid, SWx,SWy,SWz,						SWLx,SWLy,SWLz)
 	self:addShapeList(Cuboid, base.guiWidth-SWx-SWLx,SWy,SWz,	SWLx,SWLy,SWLz)
 	--Laser
-	self:addShapeList(Turret, Lx,	Ly-4, 210-40/2,		LLx,LLy,LLz)--chuizhi
-	self:addShapeList(Turret, Lx-50, Ly-4, 210-40/2,	Sx,Sy,LLz)--right
-	self:addShapeList(Turret, Lx+50, Ly-4, 210-40/2,	-Sx,Sy,LLz)--left
-	self:addShapeList(Turret, 0, Ly+210, Lz, 			1,0,0)
+	self:addShapeList(Laser, Lx,	Ly-4, 210-40/2,		LLx,LLy,LLz)--chuizhi
+	self:addShapeList(Laser, Lx-50, Ly-4, 210-40/2,	Sx,Sy,LLz)--right
+	self:addShapeList(Laser, Lx+50, Ly-4, 210-40/2,	-Sx,Sy,LLz)--left
+	self:addShapeList(Laser, 0, Ly+210, Lz, 			1,0,0)
 	--Middle Wall
 	self:addShapeList(Cuboid, 150, 50, 190,		20,55,20)
 	self:addShapeList(Cuboid, 150, 130, 190,		20,55,20)

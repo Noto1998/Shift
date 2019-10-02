@@ -1,11 +1,11 @@
-Turret = Shape:extend()
+Laser = Shape:extend()
 
-local radius = 10
+--local radius = 10
 local len = math.sqrt(base.guiHeight^2 + base.guiWidth^2) + 1
 local timeMax = 2-- second
 
-function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
-    Turret.super.new(self, x, y, z, cFill, cLine, cMesh)
+function Laser:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
+    Laser.super.new(self, x, y, z, cFill, cLine, cMesh)
     -- 0~1
     self.sx = sx
     self.sy = sy
@@ -18,7 +18,7 @@ function Turret:new(x, y, z, sx, sy, sz, cFill, cLine, cMesh)
 end
 
 
-function Turret:update(dt, mode)
+function Laser:update(dt, mode)
     if mode == 0 or mode == 1 then
         self.timer = self.timer + dt
         if self.timer > timeMax then
@@ -33,15 +33,36 @@ function Turret:update(dt, mode)
 end
 
 
-function Turret:draw(mode)
+function Laser:draw(mode)
+    local _x = self.x
     local _y = self.y + (-self.y+self.z)*mode
     
     -- draw self
+    local borderX = 10
+    local lenX = 25
+    local dir = math.atan2(self.sy*(1-mode)+self.sz*mode, self.sx)
+    local table = {
+        _x+base.dirGetXY(dir, lenX, 0), _y+base.dirGetXY(dir, lenX, 1),
+        _x+base.dirGetXY(dir+math.pi/4, borderX, 0), _y+base.dirGetXY(dir+math.pi/4, borderX, 1),
+        _x+base.dirGetXY(dir+math.pi/2, lenX, 0), _y+base.dirGetXY(dir+math.pi/2, lenX, 1),
+        _x+base.dirGetXY(dir+math.pi/4*3, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*3, borderX, 1),
+        _x+base.dirGetXY(dir+math.pi, lenX, 0), _y+base.dirGetXY(dir+math.pi, lenX, 1),
+        _x+base.dirGetXY(dir+math.pi/4*5, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*5, borderX, 1),
+        _x+base.dirGetXY(dir+math.pi/2*3, lenX, 0), _y+base.dirGetXY(dir+math.pi/2*3, lenX, 1),
+        _x+base.dirGetXY(dir+math.pi/4*7, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*7, borderX, 1),
+    }
+
     love.graphics.setColor(self.cFill)
-    love.graphics.circle("fill", self.x, _y, radius*2)
+    local triList = love.math.triangulate(table)
+    for key, triTable in pairs(triList) do
+        love.graphics.polygon("fill", triTable)
+    end
+    --love.graphics.circle("fill", self.x, _y, radius*2)
     love.graphics.setColor(self.cLine)
-    love.graphics.circle("line", self.x, _y, radius)
-    love.graphics.circle("line", self.x, _y, radius*2)
+    --love.graphics.circle("line", self.x, _y, radius)
+    --love.graphics.circle("line", self.x, _y, radius*2)
+    
+    love.graphics.polygon("line", table)
     
     -- draw shoot line
     if self.turnOn then
@@ -54,19 +75,19 @@ function Turret:draw(mode)
 
         love.graphics.setColor(cTable1)
         love.graphics.line(self.x, _y,
-        self.x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
+        _x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
     -- warning
     else
         if self.timer > timeMax * (1-0.3) then
             love.graphics.setColor(base.cWarning)
             love.graphics.line(self.x, _y,
-            self.x+self.sx*self.len, _y+(self.sy + (-self.sy+self.sz)*mode) * self.len)
+            _x+self.sx*self.len, _y+(self.sy + (-self.sy+self.sz)*mode) * self.len)
         end
     end
 end
 
 
-function Turret:hit(obj)
+function Laser:hit(obj)
     local flag = false
 
     -- x
@@ -119,7 +140,7 @@ function Turret:hit(obj)
                 for i = 1, 4 do
                     local vX = pTable[i][1]
                     local vY = pTable[i][2]
-                    -- turret to 4 point
+                    -- laser to 4 point
                     local lenX = vX-self.x
                     local lenY = vY-self.y
                     local dir = math.atan2(lenY, lenX)
@@ -152,7 +173,7 @@ function Turret:hit(obj)
                 -- both ~= 0
                 -- real
                 local dirReal = math.atan2(self.sy, self.sx)
-                -- turret to ball
+                -- laser to ball
                 local lenX = obj.x - self.x
                 local lenY = obj.y - self.y
                 local dirBall = math.atan2(lenY, lenX)
@@ -172,7 +193,7 @@ function Turret:hit(obj)
 end
 
 -- block
-function Turret:block(ballList)
+function Laser:block(ballList)
     local lenMin = len
 
     for key, obj in pairs(ballList) do

@@ -35,7 +35,7 @@ lang.level_Tunnel			= "隧道"
 lang.level_Tutorial_Ball	= "滚石"
 lang.level_Tutorial_Move	= "教学"
 lang.level_Tutorial_Shift	= "教学"
-lang.level_Tutorial_Turret	= "败者食尘"
+lang.level_Tutorial_Laser	= "败者食尘"
 
 --tips
 lang.tips_use_arrows_to_move = "用方向键移动。"

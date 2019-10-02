@@ -98,8 +98,8 @@ function Level:update(dt)
 
 	-- shape update
 	for i = 1, #self.shapeList do
-		-- turret
-		if self.shapeList[i]:is(Turret) then
+		-- laser
+		if self.shapeList[i]:is(Laser) then
 			-- turn on/off
 			self.shapeList[i]:update(dt, self.shiftMode)
 			-- hit player
