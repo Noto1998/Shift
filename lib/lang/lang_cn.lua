@@ -6,7 +6,8 @@ lang.ui_key_start_and_move = "←→ 选择\tA 开始"
 lang.ui_key_keyTips = "X 按键说明"
 lang.ui_player_stuck = "玩家卡住"
 lang.ui_level_finish = "关卡完成！"
-lang.ui_pressed_A_to_continue = "A 下一关\tB 阅读文档"
+lang.ui_key_continue = "A 继续"
+lang.io_key_doc = "B 阅读文档"
 lang.ui_key_credits = "Y 名单"
 lang.ui_key_keyTipsList = {
 	"\t方向键 - 移动\t\t",

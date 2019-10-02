@@ -102,15 +102,18 @@ function Ball:collisionPointXZ(x, z)
     return flag
 end
 
-function Ball:hit(player)
+function Ball:hit(player, shiftMode)
     local flag = false
-    for i = 1, 2 do
-        local x = player:getX(i)
-        local z = player:getZ(i)
-        
-        if self:collisionPointXZ(x, z) then
-            flag = true
-            break
+
+    if shiftMode == 1 then
+        for i = 1, 2 do
+            local x = player:getX(i)
+            local z = player:getZ(i)
+            
+            if self:collisionPointXZ(x, z) then
+                flag = true
+                break
+            end
         end
     end
     

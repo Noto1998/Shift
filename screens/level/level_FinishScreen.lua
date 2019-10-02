@@ -28,7 +28,7 @@ function Screen:activate()
 	self:addTipsList(lang.tips_save_us, 			base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
 	self:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
 	self:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
-	self:addTipsList(lang.ui_pressed_A_to_continue,	base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
+	self:addTipsList(lang.ui_key_continue,			base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
 	--
 	local _x = base.guiWidth/2
 	self:addTipsList(lang.tips_save_us, _x, base.guiHeight,		 -50*2, "center")

@@ -100,28 +100,20 @@ function Level:update(dt)
 	for i = 1, #self.shapeList do
 		-- laser
 		if self.shapeList[i]:is(Laser) then
-			-- turn on/off
-			self.shapeList[i]:update(dt, self.shiftMode)
+			-- turn on/ballBlock/reflex
+			self.shapeList[i]:update(dt, self.shiftMode, self.shapeList, player)
+			
 			-- hit player
-			if self.shiftMode == 0 and self.shapeList[i].turnOn and self.shapeList[i]:hit(player) and not finishFlag then
+			if self.shiftMode == 0 and self.shapeList[i]:hitPlayer(player) and not finishFlag then
 				self:playerDead()
 			end
 			
-			-- ball block laser
-			local ballList = {}
-			for i = 1, #self.shapeList do
-				if self.shapeList[i]:is(Ball) then
-					table.insert(ballList, self.shapeList[i])
-				end
-			end
-			self.shapeList[i]:block(ballList)
-
 		-- Ball
 		elseif self.shapeList[i]:is(Ball) then
 			self.shapeList[i]:update(dt, self.shiftMode, self.shapeList)
 
 			-- hit player
-			if self.shiftMode == 1 and self.shapeList[i]:hit(player) and not finishFlag then
+			if self.shapeList[i]:hit(player, self.shiftMode) and not finishFlag then
 				self:playerDead()
 			end
 		-- FourD
@@ -240,7 +232,11 @@ function Level:draw()
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_level_finish, base.guiWidth/2, base.guiHeight/3, "center", "center")
-		base.print(lang.ui_pressed_A_to_continue, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+		local string = lang.ui_key_continue
+		if lang.docList[levelChoice]~=nil then
+			string = string .. "\t" .. lang.io_key_doc
+		end
+		base.print(string, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
 
 		if showDoc then
 			love.graphics.setColor(base.cWhite)

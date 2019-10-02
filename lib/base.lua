@@ -115,7 +115,7 @@ end
 function base.dirGetXY(dir, dis, xy)
     local x = math.cos(dir)*dis
     local y = math.sin(dir)*dis
-
+    
     if xy == 0 then
         return x
     elseif xy == 1 then
