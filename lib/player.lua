@@ -16,8 +16,8 @@ end
 
 
 function Player:update(dt, mode, shapeList)
-	-- move
 	if mode == 0 then
+		-- move
 		self:moveXY(dt)
 		self:collisionXY(dt, shapeList)
 		--
@@ -28,7 +28,7 @@ function Player:update(dt, mode, shapeList)
 		for i = 1, 2 do
 			self.onGround[i] = self:PointOnGround(i, shapeList)
 		end
-		--
+		-- move
 		self:collisionXZ(dt)
 	end
 end
@@ -48,6 +48,11 @@ function Player:draw(mode)
 			love.graphics.setColor(cPoint)
 			love.graphics.circle("fill", self:getX(i), self:getZ(i), 3)
 		end
+
+		--[[debug
+		love.graphics.setColor(base.cWhite)
+		love.graphics.circle("line", self:getX(1), self:getZ(1), 5)
+		]]
 	end
 end
 
@@ -215,9 +220,16 @@ function Player:collisionXZ(dt)
 				self.z = self:getZ(2)
 				self.dir = -(math.pi-self.dir)
 			end
-		-- one side onGround, set garvity
+		-- one side onGround
 		else
-			if not base.isDown(base.keys.left) and not base.isDown(base.keys.right) then
+			-- setting main point
+			if not self.onGround[1] then
+				self.x = self:getX(2)
+				self.z = self:getZ(2)
+				self.dir = -(math.pi-self.dir)
+			end
+			-- garvity
+			if (not base.isDown(base.keys.left)) and (not base.isDown(base.keys.right)) then
 				local spdG
 				--
 				if self:getLeftX() == 1 then
