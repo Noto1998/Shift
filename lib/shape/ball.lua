@@ -50,13 +50,12 @@ function Ball:update(dt, mode, shapeList)
         for key, obj in pairs(shapeList) do
             if obj:is(Rectangle) then
                 if obj:collisionPointXZ(self.x, self.z+self.radius+self.spdZ*dt) then
-                    local signX = 0
                     if obj.dir < -math.pi/2 then
-                        signX = 1
+                        self.spdX = spd
                     elseif obj.dir > -math.pi/2 then
-                        signX = -1
+                        self.spdX = -spd
                     end
-                    self.spdX = spd*signX
+                    self.spdZ = math.abs(obj:getLenDZ())*spd/math.abs(obj:getLenDX())
                     break
                 end
             end
