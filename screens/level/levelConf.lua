@@ -13,6 +13,7 @@ local level = {
     "level_DonkeyKong",
     "level_BlockLaser",
     "level_Cross",
+    "level_Tutorial_MoveCuboid",
     "level_OneShot",
     
     "level_FinishScreen",   -- FinishScreen
