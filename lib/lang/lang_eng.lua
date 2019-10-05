@@ -6,7 +6,8 @@ lang.ui_key_start_and_move = "←→selct\tA start"
 lang.ui_key_keyTips = "X control tips"
 lang.ui_player_stuck = "player stuck"
 lang.ui_level_finish = "level finish"
-lang.ui_pressed_A_to_continue = "pressed A to continue"
+lang.ui_key_continue = "A continue"
+lang.io_key_doc = "B read doc"
 lang.ui_key_credits = "Y credits"
 lang.ui_key_keyTipsList = {
 	"\tArrows - Move\t\t",
@@ -55,6 +56,11 @@ lang.tips_fourD = {
 lang.tips_pressed_Y_to_shift = "Y shift dimensions."
 lang.tips_left_and_right_to_move = "←→ move."
 lang.tips_yellow_means_danger = "Yellow means danger."
+
+
+-- doc
+----------------------------NEED--------------------------------
+lang.docList = {}
 
 
 return lang
