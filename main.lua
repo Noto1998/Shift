@@ -28,6 +28,7 @@ require "lib.shape.ball"
 require "lib.shape.tips"
 require "lib.shape.fourD"
 require "lib.shape.moveCuboid"
+require "lib.shape.conPolygon"
 -- player
 require "lib.player"
 -- destination
