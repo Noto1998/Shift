@@ -2,9 +2,13 @@ MoveCuboid = Cuboid:extend()
 
 local spd = 30
 
-function MoveCuboid:new(x, y, z, lenX, lenY, lenZ, moveX, moveY, moveZ)
+function MoveCuboid:new(x, y, z, lenX, lenY, lenZ, moveX, moveY, moveZ, moveFlag)
     MoveCuboid.super.new(self, x, y, z, lenX, lenY, lenZ, nil, base.cDanger, nil)
-
+    -- record
+    self.oX = self.x
+    self.oY = self.y
+    self.oZ = self.z
+    --
     self.moveX = self.x
     self.moveY = self.y
     self.moveZ = self.z
@@ -17,10 +21,7 @@ function MoveCuboid:new(x, y, z, lenX, lenY, lenZ, moveX, moveY, moveZ)
     if moveZ ~= nil then
         self.moveZ = moveZ
     end
-    -- record
-    self.oX = self.x
-    self.oY = self.y
-    self.oZ = self.z
+    --
 end
 
 function MoveCuboid:update(dt, shiftMode, shapeList)
@@ -30,24 +31,24 @@ function MoveCuboid:update(dt, shiftMode, shapeList)
 
     -- move
     if shiftMode == 0 or shiftMode == 1 then
-        if self.x ~= self.moveX then
-            local dx = self.moveX-self.x
+        if self.x ~= self.oX then
+            local dx = self.oX-self.x
             if math.abs(dx) > spd*dt then
                 spdX = spd*base.sign(dx)
             else
                 spdX = dx/dt
             end
         end
-        if self.y ~= self.moveY then
-            local dy = self.moveY-self.y
+        if self.y ~= self.oY then
+            local dy = self.oY-self.y
             if math.abs(dy) > spd*dt then
                 spdY = spd*base.sign(dy)
             else
                 spdY = dy/dt
             end
         end
-        if self.z ~= self.moveZ then
-            local dz = self.moveZ-self.z
+        if self.z ~= self.oZ then
+            local dz = self.oZ-self.z
             if math.abs(dz) > spd*dt then
                 spdZ = spd*base.sign(dz)
             else
@@ -65,9 +66,9 @@ function MoveCuboid:update(dt, shiftMode, shapeList)
                     flag = true
                 end
                 if flag then
-                    self.x = self.oX
-                    self.y = self.oY
-                    self.z = self.oZ
+                    self.x = self.moveX
+                    self.y = self.moveY
+                    self.z = self.moveZ
                     break
                 end
             end
