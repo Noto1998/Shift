@@ -51,7 +51,7 @@ function FourD:draw(mode)
     love.graphics.polygon("fill", tableT2)
     --
     love.graphics.setColor(base.cWhite)
-    if mode > modeMin and mode < 1-modeMin then
+    if mode > modeMin and mode < (1-modeMin) then
         love.graphics.polygon("line", tableT1)
         love.graphics.polygon("line", tableT2)
     else

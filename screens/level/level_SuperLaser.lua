@@ -2,15 +2,17 @@ local Screen = Level:extend()
 
 function Screen:activate()
 	--- shape value
+	-- floor
+	local floorZ = base.guiHeight-20
 	-- player wall
 	local c1Z = 80
 	local c1LenX = 2.5*40
 	local c1LenY = 140
-	local c1LenZ = 80
+	local c1LenZ = 100
 	-- laser wall
 	local c2LenX = 40 * 4
 	local c2LenY = c1LenY
-	local c2LenZ = 20
+	local c2LenZ = floorZ-(c1Z+c1LenZ)
 	-- hole
 	local hLenX = 40 * 2
 	local hLenZ = 10
@@ -28,13 +30,11 @@ function Screen:activate()
 	-- laser
 	local tX = 3.5*40
 	local tBorderX = 40
-	local tY = -100
-	local tZ = 100
+	local tY = leftY+leftLenY
+	local tZ = hZ+30--100
 	local tSX = 0
 	local tSY = 1
 	local tSZ = 1
-	-- floor
-	local floorZ = base.guiHeight-20
 	---
 
 	-- levelName
@@ -61,13 +61,13 @@ function Screen:activate()
 	self:addShapeList(Cuboid, leftX, leftY, leftZ,				10, leftLenY, leftLenZ)
 	-- hole1
 	self:addShapeList(Cuboid, hX1, leftY, hZ,					hLenX, leftLenY, hLenZ)
-	self:addShapeList(Ball,	hX1+ballR, leftY, hZ-ballR,			ballR)
+	self:addShapeList(Ball,	  hX1+ballR, leftY-10, hZ-ballR,	ballR)
 	-- hole2
 	self:addShapeList(Cuboid, hX2, leftY, hZ,					hLenX, leftLenY, hLenZ)
-	self:addShapeList(Ball,	hX2+ballR, leftY, hZ-ballR,			ballR)
+	self:addShapeList(Ball,	  hX2+ballR, leftY-10, hZ-ballR,	ballR)
 	-- Laser
 	for i = 0, 4 do
-		self:addShapeList(Laser, tX+tBorderX*i, tY, tZ,		tSX, tSY, tSZ)
+		self:addShapeList(Laser, tX+tBorderX*i, tY, tZ,			tSX, tSY, tSZ)
 	end
 end
 
