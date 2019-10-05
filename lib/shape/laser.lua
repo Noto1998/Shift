@@ -1,6 +1,6 @@
 Laser = Shape:extend()
 
---local radius = 10
+local radius = 10
 local len = math.sqrt(base.guiHeight^2 + base.guiWidth^2) + 1
 local timeMax = 2-- second
 
@@ -59,34 +59,16 @@ end
 
 function Laser:draw(mode)
     local _x = self.x
-    local _y = self.y + (-self.y+self.z)*mode
+    local _y = self.y*(1-mode) + self.z*mode
+    local _lenX = self.sx*self.len
+    local _lenY = (self.sy*(1-mode)+self.sz*mode)*self.len
     
     -- draw self
-    local borderX = 10
-    local lenX = 25
-    local dir = math.atan2(self.sy*(1-mode)+self.sz*mode, self.sx)
-    local table = {
-        _x+base.dirGetXY(dir, lenX, 0), _y+base.dirGetXY(dir, lenX, 1),
-        _x+base.dirGetXY(dir+math.pi/4, borderX, 0), _y+base.dirGetXY(dir+math.pi/4, borderX, 1),
-        _x+base.dirGetXY(dir+math.pi/2, lenX, 0), _y+base.dirGetXY(dir+math.pi/2, lenX, 1),
-        _x+base.dirGetXY(dir+math.pi/4*3, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*3, borderX, 1),
-        _x+base.dirGetXY(dir+math.pi, lenX, 0), _y+base.dirGetXY(dir+math.pi, lenX, 1),
-        _x+base.dirGetXY(dir+math.pi/4*5, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*5, borderX, 1),
-        _x+base.dirGetXY(dir+math.pi/2*3, lenX, 0), _y+base.dirGetXY(dir+math.pi/2*3, lenX, 1),
-        _x+base.dirGetXY(dir+math.pi/4*7, borderX, 0), _y+base.dirGetXY(dir+math.pi/4*7, borderX, 1),
-    }
-
     love.graphics.setColor(self.cFill)
-    local triList = love.math.triangulate(table)
-    for key, triTable in pairs(triList) do
-        love.graphics.polygon("fill", triTable)
-    end
-    --love.graphics.circle("fill", self.x, _y, radius*2)
+    love.graphics.circle("fill", self.x, _y, radius*2)
     love.graphics.setColor(self.cLine)
-    --love.graphics.circle("line", self.x, _y, radius)
-    --love.graphics.circle("line", self.x, _y, radius*2)
-    
-    love.graphics.polygon("line", table)
+    love.graphics.circle("line", self.x, _y, radius)
+    love.graphics.circle("line", self.x, _y, radius*2)
     
     -- draw shoot line
     if self.turnOn then
@@ -103,13 +85,13 @@ function Laser:draw(mode)
             love.graphics.line(_x, _y, self.drawX, self.drawZ)
             love.graphics.line(self.drawX, self.drawZ, self.drawX2, self.drawZ2)
         else
-            love.graphics.line(_x, _y, _x + self.sx * self.len, _y + (self.sy + (-self.sy+self.sz)*mode) * self.len)
+            love.graphics.line(_x, _y, _x + _lenX, _y + _lenY)
         end
     -- warning
     else
         if self.timer > timeMax * (1-0.3) then
             love.graphics.setColor(base.cWarning)
-            love.graphics.line(_x, _y, _x+self.sx*self.len, _y+(self.sy + (-self.sy+self.sz)*mode) * self.len)
+            love.graphics.line(_x, _y, _x + _lenX, _y + _lenY)
         end
     end
 end
@@ -250,6 +232,80 @@ function Laser:hitPlayer(player)
     return self.turnOn and self:hit(player)
     -- body
 end
+function Laser:hitDraw2(obj)
+    local flag = false
+
+    local x1 = obj.x
+    local z1 = obj.z
+    local x2 = obj.x + obj.lenX
+    local z2 = obj.z + obj.lenZ
+
+    -- x
+    local xLeft = self.drawX
+    local xRight = self.drawX2
+    if xLeft > xRight then
+        xLeft, xRight = xRight, xLeft
+    end
+    -- z
+    local zTop = self.drawZ
+    local zBottom = self.drawZ2
+    if zTop > zBottom then
+        zTop, zBottom = zBottom, zTop
+    end
+    -- check rectangle
+    if  x2 > xLeft
+    and x1 < xRight
+    and z2 > zTop
+    and z1 < zBottom then
+        if xLeft == xRight and zBottom == zTop then
+            -- point, do nothing
+        elseif xLeft == xRight or zBottom == zTop then
+            -- vertical or horizontal
+            flag = true
+        else
+            -- fix
+            if z1 < zTop+1 then
+                z1 = zTop+1
+            end
+            if z2 > zBottom-1 then
+                z2 = zBottom-1
+            end
+            --
+            local pTable = {
+                {x1, z1},
+                {x2, z1},
+                {x2, z2},
+                {x1, z2},
+            }
+            local sign = nil
+            -- real
+            local dirReal = math.atan2(self.drawZ2-self.drawZ, self.drawX2-self.drawX)
+            --
+            for i = 1, 4 do
+                local vX = pTable[i][1]
+                local vY = pTable[i][2]
+                -- laser to 4 point
+                local lenX = vX-self.drawX
+                local lenY = vY-self.drawZ
+                local dir = math.atan2(lenY, lenX)
+                local pSign = base.sign(dirReal-dir)
+                --
+                if sign == nil then
+                    sign = pSign
+                else
+                    -- check dir(show point in which side)
+                    if sign ~= pSign then
+                        flag = true
+                        break
+                    end
+                end
+            end
+        end
+    end
+
+    return flag
+end
+
 
 -- block
 function Laser:block(ballList)

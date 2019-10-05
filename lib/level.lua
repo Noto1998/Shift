@@ -119,6 +119,13 @@ function Level:update(dt)
 		-- FourD
 		elseif self.shapeList[i]:is(FourD) then
 			self.shapeList[i]:update(self.shiftMode)
+		-- MoveCuboid
+		elseif self.shapeList[i]:is(MoveCuboid) then
+			self.shapeList[i]:update(dt, self.shiftMode, self.shapeList)
+			-- hit
+			if player:touch(self.shapeList[i], self.shiftMode) then
+				self:playerDead()
+			end
 		end
 	end
 	

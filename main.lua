@@ -27,6 +27,7 @@ require "lib.shape.laser"
 require "lib.shape.ball"
 require "lib.shape.tips"
 require "lib.shape.fourD"
+require "lib.shape.moveCuboid"
 -- player
 require "lib.player"
 -- destination
