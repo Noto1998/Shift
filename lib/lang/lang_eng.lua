@@ -35,6 +35,7 @@ lang.level_SuperLaser		= "Mission Impossible"
 lang.level_Tunnel			= "Tunnel"
 lang.level_Tutorial_Ball	= "Rolling Stones"
 lang.level_Tutorial_Move	= "Tutorial"
+lang.level_Tutorial_MoveCuboid = "need for speed"
 lang.level_Tutorial_Shift	= "Tutorial"
 lang.level_Tutorial_Laser	= "Bit The Dust"
 
