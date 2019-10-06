@@ -14,6 +14,7 @@ local level = {
     "level_BlockLaser",
     "level_Cross",
     "level_Tutorial_MoveCuboid",
+    "level_StandStraight",
     "level_OneShot",
     
     "level_FinishScreen",   -- FinishScreen
