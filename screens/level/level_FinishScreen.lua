@@ -51,7 +51,7 @@ function Screen:update(dt)
 
 	-- goto mainScreens
 	if self.shiftMode == 0 and base.isPressed(base.keys.enter) then
-		self.screen:view("MainScreen")
+		self.screen:view("level_End_ConPolygon")
 	end
 end
 

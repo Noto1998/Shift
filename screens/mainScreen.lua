@@ -1,7 +1,7 @@
 local Screen = Shift:extend()
 
 local page
-local pageHide = 3	--hide
+local pageHide = 4	--hide
 local imgGameLogo, imgMofishLogo
 local t1, tipsList
 

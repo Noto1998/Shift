@@ -48,6 +48,9 @@ lang.tips_mayoiba_yabureru = "Mayoiba yabureru."
 lang.tips_save_us = "SAVE US"
 lang.tips_congratulations = "Congratulations!"
 lang.tips_where_is_it = "Where is it?"
+lang.tips_pressed_Y_to_shift = "Y shift dimensions."
+lang.tips_left_and_right_to_move = "←→ move."
+lang.tips_yellow_means_danger = "Yellow means danger."
 lang.tips_fourD = {
 	"You did it, nice work.",
 	"Just like other our kind.",
@@ -55,10 +58,7 @@ lang.tips_fourD = {
 	"But four don't answer.",
 	"Hope we can meet again.",
 }
-lang.tips_pressed_Y_to_shift = "Y shift dimensions."
-lang.tips_left_and_right_to_move = "←→ move."
-lang.tips_yellow_means_danger = "Yellow means danger."
-
+lang.tips_conPolygon = {}
 
 -- doc
 ----------------------------NEED--------------------------------

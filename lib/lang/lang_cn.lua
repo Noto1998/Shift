@@ -48,6 +48,9 @@ lang.tips_mayoiba_yabureru = "犹豫就会败北。"
 lang.tips_save_us = "不要寻找"
 lang.tips_congratulations = "恭喜您通关游戏！"
 lang.tips_where_is_it = "它去哪了？"
+lang.tips_pressed_Y_to_shift = "Y 切换维度。"
+lang.tips_left_and_right_to_move = "←→ 移动。"
+lang.tips_yellow_means_danger = "黄颜色意味着危险。"
 lang.tips_fourD = {
 	"恭喜你，你做到了。",
 	"就像我们其他同胞那样。",
@@ -55,9 +58,13 @@ lang.tips_fourD = {
 	"但四维从不回应。",
 	"希望我们能再次相见。",
 }
-lang.tips_pressed_Y_to_shift = "Y 切换维度。"
-lang.tips_left_and_right_to_move = "←→ 移动。"
-lang.tips_yellow_means_danger = "黄颜色意味着危险。"
+lang.tips_conPolygon = {
+	"恭喜你，你做到了。",
+	"就像我们其他同胞那样。",
+	"我们需要生存的方法。",
+	"但四维从不回应。",
+	"希望我们能再次相见。",
+}
 
 -- doc
 lang.docList = {
