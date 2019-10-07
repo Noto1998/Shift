@@ -43,7 +43,8 @@ end
 
 
 function Screen:update(dt)
-	Screen.super.update(self, dt)
+	local canShift = (timeToEndTimer==0)
+	Screen.super.update(self, dt, canShift)
 	-- update tips
 	if base.isPressed(base.keys.shift) and (self.shiftMode == 0 or self.shiftMode == 1) then
 		tipsNum = tipsNum + 1

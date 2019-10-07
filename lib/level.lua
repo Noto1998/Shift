@@ -52,9 +52,9 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 end
 
 
-function Level:update(dt)
+function Level:update(dt, canShift)
 	-- shift/bgmManager/pressedSetting
-	local canShift = (self.shiftMode~=1 or player:isOnGround()) and (not finishFlag) and (not keyTips:getShowFlag())
+	local canShift = (self.shiftMode~=1 or player:isOnGround()) and (not finishFlag) and (not keyTips:getShowFlag()) and (canShift == nil or canShift==true)
 	Level.super.update(self, dt, canShift)
 	
 	-- keyTips

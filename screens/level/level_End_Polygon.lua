@@ -1,7 +1,9 @@
 local Level_End = require("lib.level_End")
 local Screen = Level_End:extend()
 
-local reList
+local reList, dirList, spdList, zList
+local timeToShow
+local a1, a2
 
 function Screen:activate()
 	--- shape value
@@ -17,23 +19,54 @@ function Screen:activate()
 	Screen.super.activate(self, tipsTable, levelName)
 	
 	--- here to create shape
-	for i = 1, 10 do
+	reList = {}
+	dirList = {}
+	spdList = {}
+	zList = {}
+	for i = 1, 100 do
 		-- body
 		local _x = love.math.random(0, base.guiWidth)
 		local _y = love.math.random(0, base.guiHeight)
-		reList[i] = Rectangle(_x, 0, _y, base.player.len, 0)
+		reList[i] = Rectangle(_x, 0, _y-base.guiHeight-10, base.player.len, 0)
 
 		table.insert(self.shapeList, reList[i])
 		table.insert(self.drawList, reList[i])
+
+		dirList[i] = love.math.random(-1, 1)
+		spdList[i] = love.math.random(0, 3)
+		zList[i] = love.math.random(base.garvity/2,  base.garvity)
 	end
+
+	a1 = AllForOne(base.guiWidth/2, 500, 1300, 15, 50)
+	table.insert(self.shapeList, a1)
+	table.insert(self.drawList, a1)
+	a2 = AllForOne(base.guiWidth/2, 500, 1300, 20, 30)
+	table.insert(self.shapeList, a2)
+	table.insert(self.drawList, a2)
 end
 
 function Screen:update(dt)
 	Screen.super.update(self, dt)
 
 	if self.timeToEnd then
-		--cp1.len = cp1.len + 1*dt
-		--cp1.border = cp1.border - 1*dt
+		for i = 1, #reList do
+			reList[i].z = reList[i].z + zList[i]*dt
+			reList[i].dir = reList[i].dir + dirList[i]*spdList[i]*dt
+		end
+
+		if a1.z > base.guiHeight/2 then
+			local dis = math.abs(a1.z-base.guiHeight/2) 
+			if dis > base.garvity*dt then
+				a1.z = a1.z - base.garvity*dt
+				a2.z = a2.z - base.garvity*dt
+			else
+				a1.z = a1.z - dis
+				a2.z = a2.z - dis
+			end
+		end
+		--
+		a1:update(dt)
+		a2:update(dt)
 	end
 end
 
