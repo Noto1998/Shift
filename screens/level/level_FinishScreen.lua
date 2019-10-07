@@ -1,5 +1,7 @@
 local Screen = Level:extend()
 
+local finishFlag--fake
+
 function Screen:activate()
 	--- shape value
 	local cubeZ = base.guiHeight
@@ -7,6 +9,7 @@ function Screen:activate()
 	local cubeLenY = base.guiHeight-1*2
 	local cubeLenZ = 50
 	---
+	finishFlag = false
 
 	-- levelName
 	local levelName = ""
@@ -25,7 +28,7 @@ function Screen:activate()
 	self:addShapeList(Cuboid,		1, 1+base.guiHeight, cubeZ,		cubeLenX, cubeLenY, cubeLenZ)
 	
 	--- here to create tips
-	self:addTipsList(lang.tips_save_us, 			base.guiWidth/2, base.guiHeight/3-9,	-50*4,	"center", "center")
+	self:addTipsList(lang.tips_save_us, 			base.guiWidth/2, base.guiHeight/3,		-50*4,	"center", "center")
 	self:addTipsList(lang.tips_congratulations,		base.guiWidth/2, base.guiHeight/3,		-100,	"center", "center")
 	self:addTipsList(lang.tips_save_us,				base.guiWidth/2, base.guiHeight/3 *2,	-50*3,	"center", "center")
 	self:addTipsList(lang.ui_key_continue,			base.guiWidth/2, base.guiHeight/3 *2,	-100,	"center", "center")
@@ -46,14 +49,47 @@ function Screen:activate()
 end
 
 function Screen:update(dt)
-	-- shift and bgm
 	Screen.super.update(self, dt)
-
-	-- goto mainScreens
+		
 	if self.shiftMode == 0 and base.isPressed(base.keys.enter) then
 		self.screen:view("level_End_ConPolygon")
 	end
 end
 
+--[[
+function Screen:update(dt)
+	-- shift and bgm
+	local canShift = not finishFlag
+	Screen.super.update(self, dt, canShift)
+
+	if finishFlag then
+		-- should be first
+		if base.isPressed(base.keys.enter) then
+			print(1111)
+			self.screen:view("level_End_ConPolygon")
+		end
+	else
+		if self.shiftMode == 0 and base.isPressed(base.keys.enter) then
+			print(2222)
+			finishFlag = true
+		end
+	end
+end
+
+function Screen:draw()
+	Screen.super.draw(self)
+	
+	-- draw finishLevel
+	if finishFlag then
+		love.graphics.setColor(0,0,0, 0.75)
+		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+		love.graphics.setColor(base.cWhite)
+		base.drawRoundedRectangle(base.guiBorder, base.guiBorder, base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2)
+		love.graphics.setColor(base.cBlack)
+		base.print(lang.docFake, base.guiBorder*2, base.guiBorder*2)
+		base.print("A 寻找圆", base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2, "right", "bottom")
+	end
+end
+]]
 
 return Screen

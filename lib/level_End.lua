@@ -2,6 +2,7 @@ local Screen = Level:extend()
 
 local tipsNum, tipsFlag, tipsTable
 local t1, t2, c1
+local timeToEnd, timeToEndTimer
 
 function Screen:activate(tipstable, levelName)
 	--- shape value
@@ -13,7 +14,9 @@ function Screen:activate(tipstable, levelName)
 	tipsNum = 1
 	tipsFlag = false
 	tipsTable = tipstable
-
+	timeToEnd = false
+	timeToEndTimer = 0
+	self.timeToEnd = false
 
 	-- player location
 	local playerX = base.guiWidth/4-base.player.len/2
@@ -55,8 +58,16 @@ function Screen:update(dt)
 			t1.z = -50
 			t2.z = -50
 			c1.z = base.guiHeight+50
+			timeToEnd = true
 			--self.screen:view("MainScreen")
 		end
+	end
+
+	if timeToEnd then
+		timeToEndTimer = timeToEndTimer + 1*dt
+	end
+	if timeToEndTimer > 4 then
+		self.timeToEnd = true
 	end
 end
 

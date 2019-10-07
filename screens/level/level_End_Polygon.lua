@@ -1,7 +1,7 @@
 local Level_End = require("lib.level_End")
 local Screen = Level_End:extend()
 
-local cp1
+local reList
 
 function Screen:activate()
 	--- shape value
@@ -10,24 +10,30 @@ function Screen:activate()
 	local cLenY = base.guiHeight-1*2
 	local cLenZ = 50
 	---
-	local tipsTable = lang.tips_conPolygon 
+	local tipsTable = lang.tips_polygon 
 	-- levelName
 	local levelName = ""
 	-- create player and destination
 	Screen.super.activate(self, tipsTable, levelName)
 	
 	--- here to create shape
-	cp1 = ConPolygon(base.guiWidth/4*3, base.guiHeight/2, base.guiHeight/3,		15, 30,  30)
-	table.insert(self.shapeList, cp1)
-	table.insert(self.drawList, cp1)
+	for i = 1, 10 do
+		-- body
+		local _x = love.math.random(0, base.guiWidth)
+		local _y = love.math.random(0, base.guiHeight)
+		reList[i] = Rectangle(_x, 0, _y, base.player.len, 0)
+
+		table.insert(self.shapeList, reList[i])
+		table.insert(self.drawList, reList[i])
+	end
 end
 
 function Screen:update(dt)
 	Screen.super.update(self, dt)
 
 	if self.timeToEnd then
-		cp1.len = cp1.len + 1*dt
-		cp1.border = cp1.border - 1*dt
+		--cp1.len = cp1.len + 1*dt
+		--cp1.border = cp1.border - 1*dt
 	end
 end
 
