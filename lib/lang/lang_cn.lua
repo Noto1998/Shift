@@ -45,7 +45,7 @@ lang.tips_use_arrows_to_move = "方向键 移动。"
 lang.tips_touch_the_green_goal = "到达绿色终点。"
 lang.tips_wait_not_teach_yet = "等一下，我还没教你这招呢！"
 lang.tips_mayoiba_yabureru = "犹豫就会败北。"
-lang.tips_save_us = "不要寻找"
+lang.tips_save_us = "救救我们"
 lang.tips_congratulations = "恭喜您通关游戏！"
 lang.tips_where_is_it = "它去哪了？"
 lang.tips_pressed_Y_to_shift = "Y 切换维度。"
@@ -68,7 +68,7 @@ lang.tips_conPolygon = {
 
 -- doc
 lang.docList = {
-"你的目标，是找到高维生物。\n\n你可能很困惑。\n别担心，我会慢慢解释。\n这会是个漫长的故事。",
+"你好，你可以叫我圆形。\n\n你可能很困惑。\n别担心，我会慢慢解释。\n这会是个漫长的故事。",
 "虽然我们现在分为三个势力，\n但在很久很久以前，\n所有形状都生活在一起。\n\n直到有一天，发生了一场袭击。",
 "很多圆形在袭击中丧生了。\n多边形和圆形暗自较劲了很久,\n我们当然先怀疑你们了。\n事后才发现，\n你们也对此毫不知情。",
 "你知道的，多边形并不团结。\n多边形中的大多数是凸多边形，\n一直看不起那些异类——\n凹多边形。\n他们不被国民接受，受到排挤。",
