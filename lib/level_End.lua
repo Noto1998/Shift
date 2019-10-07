@@ -1,10 +1,11 @@
 local Screen = Level:extend()
 
-local tipsNum, tipsFlag, tipsTable, t1, t2
+local tipsNum, tipsFlag, tipsTable
+local t1, t2, c1
 
 function Screen:activate(tipstable, levelName)
 	--- shape value
-	local cZ = 180
+	local cZ = 170
 	local cLenX = base.guiWidth-1*2
 	local cLenY = base.guiHeight-1*2
 	local cLenZ = 50
@@ -26,7 +27,9 @@ function Screen:activate(tipstable, levelName)
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	
+	c1 = Cuboid(1, 1, cZ,		cLenX, cLenY, cLenZ)
+	table.insert(self.shapeList, c1)
+	table.insert(self.drawList, c1)
 
 	--- here to create tips
 	t1 = Tips(tipsTable[tipsNum], base.guiBorder, -50, base.guiBorder*2)
@@ -49,7 +52,10 @@ function Screen:update(dt)
 				t2.string = tipsTable[tipsNum]
 			end
 		else
-			self.screen:view("MainScreen")
+			t1.z = -50
+			t2.z = -50
+			c1.z = base.guiHeight+50
+			--self.screen:view("MainScreen")
 		end
 	end
 end

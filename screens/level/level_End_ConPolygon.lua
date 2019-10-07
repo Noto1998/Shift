@@ -17,7 +17,7 @@ function Screen:activate()
 	Screen.super.activate(self, tipsTable, levelName)
 	
 	--- here to create shape
-	self:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
+	--self:addShapeList(Cuboid,		1, 1, cZ,		cLenX, cLenY, cLenZ)
 	
 	cp1 = ConPolygon(base.guiWidth/4*3, base.guiHeight/2, base.guiHeight/3,		15, 30,  30)
 	table.insert(self.shapeList, cp1)
