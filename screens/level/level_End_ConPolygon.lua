@@ -2,8 +2,10 @@ local Level_End = require("lib.level_End")
 local Screen = Level_End:extend()
 
 local cp1
+local waitTimer
 
 function Screen:activate()
+	waitTimer = 0
 	--- shape value
 	local cZ = 180
 	local cLenX = base.guiWidth-1*2
@@ -28,7 +30,25 @@ function Screen:update(dt)
 	if self.timeToEnd then
 		cp1.len = cp1.len + 1*dt
 		cp1.border = cp1.border - 1*dt
+		waitTimer = waitTimer + 1*dt
+	end
+
+	if waitTimer > 5 then
+		self.screen:view("MainScreen")
 	end
 end
+
+function Screen:draw()
+	Screen.super.draw(self)
+
+	if waitTimer > 2 then
+		love.graphics.setColor(base.cBlack)
+		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+		love.graphics.setColor(base.cWhite)
+		base.print("由衷地感谢您的游玩！！", base.guiWidth/2, base.guiHeight/3, "center", "center")
+		base.print("Yaolaotou & Notoj", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+	end
+end
+
 
 return Screen

@@ -1,5 +1,6 @@
 # use boon to build
-/boon
+/boon.exe
+/Boon.toml
 # build dir
 /release
 # debug dir

@@ -25,7 +25,8 @@ local level = {
     "level_FinishScreen",   -- FinishScreen
     "level_SuperLaser",     -- FinalTest
     "level_End_Polygon",        -- End1
-    "level_End_ConPolygon"      -- End2
+    "level_End_ConPolygon",      -- End2
+    --"level_TrueEnd",
 }
 
 return level

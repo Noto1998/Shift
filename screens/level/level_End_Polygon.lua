@@ -4,6 +4,7 @@ local Screen = Level_End:extend()
 local reList, dirList, spdList, zList
 local timeToShow
 local a1, a2
+local waitTimer
 
 function Screen:activate()
 	--- shape value
@@ -18,6 +19,7 @@ function Screen:activate()
 	-- create player and destination
 	Screen.super.activate(self, tipsTable, levelName)
 	
+	waitTimer = 0
 	--- here to create shape
 	reList = {}
 	dirList = {}
@@ -63,11 +65,30 @@ function Screen:update(dt)
 				a1.z = a1.z - dis
 				a2.z = a2.z - dis
 			end
+		else
+			waitTimer = waitTimer + 1*dt
 		end
 		--
 		a1:update(dt)
 		a2:update(dt)
+
+		if waitTimer > 5 then
+			self.screen:view("MainScreen")
+		end
 	end
 end
+
+function Screen:draw()
+	Screen.super.draw(self)
+
+	if waitTimer > 2 then
+		love.graphics.setColor(base.cBlack)
+		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+		love.graphics.setColor(base.cWhite)
+		base.print("由衷地感谢您的游玩！！", base.guiWidth/2, base.guiHeight/3, "center", "center")
+		base.print("Yaolaotou & Notoj", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+	end
+end
+
 
 return Screen
