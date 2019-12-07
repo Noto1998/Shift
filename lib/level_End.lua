@@ -2,22 +2,22 @@ local Screen = Level:extend()
 
 local tipsNum, tipsFlag, tipsTable
 local t1, t2, c1
-local timeToEnd, timeToEndTimer
+local waitTimer, waitTimerMax
 
-function Screen:activate(tipstable, levelName)
+function Screen:activate(tipstable, levelName, waitTime)
+	---
+	tipsNum = 1
+	tipsFlag = false
+	tipsTable = tipstable
+	waitTimer = 0
+	waitTimerMax = waitTime
+	self.timeToEnd = false
 	--- shape value
 	local cZ = 170
 	local cLenX = base.guiWidth-1*2
 	local cLenY = base.guiHeight-1*2
 	local cLenZ = 50
-	---
-	tipsNum = 1
-	tipsFlag = false
-	tipsTable = tipstable
-	timeToEnd = false
-	timeToEndTimer = 0
-	self.timeToEnd = false
-
+	
 	-- player location
 	local playerX = base.guiWidth/4-base.player.len/2
 	local playerY = base.guiHeight/2-base.player.len/2
@@ -30,7 +30,7 @@ function Screen:activate(tipstable, levelName)
 	Screen.super.activate(self, playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName)
 	
 	--- here to create shape
-	c1 = Cuboid(1, 1, cZ,		cLenX, cLenY, cLenZ)
+	c1 = Cuboid(1, 1, cZ,	cLenX, cLenY, cLenZ)
 	table.insert(self.shapeList, c1)
 	table.insert(self.drawList, c1)
 
@@ -43,8 +43,9 @@ end
 
 
 function Screen:update(dt)
-	local canShift = (timeToEndTimer==0)
+	local canShift = not self.timeToEnd
 	Screen.super.update(self, dt, canShift)
+	
 	-- update tips
 	if base.isPressed(base.keys.shift) and (self.shiftMode == 0 or self.shiftMode == 1) then
 		tipsNum = tipsNum + 1
@@ -56,31 +57,19 @@ function Screen:update(dt)
 				t2.string = tipsTable[tipsNum]
 			end
 		else
+			--hide tips and floor
 			t1.z = -50
 			t2.z = -50
 			c1.z = base.guiHeight+50
-			timeToEnd = true
-			--self.screen:view("MainScreen")
+			self.timeToEnd = true
 		end
 	end
 
-	if timeToEnd then
-		timeToEndTimer = timeToEndTimer + 1*dt
+	if self.timeToEnd and self.shiftMode==1 then
+		waitTimer = waitTimer + 1*dt
 	end
-	if timeToEndTimer > 4 then
-		self.timeToEnd = true
-	end
-end
-
-function Screen:draw()
-	Screen.super.draw(self)
-
-	if waitTimer > 2 then
-		love.graphics.setColor(base.cBlack)
-		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
-		love.graphics.setColor(base.cWhite)
-		base.print("由衷地感谢您的游玩！！", base.guiWidth/2, base.guiHeight/3, "center", "center")
-		base.print("Yaolaotou & Notoj", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+	if waitTimer > waitTimerMax then
+		self.screen:view("MainScreen", 1)--set shiftMode=1
 	end
 end
 

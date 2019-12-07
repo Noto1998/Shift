@@ -5,7 +5,7 @@ local gotoMainScreenTimer
 local keyTips
 local player, destination
 local _isTutorial
-local showDoc
+
 
 function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, destinationZ, levelName, isTutorial)
 	-- shift
@@ -46,9 +46,6 @@ function Level:activate(playerX, playerY, playerZ, destinationX, destinationY, d
 	
 	-- keyTips
 	keyTips = KeyTips()
-
-	-- doc
-	showDoc = false
 end
 
 
@@ -89,10 +86,6 @@ function Level:update(dt, canShift)
 			levelChoice = levelChoice + 1
 			local levelName = levelString[levelChoice]
 			self.screen:view(levelName)
-		end
-		-- show Doc
-		if lang.docList[levelChoice]~=nil and base.isPressed(base.keys.cancel) then
-			showDoc = not showDoc
 		end
 	end
 
@@ -235,23 +228,12 @@ function Level:draw()
 
 	-- draw finishLevel
 	if finishFlag then
-		love.graphics.setColor(0,0,0, 0.75)
+		love.graphics.setColor(0,0,0, 0.9)
 		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
 		love.graphics.setColor(base.cWhite)
 		base.print(lang.ui_level_finish, base.guiWidth/2, base.guiHeight/3, "center", "center")
 		local string = lang.ui_key_continue
-		if lang.docList[levelChoice]~=nil then
-			string = string .. "\t" .. lang.io_key_doc
-		end
 		base.print(string, base.guiWidth/2, base.guiHeight/3*2, "center", "center")
-
-		if showDoc then
-			love.graphics.setColor(base.cWhite)
-			base.drawRoundedRectangle(base.guiBorder, base.guiBorder, base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2)
-			love.graphics.setColor(base.cBlack)
-			base.print(lang.docList[levelChoice], base.guiBorder*2, base.guiBorder*2)
-			base.print("B关闭文档", base.guiWidth-base.guiBorder*2, base.guiHeight-base.guiBorder*2, "right", "bottom")
-		end
 	end
 end
 

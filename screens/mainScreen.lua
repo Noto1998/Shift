@@ -3,7 +3,7 @@ local Screen = Shift:extend()
 local page
 local pageHide = 4	--hide
 local imgGameLogo, imgMofishLogo
-local t1, tipsList
+local tipsList
 
 local function getLevelName(page)
 	local string = "bug"
@@ -26,26 +26,35 @@ local function getLevelName(page)
 end
 
 
-function Screen:activate()
+function Screen:activate(shiftModeDe)
 	-- shift
-	Screen.super.activate(self)
+	Screen.super.activate(self, shiftModeDe)
 
 	-- img
 	page = 1
 	imgGameLogo = love.graphics.newImage("img/gameLogo.png")
 	imgMofishLogo = love.graphics.newImage("img/mofishLogo.png")
 
-	-- tips
+	--- tips
 	local y1 = base.guiHeight-base.guiFontHeight
-	local y2 = y1-base.guiFontHeight-base.guiBorder
-	t1 = Tips(lang.ui_level_choice(page, getLevelName(page)), base.guiWidth/2, y2, -50, "center", "bottom")
+	local y2 = y1-(base.guiFontHeight+base.guiBorder)
+	local creditsY = base.guiFontHeight
+
 	tipsList = {
-		-- key tips
-		Tips(lang.ui_key_start_and_move,	base.guiWidth/2, y1, -50, "center", "bottom"),
-		-- credits
-		Tips(lang.ui_credits[1],		base.guiWidth/2, base.guiHeight+50, y1,	"center", "bottom"),
-		Tips(lang.ui_credits[2],		base.guiWidth/2, base.guiHeight+50, y2, "center", "bottom"),
+		Tips(lang.ui_level_choice(page, getLevelName(page)), base.guiWidth/2, y2, -50, "center", "bottom"),
+		Tips(lang.ui_key_start_and_move,	base.guiWidth/2, y1, -50, "center", "bottom")
 	}
+	table.insert(
+		tipsList,
+		Tips(lang.ui_thank_you_for_playing,		base.guiWidth/2, base.guiHeight+50, creditsY, "center")
+	)
+	for i, tipsString in ipairs(lang.ui_credits) do
+		table.insert(
+			tipsList,
+			Tips(lang.ui_credits[i],		base.guiWidth/2, base.guiHeight+50, creditsY + (base.guiFontHeight+base.guiBorder/2)*i,	"center")
+		)
+	end
+	
 end
 
 
@@ -73,8 +82,9 @@ function Screen:update(dt)
 				end
 			end
 			
-			-- update string
-			t1.string = lang.ui_level_choice(page, getLevelName(page))
+			-- update levelName string
+			tipsList[1].string = lang.ui_level_choice(page, getLevelName(page))
+
 			-- sfx
 			love.audio.play(sfx_menu)
 		end
@@ -99,23 +109,25 @@ function Screen:draw()
 	-- logo
 	local c1 = base.cloneTable(base.cWhite)
 	local c2 = base.cloneTable(base.cWhite)
-	local scale1 = 0.8
-	local scale2 = 0.6
+	local scale1 = 0.9
+	local scale2 = 0.3
 	c1[4] = 1 - self.shiftMode
 	c2[4] = self.shiftMode
 	love.graphics.setColor(c1)
-	love.graphics.draw(imgGameLogo, 25, 30, 0, scale1, scale1)
+	love.graphics.draw(imgGameLogo, base.guiWidth*(1-scale1)/2, 30, 0, scale1, scale1)
 	love.graphics.setColor(c2)
-	love.graphics.draw(imgMofishLogo, base.guiWidth*(1-scale2)/2, 15, 0, scale2, scale2)
+	love.graphics.draw(imgMofishLogo, base.guiWidth*(1-scale2)/2, base.guiHeight-imgMofishLogo:getHeight()*scale2, 0, scale2, scale2)
 
 	-- tips
-	t1:draw(self.shiftMode)
 	for key, obj in pairs(tipsList) do
 		obj:draw(self.shiftMode)
 	end
 
 	-- credits
-	love.graphics.setColor(base.cDarkGray)
+	local c1 = base.cloneTable(base.cDarkGray)
+	local c2 = base.cloneTable(base.cDarkGray)
+	c2[4] = self.shiftMode
+	love.graphics.setColor(c2)
 	base.print(lang.ui_key_credits, base.guiWidth-base.guiBorder-base.guiFontHeight, 0, "right")
 end
 

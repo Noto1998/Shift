@@ -29,9 +29,6 @@ function Screen:activate()
 	self:addShapeList(Cuboid,		base.guiWidth-cubeLenX-1, 1, 0,			cubeLenX, cubeLenY, cubeLenZ-40)
 	
 	self:addShapeList(Cuboid,		destinationX-2, destinationY+100, cubeZ-cLenZ2,		cLenZ2, cLenZ2, cLenZ2)
-
-	-- here to create tips
-	self:addTipsList(lang.tips_where_is_it, base.guiBorder, base.guiBorder, -80)	
 end
 
 return Screen

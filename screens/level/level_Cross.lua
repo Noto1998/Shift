@@ -62,7 +62,7 @@ function Screen:activate()
 	self:addShapeList(Rectangle, base.guiWidth/2, 105, 210,		(210/2)/math.cos(dir), 25,		-math.pi+dir)
 
 	-- here to create tips
-	self:addTipsList(lang.tips_mayoiba_yabureru, 20, -80, 10)
+	self:addTipsList(lang.tips_mayoiba_yabureru, 20, -80, base.guiBorder*2)
 end
 
 return Screen

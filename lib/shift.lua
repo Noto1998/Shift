@@ -1,10 +1,6 @@
 Shift = Object:extend()
 
-local shiftTimerMax
-local shiftTimer
-local shifting
-local shiftFlag
-local shiftSpd
+local shiftTimerMax, shifting, shiftSpd
 
 
 function Shift:new(ScreenManager)
@@ -12,14 +8,17 @@ function Shift:new(ScreenManager)
 end
 
 
-function Shift:activate()
+function Shift:activate(shiftModeDefault)
     -- shift
 	self.shiftMode = 0-- 0=xy, 1=xz
-	shiftFlag = false
+	self.shiftFlag = false
 	shifting = false
 	shiftTimerMax = 1.25
-	shiftTimer = 0
-    shiftSpd = 0
+	shiftSpd = 0
+	if shiftModeDefault~= nil then
+		self.shiftMode = 1
+		self.shiftFlag = true
+	end
 end
 
 
@@ -38,7 +37,7 @@ function Shift:update(dt, canShift)
 			shiftSpd = 0
 		end
 		-- add spd
-		if shiftFlag then
+		if self.shiftFlag then
 			if self.shiftMode < shiftAddTime then
 					shiftSpd = shiftSpd + shiftAddSpd
 			elseif self.shiftMode > 1-shiftAddTime then
@@ -53,7 +52,7 @@ function Shift:update(dt, canShift)
 		end
 		local _dt = math.abs(shiftSpd) / shiftTimerMax * dt
 		-- change shiftMode
-		if self.shiftMode < 1 and shiftFlag then
+		if self.shiftMode < 1 and self.shiftFlag then
 			local _border =  1 - self.shiftMode
 			if _border < _dt then
 				self.shiftMode = 1
@@ -62,7 +61,7 @@ function Shift:update(dt, canShift)
 				self.shiftMode = self.shiftMode + _dt
 			end
 		end
-		if self.shiftMode > 0 and not shiftFlag then
+		if self.shiftMode > 0 and not self.shiftFlag then
 			if self.shiftMode < _dt then
 				self.shiftMode = 0
 				shifting = false -- close
@@ -70,11 +69,15 @@ function Shift:update(dt, canShift)
 				self.shiftMode = self.shiftMode - _dt
 			end
 		end
+		-- close
+		if self.shiftMode == 0 or self.shiftMode == 1 then
+			shiftSpd = 0
+		end
 	end
 	-- switch shiftMode
 	if (canShift==nil or canShift==true)
 	and base.isPressed(base.keys.shift) and not shifting then
-		shiftFlag = not shiftFlag
+		self.shiftFlag = not self.shiftFlag
 		shifting = true
 		--sfx
 		love.audio.play(sfx_shift)
