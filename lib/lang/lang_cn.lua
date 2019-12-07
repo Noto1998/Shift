@@ -1,15 +1,16 @@
 local lang = {}
 
+
 -- ui
 function lang.ui_level_choice(Num, Name)	return "<\t第" .. Num .. "关 " .. Name .. "\t>"	end
-lang.ui_key_start_and_move = "←→ 选择\tA 开始"
-lang.ui_key_keyTips = "X 按键说明"
-lang.ui_player_stuck = "玩家卡住"
-lang.ui_level_finish = "关卡完成！"
-lang.ui_key_continue = "A 继续"
-lang.ui_key_doc = "B 信息"
-lang.ui_key_doc_close = "B 关闭"
-lang.ui_key_credits = "Y 返回主界面"
+lang.ui_key_start_and_move	= "←→ 选择\tA 开始"
+lang.ui_key_keyTips			= "X 按键说明"
+lang.ui_player_stuck		= "玩家卡住"
+lang.ui_level_finish		= "关卡完成！"
+lang.ui_key_continue		= "A 继续"
+lang.ui_key_doc				= "B 信息"
+lang.ui_key_doc_close		= "B 关闭"
+lang.ui_key_credits			= "Y 返回主界面"
 lang.ui_key_keyTipsList = {
 	"\t方向键 - 移动\t\t",
 	"\tY - 维度切换\t\t",
@@ -24,13 +25,14 @@ lang.ui_credits = {
 	"翻译|特别感谢\tHannibal",
 }
 
+
 -- level
 lang.level_BlockLaser		= "我来挡住"
 lang.level_Contour			= "等高线"
 lang.level_Cross			= "十字架"
 lang.level_CrossTheRiver	= "过河"
 lang.level_DonkeyKong		= "大金刚"
-lang.level_Invisible		= "隐形"
+--lang.level_Invisible		= "隐形"
 lang.level_OneShot			= "一次机会"
 lang.level_RockClimbing		= "攀岩"
 lang.level_Skull			= "骷髅"
@@ -43,16 +45,18 @@ lang.level_Tutorial_MoveCuboid = "速度的活"
 lang.level_Tutorial_Shift	= "教学"
 lang.level_Tutorial_Laser	= "败者食尘"
 
+
 -- tips
 lang.tips_use_arrows_to_move	= "方向键 移动"
 lang.tips_touch_the_green_goal	= "绿色 是 终点"
-lang.tips_wait_not_teach_yet	= "等一下 我还没教你这招"
+lang.tips_wait_not_teach_yet	= "我还没教你这招"
 lang.tips_mayoiba_yabureru		= "犹豫就会败北"
 lang.tips_save_us				= "救救我们"
-lang.tips_congratulations		= "恭喜 你完成了任务"
+lang.tips_congratulations		= "你完成了任务"
 lang.tips_pressed_Y_to_shift	= "Y 切换维度"
 lang.tips_left_and_right_to_move = "←→ 移动"
 lang.tips_yellow_means_danger 	= "黄色 很危险"
+
 
 -- ending dialogue
 lang.tips_conPolygon = {
@@ -66,14 +70,13 @@ lang.tips_conPolygon = {
 }
 lang.tips_polygon = {
 	"你没中他们的陷阱 好样的",
-	"多边形们看不起那些异类",
+	"我们看不起那些异类",
 	"所以他们心里有怨恨",
 	"凹多边形不相信圆",
 	"他们最先得到了SHIFT",
 	"和你拥有的一样",
 	"我们要逃出去",
 	"希望渺茫 但值得一试",
-	"我们会一起启动SHIFT",
 	"做好准备"
 }
 
