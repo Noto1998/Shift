@@ -13,17 +13,21 @@ end
 
 
 function FourD:update(mode)
+    --[[
     -- update fourD len
     if (mode >= mode1-modeMin and mode <= mode1+modeMin)
     or (mode >= (1-mode1)-modeMin and mode <= (1-mode1)+modeMin) then
 		self.lenX, self.lenY = self.lenY, self.lenX
-	end
+    end
+    ]]
 end
 
 
 function FourD:draw(mode)
+    local _x = self.x
     local _y = self.y*(1-mode) + self.z*mode
 
+    --[[
     local tableT = {
         self.x,             _y - self.lenY,
         self.x + self.lenX, _y,
@@ -57,4 +61,13 @@ function FourD:draw(mode)
     else
         love.graphics.polygon("line", tableT)
     end
+    ]]
+    local tableT = {
+        _x,             _y - self.lenY,
+        _x + self.lenX, _y,
+        _x,             _y + self.lenY,
+        _x - self.lenX, _y,
+    }
+    love.graphics.setColor(base.cWhite)
+    love.graphics.polygon("line", tableT)
 end

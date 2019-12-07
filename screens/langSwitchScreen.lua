@@ -17,7 +17,7 @@ function Screen:update(dt)
 		if base.isDown(base.keys.enter) then
 			langFile = "lib.lang.lang_cn"
 		elseif base.isDown(base.keys.cancel) then
-			langFile = "lib.lang.lang_eng"
+			langFile = "lib.lang.lang_en"
 		end
 		lang = require(langFile)
 		

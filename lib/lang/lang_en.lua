@@ -1,7 +1,7 @@
 local lang = {}
 
 -- ui
-function lang.ui_level_choice(Num, Name)   return "<\tlevel " .. Num .. " " .. Name .. "\t>"    end
+function lang.ui_level_choice(Num, Name)	return "<\tlevel " .. Num .. " " .. Name .. "\t>"	end
 lang.ui_key_start_and_move = "←→selct\tA start"
 lang.ui_key_keyTips = "X control tips"
 lang.ui_player_stuck = "player stuck"
@@ -17,8 +17,9 @@ lang.ui_key_keyTipsList = {
 	"\tB(hold) - go MainMenu\t\t"
 }
 lang.ui_credits = {
-	"code|art|music|level\tNotoj",
-	"design|level\tJcat(Yaolaotou)"
+	"design|level\tYaolaotou",
+	"code|art|music|level\tNoto",
+	"translate|special thanks\tHannibal",
 }
 
 --level
@@ -36,7 +37,7 @@ lang.level_SuperLaser		= "Mission Impossible"
 lang.level_Tunnel			= "Tunnel"
 lang.level_Tutorial_Ball	= "Rolling Stones"
 lang.level_Tutorial_Move	= "Tutorial"
-lang.level_Tutorial_MoveCuboid = "need for speed"
+lang.level_Tutorial_MoveCuboid = "Need For Speed"
 lang.level_Tutorial_Shift	= "Tutorial"
 lang.level_Tutorial_Laser	= "Bit The Dust"
 

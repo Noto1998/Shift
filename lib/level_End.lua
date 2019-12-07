@@ -72,5 +72,17 @@ function Screen:update(dt)
 	end
 end
 
+function Screen:draw()
+	Screen.super.draw(self)
+
+	if waitTimer > 2 then
+		love.graphics.setColor(base.cBlack)
+		love.graphics.rectangle("fill", 0, 0, base.guiWidth, base.guiHeight)
+		love.graphics.setColor(base.cWhite)
+		base.print("由衷地感谢您的游玩！！", base.guiWidth/2, base.guiHeight/3, "center", "center")
+		base.print("Yaolaotou & Notoj", base.guiWidth/2, base.guiHeight/3*2, "center", "center")
+	end
+end
+
 
 return Screen

@@ -1,7 +1,7 @@
 local lang = {}
 
 -- ui
-function lang.ui_level_choice(Num, Name)   return "<\t第" .. Num .. "关 " .. Name .. "\t>"    end
+function lang.ui_level_choice(Num, Name)	return "<\t第" .. Num .. "关 " .. Name .. "\t>"	end
 lang.ui_key_start_and_move = "←→ 选择\tA 开始"
 lang.ui_key_keyTips = "X 按键说明"
 lang.ui_player_stuck = "玩家卡住"
@@ -17,8 +17,9 @@ lang.ui_key_keyTipsList = {
 	"\tB(长按) - 返回主界面\t\t"
 }
 lang.ui_credits = {
-	"程序|美术|音乐|关卡\tNotoj",
-	"策划|关卡\tJcat(Yaolaotou)"
+	"策划|关卡\tYaolaotou",
+	"程序|美术|音乐|关卡\tNoto",
+	"翻译|特别感谢\tHannibal",
 }
 
 -- level

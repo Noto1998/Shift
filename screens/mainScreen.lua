@@ -56,7 +56,7 @@ function Screen:update(dt)
 	-- switch level
 	if self.shiftMode == 0 then
 		if base.isPressed(base.keys.right) or base.isPressed(base.keys.left) then
-			local levelMax = #levelString
+			local levelMax = #levelString - pageHide + 1--show the laser
 			
 			-- change page
 			if base.isPressed(base.keys.right) then
