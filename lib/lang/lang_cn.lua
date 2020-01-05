@@ -8,8 +8,6 @@ lang.ui_key_keyTips			= "X 按键说明"
 lang.ui_player_stuck		= "玩家卡住"
 lang.ui_level_finish		= "关卡完成！"
 lang.ui_key_continue		= "A 继续"
-lang.ui_key_doc				= "B 信息"
-lang.ui_key_doc_close		= "B 关闭"
 lang.ui_key_credits			= "Y 返回主界面"
 lang.ui_key_keyTipsList = {
 	"\t方向键 - 移动\t\t",
@@ -22,7 +20,7 @@ lang.ui_thank_you_for_playing = "感谢游玩！"
 lang.ui_credits = {
 	"策划|关卡\tYaolaotou",
 	"程序|美术|音乐|关卡\tNoto",
-	"翻译|特别感谢\tHannibal",
+	"翻译♥特别感谢\tHannibal",
 }
 
 
@@ -32,7 +30,7 @@ lang.level_Contour			= "等高线"
 lang.level_Cross			= "十字架"
 lang.level_CrossTheRiver	= "过河"
 lang.level_DonkeyKong		= "大金刚"
---lang.level_Invisible		= "隐形"
+lang.level_Invisible		= "隐形"
 lang.level_OneShot			= "一次机会"
 lang.level_RockClimbing		= "攀岩"
 lang.level_Skull			= "骷髅"
@@ -41,8 +39,7 @@ lang.level_SuperLaser		= "不可能的任务"
 lang.level_Tunnel			= "隧道"
 lang.level_Tutorial_Ball	= "滚石"
 lang.level_Tutorial_Move	= "教学"
-lang.level_Tutorial_MoveCuboid = "速度的活"
-lang.level_Tutorial_Shift	= "教学"
+lang.level_Tutorial_MoveCuboid = "速度的活儿"
 lang.level_Tutorial_Laser	= "败者食尘"
 
 
@@ -61,23 +58,17 @@ lang.tips_yellow_means_danger 	= "黄色 很危险"
 -- ending dialogue
 lang.tips_conPolygon = {
 	"恭喜你到达了这里",
-	"一个没有边的图形",
-	"居然能让你们这么臣服",
-	"而我们只是略显独特",
-	"就被你们驱逐",
 	"该迎接你的结局了",
 	"就像你的同胞一样"
 }
 lang.tips_polygon = {
 	"你没中他们的陷阱 好样的",
-	"我们看不起那些异类",
-	"所以他们心里有怨恨",
 	"凹多边形不相信圆",
 	"他们最先得到了SHIFT",
 	"和你拥有的一样",
 	"我们要逃出去",
-	"希望渺茫 但值得一试",
-	"做好准备"
+	"做好准备",
+	"按下Y"
 }
 
 

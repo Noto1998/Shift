@@ -1,8 +1,8 @@
 -- put all level in here
 local level = {
     "level_Tutorial_Move",
-    "level_Tutorial_Shift",
     "level_CrossTheRiver",
+    "level_Invisible",
     "level_Skull",
 
     "level_Tunnel",
@@ -21,12 +21,12 @@ local level = {
     "level_StandStraight",
     
     "level_OneShot",
-    
     "level_FinishScreen",   -- FinishScreen
+
     "level_SuperLaser",     -- FinalTest
-    "level_End_Polygon",        -- End1
-    "level_End_ConPolygon",      -- End2
-    --"level_TrueEnd",
+
+    "level_End_Polygon",    -- End1
+    "level_End_ConPolygon", -- End2
 }
 
 return level

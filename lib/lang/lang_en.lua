@@ -8,8 +8,6 @@ lang.ui_key_keyTips			= "X control tips"
 lang.ui_player_stuck		= "player stuck"
 lang.ui_level_finish		= "level finish!"
 lang.ui_key_continue		= "A continue"
-lang.ui_key_doc				= "B message"
-lang.ui_key_doc_close		= "B close"
 lang.ui_key_credits			= "Y go MainMenu"
 lang.ui_key_keyTipsList = {
 	"\tArrows - Move\t\t",
@@ -32,7 +30,7 @@ lang.level_Contour			= "Contour"
 lang.level_Cross			= "Cross"
 lang.level_CrossTheRiver	= "Cross The River"
 lang.level_DonkeyKong		= "Donkey Kong"
---lang.level_Invisible		= "Invisible"
+lang.level_Invisible		= "Invisible"
 lang.level_OneShot			= "OneShot"
 lang.level_RockClimbing 	= "Rock Climbing"
 lang.level_Skull			= "Skull"
@@ -42,7 +40,6 @@ lang.level_Tunnel			= "Tunnel"
 lang.level_Tutorial_Ball	= "Rolling Stones"
 lang.level_Tutorial_Move	= "Tutorial"
 lang.level_Tutorial_MoveCuboid = "Need For Speed"
-lang.level_Tutorial_Shift	= "Tutorial"
 lang.level_Tutorial_Laser	= "Bit The Dust"
 
 
@@ -61,23 +58,17 @@ lang.tips_yellow_means_danger 	= "yellow means danger"
 -- ending dialogue
 lang.tips_conPolygon = {
 	"Congratulations",
-	"a shape without edge",
-	"can make you so submissive",
-	"we're just a little bit unique",
-	"then you driving us out",
 	"time to your ending",
 	"just like your kind"
 }
 lang.tips_polygon = {
 	"you didn't fall into their trap",
-	"we despise those outcast",
-	"so they have resentments",
 	"they don't believe in circle",
 	"concave shap got SHIFT first",
 	"same as you have",
 	"we plan to get out",
-	"little hope, but worth a try",
 	"get ready",
+	"pressed Y"
 }
 
 
