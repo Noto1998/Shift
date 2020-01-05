@@ -3,29 +3,21 @@ local BgmManager = Object:extend()
 function BgmManager:new(bgm)
     self.bgm = bgm
     self.turnOn = true
-
-    -- play
-	self.bgm:setLooping(true)
-	love.audio.play(self.bgm)
 end
 
 
 function BgmManager:update()
     if base.isPressed(base.keys.music) then
         self.turnOn = not self.turnOn
+    end
 
-        --play
-        if self.turnOn then
-            --
-            if not self.bgm:play() then
-                self.bgm:setLooping(true)
-                love.audio.play(self.bgm)
-            end
-        else
-            --
-            if self.bgm:play() then
-                love.audio.stop(self.bgm)
-            end
+    if self.turnOn then
+        if not self.bgm:isPlaying() then
+            self.bgm:play()
+        end
+    else
+        if self.bgm:isPlaying() then
+            self.bgm:pause()
         end
     end
 end

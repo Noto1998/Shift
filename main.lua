@@ -79,8 +79,8 @@ function love.load()
     sfx_finish      = love.audio.newSource("sound/finish.mp3", "static")
     sfx_restart     = love.audio.newSource("sound/dead.mp3", "static")
     sfx_shoot       = love.audio.newSource("sound/shoot.mp3", "static")
-    bgm_mainScreens = love.audio.newSource("sound/bgm_191208.mp3", "stream")
-    bgmManager = BgmManager(bgm_mainScreens)
+    bgm_main        = love.audio.newSource("sound/bgm_191208.mp3", "stream")
+    bgmManager = BgmManager(bgm_main)
 
     --- canvas
     canvasBG = love.graphics.newCanvas()

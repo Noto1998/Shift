@@ -114,7 +114,7 @@ function Screen:draw()
 	c1[4] = 1 - self.shiftMode
 	c2[4] = self.shiftMode
 	love.graphics.setColor(c1)
-	love.graphics.draw(imgGameLogo, base.guiWidth*(1-scale1)/2, 30, 0, scale1, scale1)
+	love.graphics.draw(imgGameLogo, base.guiWidth*(1-scale1)/2, 10, 0, scale1, scale1)
 	love.graphics.setColor(c2)
 	love.graphics.draw(imgMofishLogo, base.guiWidth*(1-scale2)/2, base.guiHeight-imgMofishLogo:getHeight()*scale2, 0, scale2, scale2)
 

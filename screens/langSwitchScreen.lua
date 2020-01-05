@@ -30,7 +30,7 @@ end
 
 function Screen:draw()
 	love.graphics.setColor(base.cWhite)
-	base.print("A: 中文\nB: English\nX: 日本語")
+	base.print("A - 中文\nB - English\nX - 日本語")
 end
 
 return Screen
